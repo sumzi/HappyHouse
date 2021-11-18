@@ -1,11 +1,11 @@
 <template>
   <div>
     <header-nav />
-    <div class="">
-      <h1>QnA</h1>
-      <div class="">
-        <router-view />
-      </div>
+    <v-container>
+      <h2>Q&A</h2>
+    </v-container>
+    <div>
+      <router-view />
     </div>
   </div>
 </template>

@@ -1,94 +1,31 @@
 <template>
-  <div class="mt-4 col-8">
-    <h5>update</h5>
-    <table class="table table-bordered">
-      <tr>
-        <td>번호</td>
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            id="no"
-            name="no"
-            v-model="qna.no"
-            ref="no"
-            disabled
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>작성자</td>
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            id="userId"
-            name="userId"
-            v-model="qna.userId"
-            ref="userId"
-            disabled
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>등록일</td>
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            id="ndata"
-            name="ndata"
-            v-model="qna.ndate"
-            ref="ndata"
-            disabled
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>제목</td>
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            name="title"
-            v-model="qna.title"
-            ref="title"
-            disabled
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>내용</td>
-        <td>
-          <textarea
-            type="text"
-            class="form-control"
-            id="content"
-            name="content"
-            v-model="qna.content"
-            ref="content"
-            disabled
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>답변</td>
-        <td>
-          <textarea
-            type="text"
-            class="form-control"
-            id="reply"
-            name="reply"
-            v-model="reply"
+  <div class="d-flex justify-center">
+    <div class="col-6">
+      <v-card elevation="2" outlined class="pa-6">
+        <v-card-title>Q. {{ qna.title }}</v-card-title>
+        <v-card-text>
+          {{ qna.content }}
+        </v-card-text>
+        <v-card-text>
+          <v-textarea
+            color="success"
+            label="답변"
+            v-model="reply2"
             ref="reply"
-          />
-        </td>
-      </tr>
-    </table>
-    <div>
-      <button class="btn btn-primary" @click="updateAnswer">답변완료</button>
-      <button class="btn btn-primary" @click="moveQnAList">목록</button>
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions class="d-flex justify-space-around">
+          <v-btn color="primary" outlined rounded text @click="updateAnswer">
+            답변
+          </v-btn>
+          <v-btn color="warning" outlined rounded text @click="resetQnA">
+            초기화
+          </v-btn>
+          <v-btn color="success" outlined rounded text @click="moveQnAList">
+            목록
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </div>
   </div>
 </template>
@@ -100,20 +37,26 @@ export default {
   name: "QnAUpdate",
   data() {
     return {
-      reply: "",
+      reply2: "",
     };
+  },
+  created() {
+    this.reply2 = this.qna.reply;
   },
   computed: {
     ...mapGetters(["qna"]),
   },
   methods: {
+    resetQnA() {
+      this.reply2 = this.qna.reply;
+    },
     moveQnAList() {
       this.$router.push({ name: "QnAList" });
     },
     updateAnswer() {
       let error = true;
       let msg = "";
-      !this.reply &&
+      !this.reply2 &&
         ((msg = "답변을 입력해 주세요"),
         (error = false),
         this.$refs.reply.focus());
@@ -123,7 +66,7 @@ export default {
       } else {
         http
           .put("/qna/reply", {
-            reply: this.reply,
+            reply: this.reply2,
             no: this.qna.no,
           })
           .then((res) => {
