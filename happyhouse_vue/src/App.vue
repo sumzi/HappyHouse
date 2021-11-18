@@ -1,24 +1,12 @@
 <template>
-  <div>
+  <v-app>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
-<script>
-// import HeaderNav from "./components/layout/HeaderNav.vue";
-// export default {
-//   components: { HeaderNav },
-//   name: "App",
-
-//   data: () => ({
-//     //
-//   }),
-// };
-//
-</script>
+<script></script>
 <style>
 * {
   box-sizing: border-box;
-  /* text-decoration: none; */
 }
 </style>

@@ -1,8 +1,10 @@
 <template>
   <div>
     <header-nav />
-    <div class="container">
-      <h1>거래, 지도</h1>
+    <v-container>
+      <h2>내집찾기</h2>
+    </v-container>
+    <div>
       <router-view />
     </div>
   </div>

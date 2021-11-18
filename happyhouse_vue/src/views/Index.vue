@@ -1,21 +1,28 @@
 <template>
   <div id="app">
     <ul id="menu">
-      <li><router-link :to="{ name: 'Deal' }">거래</router-link></li>
+      <li><router-link :to="{ name: 'Intro' }">해피하우스</router-link></li>
+      <li><router-link :to="{ name: 'Deal' }">집찾기</router-link></li>
       <li><router-link :to="{ name: 'Notice' }">공지사항</router-link></li>
-      <li><router-link :to="{ name: 'QnA' }">QnA</router-link></li>
+      <li><router-link :to="{ name: 'QnA' }">문의하기</router-link></li>
       <li><router-link :to="{ name: 'Login' }">로그인</router-link></li>
     </ul>
 
     <full-page :options="options" id="fullpage">
-      <div class="section" style="text-align: : center">
-        <v-img :src="bgImage" height="100vh">
+      <div class="section">
+        <v-img :src="bgImage" lazy-src="@/assets/house2.jpg" height="100vh">
           <div id="index">
-            <div>Happy House</div>
-            <div class="sub-text">당신의 집을 찾아보세요</div>
-          </div>
-          <div class="input-container">
-            <v-text-field label="검색을 해주세요" solo></v-text-field>
+            <p id="title">Happy House</p>
+            <p id="sub-title">당신의 행복한 집을 찾아보세요!</p>
+            <div class="d-flex justify-center mt-5">
+              <div class="col-4">
+                <v-text-field
+                  label="내 집 검색하기"
+                  solo
+                  rounded
+                ></v-text-field>
+              </div>
+            </div>
           </div>
         </v-img>
       </div>
@@ -88,10 +95,15 @@ export default {
   left: 0;
   z-index: 70;
   text-align: center;
+  color: #fff;
+}
+#title {
   font-size: 4.5em;
   font-weight: bold;
-  color: #fff;
-  text-shadow: 3px 3px 10px black;
+  text-shadow: 2px 2px 4px black;
+}
+#sub-title {
+  text-shadow: 1px 1px 2px black;
 }
 #menu {
   position: fixed;
@@ -102,11 +114,18 @@ export default {
   -moz-font-smoothing: antialiased;
   letter-spacing: 1px;
   font-size: 1.1em;
+  font-weight: 400;
+  text-shadow: 0px 0px 3px black;
 }
 #menu li {
   display: inline-block;
   margin: 10px 0px;
   position: relative;
+}
+#menu a:hover {
+  color: darkgreen;
+  font-weight: bold;
+  text-shadow: none;
 }
 #menu a {
   color: #fff;
@@ -133,6 +152,6 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  text-decoration: none;
 }
 </style>
