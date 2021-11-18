@@ -6,17 +6,19 @@ import com.ssafy.happyhouse.model.UserDto;
 
 public interface UserService {
 
-	void insert(UserDto user);
+	void insert(UserDto user)  throws Exception;
 
-	void update(UserDto user);
+	void update(UserDto user)  throws Exception;
 
-	void delete(String userId);
+	void delete(String userId) throws Exception;
 
-	String findPass(String userId, String userEmail, String userName);
+	String findPass(String userId, String userEmail, String userName) throws Exception;
 
-	UserDto login(String userId, String userPw);
+	UserDto login(UserDto user) throws Exception;
+	
+	UserDto userInfo(String userid) throws Exception;
 
-	List<UserDto> searchAll();
+	List<UserDto> searchAll() throws Exception;
 
-	UserDto search(String id);
+	UserDto search(String id) throws Exception;
 }

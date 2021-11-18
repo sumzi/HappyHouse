@@ -9,15 +9,17 @@ import com.ssafy.happyhouse.model.UserDto;
 
 @Mapper
 public interface UserMapper {
-	void insert(UserDto user);
+	void insert(UserDto user) throws SQLException ;
 
-	void update(UserDto user);
+	void update(UserDto user) throws SQLException ;
 
-	void delete(String id);
+	void delete(String id) throws SQLException ;
 
-	String findPass(String id, String email, String name);
+	String findPass(String id, String email, String name) throws SQLException ;
 
-	UserDto login(String id, String pw);
-	List<UserDto> searchAll();
-	UserDto search(String id);
+	UserDto login(UserDto user) throws SQLException ;
+	UserDto userInfo(String userid) throws SQLException;
+	
+	List<UserDto> searchAll() throws SQLException ;
+	UserDto search(String id) throws SQLException ;
 }

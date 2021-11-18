@@ -26,11 +26,18 @@
 		where userId=#{id} and userEmail=#{email} and userName=#{name}
 	</select>
 	
-	<select id="login" parameterType="string" resultType="UserDto"> 
-		select *
+	<select id="login" parameterType="UserDto" resultType="UserDto"> 
+		select userName, userId, userEmail, role
 		from userinfo
 		where userId=#{userId} and userPw=#{userPw}
 	</select>
+	
+	<select id="userInfo" parameterType="String" resultType="UserDto">
+		select userName, userId, userEmail, joinDate, role
+		from userinfo
+		where userId = #{userId}
+	</select>
+	
 	<select id="search"	parameterType="string"		resultType="UserDto">
 		select *
 		from   userinfo

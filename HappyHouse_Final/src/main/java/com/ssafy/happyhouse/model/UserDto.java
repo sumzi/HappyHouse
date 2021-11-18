@@ -8,58 +8,65 @@ public class UserDto implements Serializable {
 	private String userEmail;
 	private String userPhone;
 	private String userName;
-
-	public UserDto(String userId, String userPw, String userEmail, String userPhone, String userName) {
+	private String joinDate;
+	private String role;
+	
+	public UserDto(String userId, String userPw, String userEmail, String userPhone, String userName, String joinDate,
+			String role) {
+		super();
 		this.userId = userId;
 		this.userPw = userPw;
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
 		this.userName = userName;
+		this.joinDate = joinDate;
+		this.role = role;
 	}
-
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 	public String getUserPw() {
 		return userPw;
 	}
-
 	public void setUserPw(String userPw) {
 		this.userPw = userPw;
 	}
-
 	public String getUserEmail() {
 		return userEmail;
 	}
-
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-
 	public String getUserPhone() {
 		return userPhone;
 	}
-
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	public String getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", userPw=" + userPw + ", userEmail=" + userEmail + ", userPhone="
-				+ userPhone + ", userName=" + userName + "]";
+				+ userPhone + ", userName=" + userName + ", joinDate=" + joinDate + ", role=" + role + "]";
 	}
 }
