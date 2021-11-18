@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseMapper">
+
+	
+	<select id="searchAll" >
+		select * 
+		from housedeal d,houseinfo i 
+		where d.aptCode = i.aptCode
+	</select>
+	
+	<select id="searchByAptName" parameterType="string" resultType="HouseInfoDto">
+		select * 
+		from housedeal d,houseinfo i 
+		where d.aptCode = i.aptCode
+			and ${aptName} like concat('%', #{aptName}, '%')
+	</select>
+	
+	<select id="searchByAptDong" parameterType="string" resultType="HouseInfoDto">
+		select * 
+		from housedeal d,houseinfo i 
+		where d.aptCode = i.aptCode
+			and ${dongName} like concat('%', #{dongName}, '%')
+	</select>
+	
+	<select id="searchByNo" parameterType="string" resultType="HouseInfoDto">
+		select * 
+		from housedeal d,houseinfo i 
+		where d.aptCode = i.aptCode
+			and ${no} = #{no}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+

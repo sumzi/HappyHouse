@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'userId'">
+				and userId= #{word}
+			</if>
+			<if test="key != 'userId'">
+				and ${key} like concat('%', #{word}, '%')
+			</if>
+		</if>
+	</sql>
+	
+	<insert id="insertNotice" parameterType="NoticeDto">
+		insert into notice (no, likeCount, isReply)
+		values (#{no},#{likeCount},#{isReply})
+	</insert>
+	
+	<update id="updateNotice" parameterType="NoticeDto">
+		update notice set likeCount=#{likeCount} 
+		where no = #{no} 
+	</update>
+	
+	<select id="searchNotice" parameterType="string" resultType="NoticeDto">
+		select b.*, n.likeCount, n.isReply 
+		from board b, notice n
+		where b.no = #{no} and n.no = #{no}
+	</select>
+	
+	<select id="searchAllNotice"	parameterType="PageBean" 	resultType="NoticeDto">
+		select b.*, n.likeCount, n.isReply 
+		from board b, notice n
+		<where>
+			<include refid="search"/>
+			and b.no = n.no
+		</where>
+		order by no
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id='totalCount'	parameterType="PageBean" 	resultType="int">
+		select count(*) as cnt
+		from book
+		<where>
+			<include refid="search"/>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+

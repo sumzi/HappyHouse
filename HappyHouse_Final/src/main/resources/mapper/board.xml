@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.BoardMapper">
+	<!-- <resultMap type="BoardDto" id="boardResultMap">
+		no, title, content, ndate, userId, type
+		<id property="no" column="no" />
+	
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="ndate" column="ndate" />
+		<result property="userId" column="userId" />
+		<result property="type" column="type" />
+		
+		<discriminator javaType="String" column="type">
+			<case value="notice" resultMap="noticeResultMap" />
+			<case value="qna" resultMap="qnaResultMap" />
+		</discriminator>
+	</resultMap>
+	
+	<resultMap type="NoticeDto" id="noticeResultMap" extends="boardResultMap">
+	  <result property="likeCount" column="likeCount" />
+	  <result property="isReply" column="isReply" />
+	</resultMap>
+	
+	<resultMap type="QnADto" id="qnaResultMap" extends="boardResultMap">
+	  <result property="isReply" column="isReply" />
+	  <result property="qUserId" column="qUserId" />
+	</resultMap> -->
+
+
+	<insert id="insert" parameterType="BoardDto">
+		insert into board (title, content, ndate, userId, type)
+		values (#{title},#{content}, now(), #{userId}, #{type})
+	</insert>
+	
+	<update id="update" parameterType="BoardDto">
+		update board set title=#{title}, content=#{content} 
+		where no = #{no} 
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from board
+		where no=#{no}
+	</delete>
+	
+	<select id="search" parameterType="string" resultType="BoardDto">
+		select * from board where no=#{no}
+	</select>
+	
+	<select id="searchAll" resultType="BoardDto">
+		select * from board
+	</select>
+	
+	<select id="lastInsertNo" resultType="string">
+		select last_insert_id();
+	</select> 
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnAMapper">	
+
+	<sql id="search">
+		<if test="key == 'userId'">
+			and userId= #{word}
+		</if>
+	</sql>
+	
+	<insert id="insertQnA" parameterType="QnADto">
+		insert into qna (no)
+		values (#{no})
+	</insert>
+	
+	<update id="reply" parameterType="QnADto">
+		update qna set reply=#{reply} 
+		where no = #{no} 
+	</update>
+	
+	<update id="clearReply" parameterType="string">
+		update qna set reply=null 
+		where no = #{no} 
+	</update>
+	
+	<select id="searchQnA" parameterType="string" resultType="QnADto">
+		select b.*, q.reply
+		from board b, qna q
+		where b.no = #{no} and q.no = #{no}
+	</select>
+	
+	<select id="searchAllQnA" resultType="QnADto">
+		select b.*, q.reply
+		from board b, qna q
+		<where>
+			<include refid="search"/>
+			and b.no = q.no
+		</where>
+		order by no
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id='totalCount'	parameterType="PageBean" 	resultType="int">
+		select count(*) as cnt
+		from book
+		<where>
+			<include refid="search"/>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+
