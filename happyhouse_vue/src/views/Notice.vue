@@ -2,7 +2,7 @@
   <div>
     <header-nav />
     <v-container>
-      <h1>공지사항</h1>
+      <h2>공지사항</h2>
     </v-container>
     <div>
       <router-view />

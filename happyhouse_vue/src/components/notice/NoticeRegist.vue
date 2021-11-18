@@ -1,40 +1,36 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8">
-        <table class="table table-bordered">
-          <tr>
-            <td>제목</td>
-            <td>
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                name="title"
-                v-model="title"
-                ref="title"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>내용</td>
-            <td>
-              <textarea
-                type="text"
-                class="form-control"
-                id="content"
-                name="content"
-                v-model="content"
-                ref="content"
-              />
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div>
-      <button class="btn btn-primary" @click="registNotice">등록</button>
+  <div class="d-flex justify-center">
+    <div class="col-6">
+      <v-card elevation="2" outlined class="pa-6">
+        <v-card-title>등록하기</v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="제목"
+            color="success"
+            v-model="title"
+            ref="title"
+          ></v-text-field>
+        </v-card-text>
+        <v-card-text>
+          <v-textarea
+            color="success"
+            label="내용"
+            v-model="content"
+            ref="content"
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions class="d-flex justify-space-around">
+          <v-btn color="primary" outlined rounded text @click="registNotice">
+            등록
+          </v-btn>
+          <v-btn color="warning" outlined rounded text @click="resetNotice">
+            초기화
+          </v-btn>
+          <v-btn color="success" outlined rounded text @click="moveNoticeList">
+            목록
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </div>
   </div>
 </template>
@@ -50,6 +46,13 @@ export default {
     };
   },
   methods: {
+    resetNotice() {
+      this.title = "";
+      this.content = "";
+    },
+    moveNoticeList() {
+      this.$router.push({ name: "NoticeList" });
+    },
     registNotice() {
       let error = true;
       let msg = "";

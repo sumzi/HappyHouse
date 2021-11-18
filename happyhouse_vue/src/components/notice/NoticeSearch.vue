@@ -1,57 +1,28 @@
 <template>
-  <v-container>
-    <div class="col-6" style="border: 1px solid red">
-      <v-simple-table>
-        <template v-slot:default>
-          <tr>
-            <td class="text-center">번호</td>
-            <td>
-              <v-card elevation="2">
-                {{ notice.no }}
-              </v-card>
-            </td>
-          </tr>
-          <tr>
-            <td>작성자</td>
-            <td>
-              <v-card elevation="2">
-                {{ notice.userId }}
-              </v-card>
-            </td>
-          </tr>
-          <tr>
-            <td>등록일</td>
-            <td>
-              <v-card elevation="2">
-                {{ notice.ndate }}
-              </v-card>
-            </td>
-          </tr>
-          <tr>
-            <td>제목</td>
-            <td>
-              <v-card elevation="2">
-                {{ notice.title }}
-              </v-card>
-            </td>
-          </tr>
-          <tr>
-            <td>내용</td>
-            <td>
-              <v-card elevation="2">
-                {{ notice.content }}
-              </v-card>
-            </td>
-          </tr>
-        </template>
-      </v-simple-table>
-      <div>
-        <v-btn @click="updateNotice">수정</v-btn>
-        <v-btn @click="deleteNotice">삭제</v-btn>
-        <v-btn @click="moveNoticeList">목록</v-btn>
-      </div>
+  <div class="d-flex justify-center">
+    <div class="col-6">
+      <v-card elevation="2" outlined class="pa-6">
+        <v-card-title> {{ notice.title }}</v-card-title>
+        <v-card-subtitle class="d-flex justify-space-between"
+          ><p>{{ notice.userId }}</p>
+          <p>{{ notice.ndate }}</p></v-card-subtitle
+        >
+        <v-card-text class="mb-15">{{ notice.content }}</v-card-text>
+      </v-card>
+      <!-- 관리자만 보이도록 -->
+      <v-card-actions class="d-flex justify-space-around mt-6">
+        <v-btn color="primary" outlined rounded text @click="updateNotice"
+          >수정</v-btn
+        >
+        <v-btn color="error" outlined rounded text @click="deleteNotice"
+          >삭제</v-btn
+        >
+        <v-btn color="success" outlined rounded text @click="moveNoticeList"
+          >목록</v-btn
+        >
+      </v-card-actions>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -86,8 +57,7 @@ export default {
 </script>
 
 <style>
-tr {
-  border: 1px solid blud;
-  height: 50px;
+.btn-container {
+  display: flex;
 }
 </style>

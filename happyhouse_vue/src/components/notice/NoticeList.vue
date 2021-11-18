@@ -1,6 +1,12 @@
 <template>
-  <v-container>
+  <div class="d-flex justify-center">
     <div class="col-8">
+      <!-- 관리자만 보이게 해야한다. -->
+      <div class="d-flex justify-end">
+        <v-btn outlined rounded color="success" @click="moveNoticeRegist"
+          >공지등록</v-btn
+        >
+      </div>
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -26,7 +32,7 @@
         </template>
       </v-simple-table>
 
-      <div class="text-center">
+      <div class="text-center mt-10">
         <v-pagination
           v-model="page"
           :length="5"
@@ -35,15 +41,8 @@
           next-icon="mdi-menu-right"
         ></v-pagination>
       </div>
-
-      <!-- 관리자만 보이게 해야한다. -->
-      <div>
-        <v-btn color="#019689" elevation="2" @click="moveNoticeRegist"
-          >공지등록</v-btn
-        >
-      </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
