@@ -38,7 +38,7 @@
 			<include refid="search"/>
 			and b.no = q.no
 		</where>
-		order by no
+		order by no desc
 		limit #{start}, #{spp}
 	</select>
 	

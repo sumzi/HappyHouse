@@ -1,8 +1,8 @@
 package com.ssafy.happyhouse.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.happyhouse.model.HouseException;
 import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.PageBean;
-import com.ssafy.happyhouse.model.mapper.HouseMapper;
 import com.ssafy.happyhouse.model.mapper.NoticeMapper;
 
 @Service
@@ -72,5 +71,14 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 	}
 
+	@Transactional
+	public void updateHit(String no) {
+		try {
+			noticeMapper.updateHit(no);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new HouseException("notice 조회수 업데이트 중 오류");
+		}
+	}
 
 }

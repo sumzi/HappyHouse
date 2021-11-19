@@ -17,4 +17,6 @@ public interface NoticeMapper extends BoardMapper {
 	NoticeDto searchNotice(String no) throws SQLException ;
 	List<NoticeDto> searchAllNotice(PageBean page) throws SQLException ;
 	int totalCount(PageBean bean) throws SQLException ;
+	
+	void updateHit(String no) throws SQLException;
 }

@@ -34,3 +34,11 @@ CREATE TABLE `happyhousepj`.`interesthouse` (
     REFERENCES `happyhousepj`.`userinfo` (`userId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+    
+ALTER TABLE `happyhousepj`.`qna` 
+ADD COLUMN `hitCount` INT NOT NULL DEFAULT 0 AFTER `reply`;
+
+    
+    
+ALTER TABLE `happyhousepj`.`notice` 
+CHANGE COLUMN `likeCount` `hitCount` INT NOT NULL DEFAULT '0' ;

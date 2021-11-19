@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.happyhouse.model.NoticeDto;
@@ -12,4 +13,5 @@ public interface NoticeService {
 	void delete(String no);
 	NoticeDto search(String no);
 	List<NoticeDto> searchAll(PageBean bean);
+	void updateHit(String no);
 }

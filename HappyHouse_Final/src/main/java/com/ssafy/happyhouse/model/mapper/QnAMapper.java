@@ -18,4 +18,6 @@ public interface QnAMapper extends BoardMapper {
 	QnADto searchQnA(String no) throws SQLException ;
 	List<QnADto> searchAllQnA(PageBean bean) throws SQLException ;
 	int totalCount(PageBean bean) throws SQLException ;
+	
+	void updateHit(String no) throws SQLException;
 }

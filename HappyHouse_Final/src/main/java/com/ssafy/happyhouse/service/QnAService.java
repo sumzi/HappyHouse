@@ -16,4 +16,6 @@ public interface QnAService {
 	
 	QnADto search(String no);
 	List<QnADto> searchAll(PageBean bean);
+	
+	void updateHit(String no);
 }

@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 
 public class NoticeDto extends BoardDto implements Serializable {
-	private int likeCount;
+	private int hitCount;
 	private String isReply;
 	public NoticeDto(String no, String title, String content, String ndate, String userName, String type,
 			int heartCount, String isReply) {
 		super(no, title, content, ndate, userName, "notice");
-		this.likeCount = heartCount;
+		this.hitCount = heartCount;
 		this.isReply = isReply;
 	}
 
 	
 	public int getLikeCount() {
-		return likeCount;
+		return hitCount;
 	}
 
 
 
 	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
+		this.hitCount = likeCount;
 	}
 
 
@@ -40,6 +40,6 @@ public class NoticeDto extends BoardDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[" + super.toString() + "NoticeDto: heartCount=" + likeCount + ", isReply=" + isReply + "]";
+		return "[" + super.toString() + "NoticeDto: heartCount=" + hitCount + ", isReply=" + isReply + "]";
 	}
 }

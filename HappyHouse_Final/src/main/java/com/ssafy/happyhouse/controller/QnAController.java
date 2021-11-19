@@ -63,6 +63,7 @@ public class QnAController {
 	@GetMapping("/{no}")
 	public ResponseEntity<QnADto> search(@PathVariable String no){
 		logger.debug("search............................");
+		service.updateHit(no);
 		QnADto qna = service.search(no);
 		if(qna!=null ) {
 			return new ResponseEntity<QnADto>(qna, HttpStatus.OK);
