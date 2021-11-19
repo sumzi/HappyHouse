@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.service.UserService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Controller
+
+@RestController
+@CrossOrigin(origins = {"*"},maxAge = 6000)
+@Api("User Controller API V1")  // Controller에 대한 설명 Swagger Annotation
 @RequestMapping("/user")
 public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
