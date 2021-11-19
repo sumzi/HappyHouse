@@ -7,9 +7,9 @@ public class NoticeDto extends BoardDto implements Serializable {
 	private int hitCount;
 	private String isReply;
 	public NoticeDto(String no, String title, String content, String ndate, String userName, String type,
-			int heartCount, String isReply) {
+			int hitCount, String isReply) {
 		super(no, title, content, ndate, userName, "notice");
-		this.hitCount = heartCount;
+		this.hitCount = hitCount;
 		this.isReply = isReply;
 	}
 

@@ -61,6 +61,7 @@ public class NoticeController {
 	@GetMapping("/{no}")
 	public ResponseEntity<NoticeDto> search(@PathVariable String no){
 		logger.debug("search............................");
+		service.updateHit(no);
 		NoticeDto notice = service.search(no);
 		if(notice!=null ) {
 			return new ResponseEntity<NoticeDto>(notice, HttpStatus.OK);

@@ -26,13 +26,13 @@
 	</update>
 	
 	<select id="searchNotice" parameterType="string" resultType="NoticeDto">
-		select b.*, n.likeCount, n.isReply 
+		select b.*, n.hitCOunt, n.isReply 
 		from board b, notice n
 		where b.no = #{no} and n.no = #{no}
 	</select>
 	
 	<select id="searchAllNotice"	parameterType="PageBean" 	resultType="NoticeDto">
-		select b.*, n.likeCount, n.isReply 
+		select b.*, n.hitCOunt, n.isReply 
 		from board b, notice n
 		<where>
 			<include refid="search"/>
@@ -49,6 +49,12 @@
 			<include refid="search"/>
 		</where>
 	</select>
+	
+	<update id="updateHit" parameterType="string">
+		update notice
+		set hitCount = hitCount + 1
+		where no = #{no}
+	</update>
 </mapper>
 
 

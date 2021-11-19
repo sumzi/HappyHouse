@@ -6,7 +6,7 @@
 
 	<sql id="search">
 		<if test="key == 'userId'">
-			and userId= #{word}
+			userId= #{word}
 		</if>
 	</sql>
 	
@@ -26,13 +26,13 @@
 	</update>
 	
 	<select id="searchQnA" parameterType="string" resultType="QnADto">
-		select b.*, q.reply
+		select b.*, q.reply, q.hitCount
 		from board b, qna q
 		where b.no = #{no} and q.no = #{no}
 	</select>
 	
 	<select id="searchAllQnA" resultType="QnADto">
-		select b.*, q.reply
+		select b.*, q.reply, q.hitCount
 		from board b, qna q
 		<where>
 			<include refid="search"/>
@@ -49,6 +49,12 @@
 			<include refid="search"/>
 		</where>
 	</select>
+	
+	<update id="updateHit" parameterType="string">
+		update qna
+		set hitCount = hitCount + 1
+		where no = #{no}
+	</update>
 </mapper>
 
 
