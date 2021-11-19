@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.service.UserService;
 
@@ -126,6 +127,8 @@ public class UserController {
 	@PostMapping("")
 	public ResponseEntity<Map<String, Object>> regist(
 			@RequestBody @ApiParam(value = "회원가입시 필요한 회원정보", required = true) UserDto user) {
+		logger.debug("regist............................");
+		logger.debug("user:{}", user);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
