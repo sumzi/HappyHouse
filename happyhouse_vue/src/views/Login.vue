@@ -11,7 +11,11 @@
           <input type="password" placeholder="Password" v-model="userPw" />
         </div>
         <div class="login-button" @click="login">SIGN IN</div>
-        <div>아이디 저장 | 회원가입 | 비밀번호 찾기</div>
+        <div>
+          아이디 저장 |
+          <router-link :to="{ name: 'Signup' }">회원가입</router-link> |
+          비밀번호 찾기
+        </div>
       </v-card>
     </v-container>
   </div>

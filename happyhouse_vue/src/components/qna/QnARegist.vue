@@ -46,6 +46,9 @@ export default {
     };
   },
   methods: {
+    moveQnAList() {
+      this.$router.push({ name: "QnAList" });
+    },
     resetQnA() {
       this.title = "";
       this.content = "";

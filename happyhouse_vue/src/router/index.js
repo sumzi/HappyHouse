@@ -7,6 +7,7 @@ import User from "../views/User.vue";
 import QnA from "../views/QnA.vue";
 import Login from "../views/Login.vue";
 import Intro from "../views/Intro.vue";
+import Signup from "../views/Signup.vue";
 
 import NoticeList from "../components/notice/NoticeList.vue";
 import NoticeRegist from "../components/notice/NoticeRegist.vue";
@@ -111,6 +112,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
   },
 ];
 

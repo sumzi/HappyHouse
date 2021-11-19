@@ -16,7 +16,6 @@ export default {
   },
   actions: {
     loginUser({ commit }, payload) {
-      console.log("오 온다.");
       http
         .post("/user/login", {
           userId: payload.userId,

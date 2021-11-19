@@ -23,7 +23,7 @@ export default {
   actions: {
     getQnAList({ commit }) {
       http
-        .get("/qna")
+        .get("/qna?spp=10")
         .then((response) => commit("SET_QNA_LIST", response.data))
         .catch(() => {
           alert("큐앤에이목록조회 중 오류 발생!!!!");

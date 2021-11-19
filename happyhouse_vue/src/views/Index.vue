@@ -17,6 +17,8 @@
             <div class="d-flex justify-center mt-5">
               <div class="col-4">
                 <v-text-field
+                  color="success"
+                  prepend-inner-icon="mdi-map-marker"
                   label="내 집 검색하기"
                   solo
                   rounded
