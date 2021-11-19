@@ -11,17 +11,6 @@ public class UserDto implements Serializable {
 	private String joinDate;
 	private String role;
 	
-	public UserDto(String userId, String userPw, String userEmail, String userPhone, String userName, String joinDate,
-			String role) {
-		super();
-		this.userId = userId;
-		this.userPw = userPw;
-		this.userEmail = userEmail;
-		this.userPhone = userPhone;
-		this.userName = userName;
-		this.joinDate = joinDate;
-		this.role = role;
-	}
 	public String getUserId() {
 		return userId;
 	}

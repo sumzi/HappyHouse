@@ -27,13 +27,13 @@
 	</select>
 	
 	<select id="login" parameterType="UserDto" resultType="UserDto"> 
-		select userName, userId, userEmail, role
+		select userId, userName, userEmail, role
 		from userinfo
 		where userId=#{userId} and userPw=#{userPw}
 	</select>
 	
 	<select id="userInfo" parameterType="String" resultType="UserDto">
-		select userName, userId, userEmail, joinDate, role
+		select userId, userName, userEmail, userPhone, joinDate, role
 		from userinfo
 		where userId = #{userId}
 	</select>
@@ -43,6 +43,7 @@
 		from   userinfo
 		where  userId=#{userId}		
 	</select>
+	
 	<select id="searchAll" resultType="UserDto">
 		select * 
 		from userinfo

@@ -102,15 +102,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@ApiOperation(value = "로그아웃 구현 안됨. 프론트 구현?", notes = "로그아웃을 백앤드에서 구현안하고 세션 스토리지만 프론트에서 비우는걸로?")
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-//		session.invalidate();
-		return null;
-	}
-
-	
-	@ApiOperation(value = "비밀번호 찾기", notes = "비밀번호를 찾는다.")
+	@ApiOperation(value = "비밀번호 찾기", notes = "비밀번호를 찾는다.", response = Map.class)
 	@PostMapping("/find")
 	public ResponseEntity<Map<String, Object>> find(
 			@ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) String userId, String userEmail,
@@ -130,7 +122,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@ApiOperation(value = "회원가입", notes = "아이디, 비밀번호, 이름, 이메일, 전화번호를 받아 회원가입한다.")
+	@ApiOperation(value = "회원가입", notes = "아이디, 비밀번호, 이름, 이메일, 전화번호를 받아 회원가입한다.", response = Map.class)
 	@PostMapping("")
 	public ResponseEntity<Map<String, Object>> regist(
 			@RequestBody @ApiParam(value = "회원가입시 필요한 회원정보", required = true) UserDto user) {
@@ -148,7 +140,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@ApiOperation(value = "회원정보 변경", notes = "비밀번호, 이름, 이메일, 전화번호를 업데이트 한다. (선택적 업데이트 가능)")
+	@ApiOperation(value = "회원정보 변경", notes = "비밀번호, 이름, 이메일, 전화번호를 업데이트 한다. (선택적 업데이트 가능)", response = Map.class)
 	@PutMapping("")
 	public ResponseEntity<Map<String, Object>> update(
 			@RequestBody @ApiParam(value = "회원 정보 변경에 필요한 회원정보", required = true) UserDto user) {
@@ -165,24 +157,22 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
-	@ApiOperation(value = "회원정보 리스트 조회", notes = "관리자용 회원 리스트 조회 기능")
-	@GetMapping("/list")
-	public ResponseEntity<Map<String, Object>> list(
-			@RequestBody @ApiParam(value = "관리자 체크용 회원정보, role확인", required = true) UserDto user) {
+
+	@ApiOperation(value = "회원정보 리스트 조회", notes = "관리자용 회원 리스트 조회 기능", response = Map.class)
+	@PostMapping("/list")
+	public ResponseEntity<Map<String, Object>> list() {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 
 		try {
-			if (user.getRole().equals("admin")) {
-				List<UserDto> list = service.searchAll();
-				resultMap.put("userList", SUCCESS);
-				resultMap.put("message", SUCCESS);
-				System.out.println(user);
-			} else {
-				resultMap.put("message", FAIL);
-				status = HttpStatus.ACCEPTED;
-			}
+//			if (user.getRole().equals("admin")) {
+			List<UserDto> list = service.searchAll();
+			resultMap.put("userList", list);
+			resultMap.put("message", SUCCESS);
+//			} else {
+//				resultMap.put("message", FAIL);
+//				status = HttpStatus.ACCEPTED;
+//			}
 		} catch (Exception e) {
 			logger.error("회원정보 업데이트 실패 : {}", e);
 			resultMap.put("message", e.getMessage());
@@ -191,7 +181,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@ApiOperation(value = "회원정보 삭제", notes = "회원정보 삭제 기능")
+	@ApiOperation(value = "회원정보 삭제", notes = "회원정보 삭제 기능", response = Map.class)
 	@DeleteMapping("/delete")
 	public ResponseEntity<Map<String, Object>> delete(
 			@RequestBody @ApiParam(value = "회원정보 삭제용 회원정보", required = true) UserDto user) {
