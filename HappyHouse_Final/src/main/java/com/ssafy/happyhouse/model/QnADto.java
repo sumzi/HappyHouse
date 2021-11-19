@@ -9,7 +9,7 @@ public class QnADto extends BoardDto implements Serializable{
 
 	public QnADto(String no, String title, String content, String ndate, String userName, String type, String reply,
 			int hitCount) {
-		super(no, title, content, ndate, userName, type);
+		super(no, title, content, ndate, userName, "qna");
 		this.reply = reply;
 		this.hitCount = hitCount;
 	}
