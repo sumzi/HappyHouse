@@ -7,6 +7,7 @@ import User from "../views/User.vue";
 import QnA from "../views/QnA.vue";
 import Login from "../views/Login.vue";
 import Intro from "../views/Intro.vue";
+import Mypage from "../views/Mypage.vue";
 
 import Signup from "../views/Signup.vue";
 
@@ -134,6 +135,11 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/mypage",
+    name: "Mypage",
+    component: Mypage,
   },
 ];
 
