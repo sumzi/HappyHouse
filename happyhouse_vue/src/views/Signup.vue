@@ -180,7 +180,7 @@ export default {
         alert(msg);
       } else {
         http
-          .post("/user", {
+          .post("http://localhost:9200/user", {
             userId: this.id,
             userPw: this.pw1,
             userName: this.name,
@@ -189,13 +189,13 @@ export default {
           })
           .then((res) => {
             console.log(res);
-            this.$router.push({ name: "Login" });
-            // if (res.data === "success") {
-            //   alert("회원가입 성공");
+            if (res.data.message === "success") {
+              alert("회원가입 성공");
+            } else {
+              alert("회원가입 실패");
+            }
 
-            // } else {
-            //   alert("회원가입 실패");
-            // }
+            this.$router.push({ name: "Login" });
           })
           .catch((error) => {
             alert(error);

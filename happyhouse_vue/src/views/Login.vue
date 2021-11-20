@@ -5,12 +5,12 @@
       <v-card class="login-container">
         <div class="login-header">LOGIN</div>
         <div class="login-input">
-          <input type="text" placeholder="Id" v-model="userId" />
+          <input type="text" placeholder="Id" v-model="user.userId" />
         </div>
         <div class="login-input">
-          <input type="password" placeholder="Password" v-model="userPw" />
+          <input type="password" placeholder="Password" v-model="user.userPw" />
         </div>
-        <div class="login-button" @click="login">SIGN IN</div>
+        <div class="login-button" @click="userCheck">SIGN IN</div>
         <div>
           아이디 저장 |
           <router-link :to="{ name: 'Signup' }">회원가입</router-link> |
@@ -21,23 +21,33 @@
   </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
 import HeaderNav from "../components/layout/HeaderNav.vue";
 export default {
+  name: "Login",
   components: {
     HeaderNav,
   },
   data() {
     return {
-      userId: "",
-      userPw: "",
+      user: {
+        userId: null,
+        userPw: null,
+      },
     };
   },
+  computed: {
+    ...mapState("userStore", ["isLogin", "isLoginError", "userInfo"]),
+  },
   methods: {
-    login() {
-      this.$store.dispatch("loginUser", {
-        userId: this.userId,
-        userPw: this.userPw,
-      });
+    ...mapActions("userStore", ["userLogin", "getUserInfo"]),
+    async userCheck() {
+      await this.userLogin(this.user);
+
+      if (this.isLogin) {
+        await this.getUserInfo();
+        this.$router.push({ name: "Index" });
+      }
     },
   },
 };
