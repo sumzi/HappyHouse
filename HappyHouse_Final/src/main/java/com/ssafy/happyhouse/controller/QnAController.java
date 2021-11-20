@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +46,18 @@ public class QnAController {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.FAILED_DEPENDENCY);
 	}
 	
-	@ApiOperation(value="QnA 목록", notes = "id와 일치하는 QnA를 검색한 결과")
+	@ApiOperation(value="QnA 목록", notes = "전체 QnA를 목록을 조회한 결과")
 	@GetMapping("")
-	public ResponseEntity<List<QnADto>> searchAll(PageBean bean) {
+	public ResponseEntity<Map<String, Object>> searchAll(PageBean bean) {
 		logger.debug("searchAll............................");
 		List<QnADto> qnaList = service.searchAll(bean);
+		Map<String, Object> resultMap = new HashMap<>();
 		logger.debug("qnaList:{}",qnaList);
+		resultMap.put("qnaList", qnaList);
 		if(qnaList!=null && !qnaList.isEmpty()) {
-			return new ResponseEntity<List<QnADto>>(qnaList, HttpStatus.OK);
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<List<QnADto>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<Map<String, Object>>(HttpStatus.NO_CONTENT);
 		}
 	}
 	
