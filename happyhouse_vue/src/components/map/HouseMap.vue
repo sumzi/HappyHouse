@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <div
-      class="map_wrap"
-      style="position: relative; width: 100%; height: 500px"
-    >
+  <div style="position: relative; width: auto; height: 100%">
+    <div class="map_wrap" style="position: relative; width: auto; height: 100%">
       <div
         id="map"
         style="width: 100%; height: 100%; position: relative; overflow: hidden"
@@ -27,12 +24,7 @@ export default {
   data() {
     return {
       map: null,
-      ps: null,
-      markerPositions1: [
-        [33.452278, 126.567803],
-        [33.452671, 126.574792],
-        [33.451744, 126.572441],
-      ],
+      markerPositions1: [[945959.0381341814, 1953851.7348996028]],
       markerPositions2: [
         [37.499590490909185, 127.0263723554437],
         [37.499427948430814, 127.02794423197847],
@@ -67,7 +59,6 @@ export default {
         level: 3, // 지도의 확대 레벨
       };
       this.map = new kakao.maps.Map(container, options);
-      this.ps = new kakao.maps.services.Places();
     },
     changeSize(size) {
       const container = document.getElementById("map");
@@ -132,4 +123,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  height: 100%;
+}
+</style>

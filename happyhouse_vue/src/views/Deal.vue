@@ -1,21 +1,18 @@
 <template>
   <div>
     <header-nav />
-    <v-container>
-      <h2>내집찾기</h2>
-    </v-container>
-    <house-map></house-map>
+    <div style="height: calc(100% - 100px)">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderNav from "../components/layout/HeaderNav.vue";
-import HouseMap from "../components/map/HouseMap.vue";
 export default {
-  name: "QnA",
+  name: "Deal",
   components: {
     HeaderNav,
-    HouseMap,
   },
 };
 </script>

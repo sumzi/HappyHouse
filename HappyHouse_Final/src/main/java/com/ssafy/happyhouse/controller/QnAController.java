@@ -46,6 +46,7 @@ public class QnAController {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.FAILED_DEPENDENCY);
 	}
 	
+	// TODO page번호 보이기
 	@ApiOperation(value="QnA 목록", notes = "전체 QnA를 목록을 조회한 결과")
 	@GetMapping("")
 	public ResponseEntity<Map<String, Object>> searchAll(PageBean bean) {
@@ -54,13 +55,14 @@ public class QnAController {
 		Map<String, Object> resultMap = new HashMap<>();
 		logger.debug("qnaList:{}",qnaList);
 		resultMap.put("qnaList", qnaList);
+		
+		resultMap.put("qnaList", qnaList);
 		if(qnaList!=null && !qnaList.isEmpty()) {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<Map<String, Object>>(HttpStatus.NO_CONTENT);
 		}
 	}
-	
 	
 	
 	@ApiOperation(value="QnA 정보 조회", notes = "QnA 번호에 해당하는 QnA 정보를 조회")

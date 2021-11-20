@@ -10,6 +10,9 @@ import Intro from "../views/Intro.vue";
 
 import Signup from "../views/Signup.vue";
 
+import HouseDetail from "../components/map/house/HouseDetail.vue";
+import HouseComp from "../components/map/HouseComp.vue";
+
 import NoticeList from "../components/notice/NoticeList.vue";
 import NoticeRegist from "../components/notice/NoticeRegist.vue";
 import NoticeSearch from "../components/notice/NoticeSearch.vue";
@@ -67,6 +70,19 @@ const routes = [
     path: "/deal",
     name: "Deal",
     component: Deal,
+    redirect: "/deal/house/map",
+    children: [
+      {
+        path: "house/map",
+        name: "HouseComp",
+        component: HouseComp,
+      },
+      {
+        path: "house/detail",
+        name: "HouseDetail",
+        component: HouseDetail,
+      },
+    ],
   },
   {
     path: "/user",
