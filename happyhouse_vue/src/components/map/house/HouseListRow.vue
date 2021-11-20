@@ -1,22 +1,22 @@
 <template>
-  <v-row
-    class="m-2"
-    @click="selectHouse"
-    @mouseover="colorChange(true)"
-    @mouseout="colorChange(false)"
-    :class="{ 'mouse-over-bgcolor': isColor }"
-  >
-    <v-col cols="2" class="text-center align-self-center">
-      <v-img
-        thumbnail
-        src="https://picsum.photos/250/250/?image=58"
-        alt="Image 1"
-      ></v-img>
-    </v-col>
-    <v-col cols="10" class="align-self-center">
-      [{{ house.aptCode }}] {{ house.aptName }}
-    </v-col>
-  </v-row>
+  <li class="item">
+    <v-row
+      class="m-2"
+      @click="selectHouse"
+      @mouseover="colorChange(true)"
+      @mouseout="colorChange(false)"
+      :class="{ 'mouse-over-bgcolor': isColor }"
+    >
+      <span class="markerbg" :class="'marker_' + (num + 1)"></span>
+      <div class="content">
+        <h5>{{ house.aptName }}</h5>
+        <span
+          >{{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
+          {{ house.jibun }}</span
+        >
+      </div>
+    </v-row>
+  </li>
 </template>
 
 <script>
@@ -33,7 +33,9 @@ export default {
   },
   props: {
     house: Object,
+    num: Number,
   },
+
   methods: {
     ...mapActions(dealStore, ["detailHouse"]),
     selectHouse() {

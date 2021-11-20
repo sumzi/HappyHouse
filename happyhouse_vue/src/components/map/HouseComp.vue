@@ -1,14 +1,12 @@
 <template>
   <div>
-    <v-container class="mt-3 text-center">
-      <h3 class="underline-orange">
-        <v-icon icon="house-fill"></v-icon> House Service
-      </h3>
-      <v-row style="height: 100px">
-        <v-col>
-          <house-search-bar></house-search-bar>
-        </v-col>
-      </v-row>
+    <v-container
+      class="mt-0 text-center"
+      style="position: relative; height: 100%"
+    >
+      <v-container style="height: 16vh">
+        <house-search-bar></house-search-bar>
+      </v-container>
       <v-row style="height: 70vh">
         <v-col cols="3" align="left" style="height: 100%">
           <house-list />

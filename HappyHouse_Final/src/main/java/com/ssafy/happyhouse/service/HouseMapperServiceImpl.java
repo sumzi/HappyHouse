@@ -50,6 +50,8 @@ public class HouseMapperServiceImpl implements HappyHouseMapService {
 	@Transactional
 	public int getAptAvgPrice(List<HouseInfoDto> houseList) {
 		int sum = 0;
+		if( houseList.size() == 0)
+			return 0;
 		for(HouseInfoDto house : houseList) {
 			String temp = house.getRecentPrice();
 			if(temp == null)
