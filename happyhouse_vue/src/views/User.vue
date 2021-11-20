@@ -1,13 +1,22 @@
 <template>
   <div>
-    <h1>회원 정보</h1>
-    <router-view />
+    <header-nav />
+    <v-container class="text-center mt-8">
+      <h2>회원관리</h2>
+    </v-container>
+    <div>
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
+import HeaderNav from "../components/layout/HeaderNav.vue";
 export default {
   name: "User",
+  components: {
+    HeaderNav,
+  },
 };
 </script>
 

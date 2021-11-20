@@ -1,23 +1,48 @@
 <template>
   <div>
     <header-nav />
-    <v-container class="container">
-      <v-card class="login-container">
-        <div class="login-header">LOGIN</div>
-        <div class="login-input">
-          <input type="text" placeholder="Id" v-model="user.userId" />
+    <div class="d-flex justify-center login-container">
+      <v-card width="350px" height="500px" elevation="5" class="ma-10"
+        ><div class="login-header">LOGIN</div>
+        <div class="pr-8 pl-8">
+          <v-text-field
+            v-model="user.userId"
+            height="50px"
+            placeholder="Id"
+            filled
+            rounded
+            dense
+            color="success"
+          ></v-text-field>
+          <v-text-field
+            type="password"
+            v-model="user.userPw"
+            height="50px"
+            placeholder="Password"
+            filled
+            rounded
+            dense
+            color="success"
+          ></v-text-field>
         </div>
-        <div class="login-input">
-          <input type="password" placeholder="Password" v-model="user.userPw" />
-        </div>
-        <div class="login-button" @click="userCheck">SIGN IN</div>
-        <div>
+        <v-card-actions class="pr-8 pl-8 pb-8">
+          <v-btn
+            @click="userCheck"
+            height="50px"
+            width="100%"
+            color="#019689"
+            rounded
+            class="white--text"
+            >로그인</v-btn
+          >
+        </v-card-actions>
+        <div class="text-center">
           아이디 저장 |
           <router-link :to="{ name: 'Signup' }">회원가입</router-link> |
-          비밀번호 찾기
+          <router-link :to="{ name: 'FindPw' }">비밀번호 찾기</router-link>
         </div>
       </v-card>
-    </v-container>
+    </div>
   </div>
 </template>
 <script>
@@ -54,42 +79,14 @@ export default {
 </script>
 
 <style>
-/* .container {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center;
-  border: 1px solid red; 
-} */
 .login-container {
-  width: 370px;
-  height: 500px;
-  text-align: center;
+  margin: 50px 0;
 }
 .login-header {
-  padding: 60px;
+  padding: 60px 0 50px 0;
+  text-align: center;
   font-size: 22px;
   font-weight: bold;
   color: #019689;
-}
-.login-input {
-  margin-bottom: 20px;
-}
-.login-input input {
-  border: 2px solid #019689;
-  border-radius: 5px;
-  padding: 10px 15px;
-  width: 300px;
-  font-size: 18px;
-  color: #019689;
-  outline: none;
-  width: 300px;
-}
-.login-button {
-  background-color: #019689;
-  color: white;
-  padding: 15px;
-  width: 300px;
-  margin: 20px 35px;
-  border-radius: 30px;
 }
 </style>

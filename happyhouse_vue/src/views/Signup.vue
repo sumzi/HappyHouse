@@ -1,88 +1,83 @@
 <template>
   <div>
     <header-nav />
-    <v-container class="container">
-      <h2>회원 가입</h2>
-    </v-container>
 
-    <div class="d-flex justify-center">
-      <div class="">
-        <v-card elevation="2" outlined class="pa-6" width="450px">
-          <v-card-title>가입하기</v-card-title>
-          <v-card-text>
-            <v-text-field
-              label="아이디"
-              color="success"
-              v-model="id"
-              ref="id"
-              :counter="10"
-              :rules="idRules"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="이름"
-              color="success"
-              v-model="name"
-              ref="name"
-              :counter="10"
-              :rules="nameRules"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="비밀번호"
-              color="success"
-              v-model="pw1"
-              ref="pw1"
-              :counter="12"
-              :rules="pwRules"
-              required
-              :type="show1 ? 'text' : 'password'"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="show1 = !show1"
-            ></v-text-field>
-            <v-text-field
-              label="비밀번호 확인"
-              color="success"
-              v-model="pw2"
-              ref="pw2"
-              :counter="12"
-              :rules="pw2Rules"
-              :type="show2 ? 'text' : 'password'"
-              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="show2 = !show2"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="이메일"
-              color="success"
-              v-model="email"
-              ref="email"
-              :rules="emailRules"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="전화번호"
-              color="success"
-              v-model="phone"
-              ref="phone"
-              required
-            ></v-text-field>
-            <v-checkbox
-              label="개인정보 수집 및 이용에 동의합니다."
-              color="success"
-              v-model="checkbox"
-            ></v-checkbox>
-          </v-card-text>
-          <v-card-actions class="d-flex justify-space-around">
-            <v-btn color="primary" outlined rounded text @click="registUser">
-              가입
-            </v-btn>
-            <v-btn color="warning" outlined rounded text @click="resetUser">
-              초기화
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </div>
+    <div class="d-flex justify-center mt-10 mb-10">
+      <v-card elevation="2" outlined class="pa-6" width="450px">
+        <v-card-title>회원가입</v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="아이디"
+            color="success"
+            v-model="id"
+            ref="id"
+            :counter="10"
+            :rules="idRules"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="이름"
+            color="success"
+            v-model="name"
+            ref="name"
+            :counter="10"
+            :rules="nameRules"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="비밀번호"
+            color="success"
+            v-model="pw1"
+            ref="pw1"
+            :counter="12"
+            :rules="pwRules"
+            required
+            :type="show1 ? 'text' : 'password'"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show1 = !show1"
+          ></v-text-field>
+          <v-text-field
+            label="비밀번호 확인"
+            color="success"
+            v-model="pw2"
+            ref="pw2"
+            :counter="12"
+            :rules="pw2Rules"
+            :type="show2 ? 'text' : 'password'"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show2 = !show2"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="이메일"
+            color="success"
+            v-model="email"
+            ref="email"
+            :rules="emailRules"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="전화번호"
+            color="success"
+            v-model="phone"
+            ref="phone"
+            required
+          ></v-text-field>
+          <v-checkbox
+            label="개인정보 수집 및 이용에 동의합니다."
+            color="success"
+            v-model="checkbox"
+          ></v-checkbox>
+        </v-card-text>
+        <v-card-actions class="d-flex justify-space-around">
+          <v-btn color="primary" outlined rounded text @click="registUser">
+            가입
+          </v-btn>
+          <v-btn color="warning" outlined rounded text @click="resetUser">
+            초기화
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </div>
   </div>
 </template>
