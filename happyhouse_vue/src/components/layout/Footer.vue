@@ -1,14 +1,13 @@
 <template>
-  <div class="footer-container">footer</div>
+  <v-footer padless class="mt-10">
+    <v-col class="text-center" cols="12">
+      2021 — <strong>HappyHouse</strong>
+    </v-col>
+  </v-footer>
 </template>
 
 <script>
 export default {};
 </script>
 
-<style>
-.footer-container {
-  height: 100px;
-  background-color: gray;
-}
-</style>
+<style></style>

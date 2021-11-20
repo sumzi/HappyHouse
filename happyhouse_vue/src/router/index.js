@@ -8,7 +8,7 @@ import QnA from "../views/QnA.vue";
 import Login from "../views/Login.vue";
 import Intro from "../views/Intro.vue";
 import Mypage from "../views/Mypage.vue";
-
+import FindPw from "../views/FindPw.vue";
 import Signup from "../views/Signup.vue";
 
 import HouseDetail from "../components/map/house/HouseDetail.vue";
@@ -140,6 +140,11 @@ const routes = [
     path: "/mypage",
     name: "Mypage",
     component: Mypage,
+  },
+  {
+    path: "/findpw",
+    name: "FindPw",
+    component: FindPw,
   },
 ];
 

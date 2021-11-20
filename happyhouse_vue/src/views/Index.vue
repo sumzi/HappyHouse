@@ -1,10 +1,24 @@
 <template>
   <div id="app">
-    <ul id="menu">
+    <ul id="menu" v-if="userInfo">
       <li><router-link :to="{ name: 'Intro' }">해피하우스</router-link></li>
       <li><router-link :to="{ name: 'Deal' }">집찾기</router-link></li>
       <li><router-link :to="{ name: 'Notice' }">공지사항</router-link></li>
       <li><router-link :to="{ name: 'QnA' }">문의하기</router-link></li>
+      <li><router-link :to="{ name: 'User' }">회원관리</router-link></li>
+      <li>
+        <router-link :to="{ name: 'Mypage' }">{{
+          userInfo.userName
+        }}</router-link>
+      </li>
+    </ul>
+
+    <ul id="menu" v-else>
+      <li><router-link :to="{ name: 'Intro' }">해피하우스</router-link></li>
+      <li><router-link :to="{ name: 'Deal' }">집찾기</router-link></li>
+      <li><router-link :to="{ name: 'Notice' }">공지사항</router-link></li>
+      <li><router-link :to="{ name: 'QnA' }">문의하기</router-link></li>
+      <li><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
       <li><router-link :to="{ name: 'Login' }">로그인</router-link></li>
     </ul>
 
@@ -17,6 +31,7 @@
             <div class="d-flex justify-center mt-5">
               <div class="col-4">
                 <v-text-field
+                  height="60px"
                   color="success"
                   prepend-inner-icon="mdi-map-marker"
                   label="내 집 검색하기"
@@ -35,9 +50,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 export default {
   name: "app",
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
   data() {
     return {
       bgImage: "",
@@ -51,7 +70,7 @@ export default {
         anchors: ["page1", "page2", "page3"],
         sectionsColor: [
           "#fff",
-          "#e9f4ed",
+          "#000",
           "#fff",
           "#fec401",
           "#1bcee6",
@@ -121,22 +140,20 @@ export default {
 }
 #menu li {
   display: inline-block;
-  margin: 10px 0px;
+  margin: 10px 15px;
   position: relative;
 }
 #menu a:hover {
-  color: darkgreen;
   font-weight: bold;
-  text-shadow: none;
+  border-bottom: 2px solid green;
 }
 #menu a {
   color: #fff;
-  padding: 0 1.1em 1.1em 1.1em;
+  /* padding: 0 1.1em 1.1em 1.1em; */
 }
 #menu li.active a:after {
   content: "";
   margin: 0 1.1em 0 1.1em;
-  height: 2px;
   background: #fff;
   display: block;
   position: absolute;

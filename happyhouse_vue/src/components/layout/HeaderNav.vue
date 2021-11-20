@@ -5,7 +5,6 @@
         ><img src="@/assets/hh3.png"
       /></router-link>
     </div>
-    <!-- 회원 -->
     <div v-if="userInfo" class="menu-container">
       <ul class="menu">
         <li>
@@ -20,13 +19,29 @@
         <li>
           <router-link :to="{ name: 'QnA' }">문의하기</router-link>
         </li>
-        <li>
-          <router-link :to="{ name: 'User' }">회원 정보</router-link>
+        <li v-if="userInfo.role === 'admin'">
+          <router-link :to="{ name: 'User' }">회원관리</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'User' }"
-            >{{ userInfo.userName }}님</router-link
-          >
+          <v-menu open-on-hover bottom offset-y :nudge-width="100">
+            <template v-slot:activator="{ on, attrs }">
+              <div color="primary" dark v-bind="attrs" v-on="on">
+                <v-icon class="mr-1"> mdi-account-circle </v-icon>
+                <router-link :to="{ name: 'Mypage' }" v-bind="attrs" v-on="on"
+                  >{{ userInfo.userName }}님</router-link
+                >
+              </div>
+            </template>
+            <v-list>
+              <v-list-item link
+                ><router-link :to="{ name: 'Mypage' }"
+                  >마이페이지</router-link
+                ></v-list-item
+              >
+              <v-list-item link>찜 목록</v-list-item>
+              <v-list-item link @click="userLogout">로그아웃</v-list-item>
+            </v-list>
+          </v-menu>
         </li>
       </ul>
     </div>
@@ -45,7 +60,9 @@
         <li>
           <router-link :to="{ name: 'QnA' }">문의하기</router-link>
         </li>
-
+        <li>
+          <router-link :to="{ name: 'Signup' }">회원가입</router-link>
+        </li>
         <li>
           <router-link :to="{ name: 'Login' }">로그인</router-link>
         </li>
@@ -74,13 +91,10 @@ export default {
 </script>
 
 <style>
-#logo {
-  width: 60px;
-  margin: 15px 20px;
-}
 #logo img {
-  width: 100%;
-  height: 100%;
+  margin: 10px;
+  width: 60px;
+  height: 50px;
 }
 .header-container {
   border-bottom: 1px solid lightgray;
@@ -97,8 +111,12 @@ export default {
   font-size: 16px;
 }
 
-.menu a {
+.menu li a {
   font-weight: bold;
-  color: red;
+  color: gray;
+}
+.menu li a:hover {
+  font-weight: bold;
+  color: black;
 }
 </style>

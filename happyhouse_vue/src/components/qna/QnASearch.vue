@@ -36,15 +36,16 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["qna"]),
+    ...mapState("qnaStore", ["qna"]),
   },
   created() {
-    this.$store.dispatch("getQnA", this.$route.params.no);
+    this.getQnA(this.$route.params.no);
   },
   methods: {
+    ...mapActions("qnaStore", ["getQnA"]),
     moveQnAList() {
       this.$router.push({ name: "QnAList" });
     },

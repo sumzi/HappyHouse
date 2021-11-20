@@ -1,7 +1,7 @@
 <template>
   <div>
     <header-nav />
-    <v-container>
+    <v-container class="text-center mt-8">
       <h2>Q&A</h2>
     </v-container>
     <div>

@@ -1,5 +1,6 @@
 import http from "@/util/http-common.js";
 export default {
+  namespaced: true,
   state: {
     noticelist: [],
     notice: {},
@@ -24,7 +25,10 @@ export default {
     getNoticeList({ commit }) {
       http
         .get("/notice")
-        .then((response) => commit("SET_NOTICE_LIST", response.data))
+        .then((response) => {
+          console.log(response);
+          commit("SET_NOTICE_LIST", response.data);
+        })
         .catch(() => {
           alert("공지목록조회 중 오류 발생!!!!");
         });

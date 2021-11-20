@@ -15,6 +15,7 @@
               <th>제목</th>
               <th>작성자</th>
               <th>등록일</th>
+              <th>조회수</th>
             </tr>
           </thead>
           <tbody>
@@ -27,12 +28,13 @@
               <td>{{ notice.title }}</td>
               <td>{{ notice.userId }}</td>
               <td>{{ notice.ndate }}</td>
+              <td>{{ notice.hitCount }}</td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
 
-      <div class="text-center mt-10">
+      <!-- <div class="text-center mt-10">
         <v-pagination
           v-model="page"
           :length="5"
@@ -40,22 +42,23 @@
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
         ></v-pagination>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "NoticeList",
   computed: {
-    ...mapGetters(["noticelist"]),
+    ...mapGetters("noticeStore", ["noticelist"]),
   },
   created() {
-    this.$store.dispatch("getNoticeList");
+    this.getNoticeList();
   },
   methods: {
+    ...mapActions("noticeStore", ["getNoticeList"]),
     moveNoticeRegist() {
       this.$router.push({ name: "NoticeRegist" });
     },
