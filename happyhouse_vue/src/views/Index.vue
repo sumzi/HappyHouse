@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .input-container {
   position: absolute;
   top: 45%;
