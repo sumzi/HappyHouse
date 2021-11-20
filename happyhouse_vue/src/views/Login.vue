@@ -54,12 +54,12 @@ export default {
 </script>
 
 <style>
-.container {
+/* .container {
   margin-top: 80px;
   display: flex;
   justify-content: center;
-  /* border: 1px solid red; */
-}
+  border: 1px solid red; 
+} */
 .login-container {
   width: 370px;
   height: 500px;
