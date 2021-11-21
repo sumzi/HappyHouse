@@ -16,12 +16,12 @@
 	</sql>
 	
 	<insert id="insertNotice" parameterType="NoticeDto">
-		insert into notice (no, likeCount, isReply)
-		values (#{no},#{likeCount},#{isReply})
+		insert into notice (no, isReply)
+		values (#{no}, #{isReply})
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
-		update notice set likeCount=#{likeCount} 
+		update notice set isReply=#{isReply} 
 		where no = #{no} 
 	</update>
 	
