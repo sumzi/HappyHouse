@@ -33,12 +33,12 @@
               </div>
             </template>
             <v-list>
-              <v-list-item link
-                ><router-link :to="{ name: 'Mypage' }"
-                  >마이페이지</router-link
-                ></v-list-item
+              <router-link :to="{ name: 'Mypage' }"
+                ><v-list-item link>마이페이지</v-list-item></router-link
               >
-              <v-list-item link>찜 목록</v-list-item>
+              <router-link :to="{ name: 'InterestHouse' }"
+                ><v-list-item link>찜 목록</v-list-item></router-link
+              >
               <v-list-item link @click="userLogout">로그아웃</v-list-item>
             </v-list>
           </v-menu>
@@ -81,8 +81,8 @@ export default {
   methods: {
     ...mapMutations("userStore", ["SET_USER_INFO", "USER_LOGIN"]),
     userLogout() {
-      this.USER_LOGIN(false);
       this.SET_USER_INFO(null);
+      this.USER_LOGIN(false);
       sessionStorage.removeItem("userId");
       if (this.$route.path != "/") this.$router.push({ name: "Index" });
     },
@@ -90,11 +90,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #logo img {
-  margin: 10px;
-  width: 60px;
-  height: 50px;
+  height: 60px;
+  margin: 10px 20px;
 }
 .header-container {
   border-bottom: 1px solid lightgray;
@@ -107,10 +106,9 @@ export default {
 }
 .menu > li {
   display: inline-block;
-  margin: 25px 16px;
+  margin: 30px 16px;
   font-size: 16px;
 }
-
 .menu li a {
   font-weight: bold;
   color: gray;

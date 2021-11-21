@@ -16,5 +16,6 @@ export default {
 <style>
 * {
   box-sizing: border-box;
+  text-decoration: none;
 }
 </style>

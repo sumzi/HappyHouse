@@ -10,6 +10,7 @@ import Intro from "../views/Intro.vue";
 import Mypage from "../views/Mypage.vue";
 import FindPw from "../views/FindPw.vue";
 import Signup from "../views/Signup.vue";
+import InterestHouse from "../views/InterestHouse.vue";
 
 import HouseDetail from "../components/map/house/HouseDetail.vue";
 import HouseComp from "../components/map/HouseComp.vue";
@@ -145,6 +146,11 @@ const routes = [
     path: "/findpw",
     name: "FindPw",
     component: FindPw,
+  },
+  {
+    path: "/interesthouse",
+    name: "InterestHouse",
+    component: InterestHouse,
   },
 ];
 

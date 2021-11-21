@@ -5,11 +5,14 @@
       <li><router-link :to="{ name: 'Deal' }">집찾기</router-link></li>
       <li><router-link :to="{ name: 'Notice' }">공지사항</router-link></li>
       <li><router-link :to="{ name: 'QnA' }">문의하기</router-link></li>
-      <li><router-link :to="{ name: 'User' }">회원관리</router-link></li>
+      <li v-if="userInfo.role === 'admin'">
+        <router-link :to="{ name: 'User' }">회원관리</router-link>
+      </li>
       <li>
-        <router-link :to="{ name: 'Mypage' }">{{
-          userInfo.userName
-        }}</router-link>
+        <router-link :to="{ name: 'Mypage' }"
+          ><v-icon class="mr-1" color="white"> mdi-account-circle </v-icon
+          >{{ userInfo.userName }} 님</router-link
+        >
       </li>
     </ul>
 
@@ -145,7 +148,6 @@ export default {
 }
 #menu a:hover {
   font-weight: bold;
-  border-bottom: 2px solid green;
 }
 #menu a {
   color: #fff;
