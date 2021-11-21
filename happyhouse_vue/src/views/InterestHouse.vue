@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <header-nav />
+    <v-container class="text-center mt-8">
+      <h2>관심 매매 목록</h2>
+    </v-container>
+    <v-container style="width: 70%" class="">
+      <v-layout text-xs-center row wrap>
+        <v-flex v-for="house in houselist" :key="house.aptCode">
+          <house-card v-bind="house" />
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from "vuex";
+import HeaderNav from "../components/layout/HeaderNav.vue";
+import HouseCard from "../components/interest/HouseCard.vue";
+export default {
+  name: "InterestHouse",
+  components: {
+    HeaderNav,
+    HouseCard,
+  },
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+    ...mapState("interestStore", ["houselist"]),
+  },
+  methods: {
+    ...mapActions("interestStore", ["getInterestHouse"]),
+  },
+  created() {
+    this.getInterestHouse(this.userInfo.userId);
+  },
+};
+</script>
+
+<style></style>
