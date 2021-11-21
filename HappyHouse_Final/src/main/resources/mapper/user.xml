@@ -9,13 +9,14 @@
 		values(#{userId},#{userPw},#{userEmail},#{userPhone},#{userName})
 	</insert>
 	
-	<update id='update'	parameterType="UserDto">
-		update userinfo set userPw=#{userPw}
-						,userEmail=#{userEmail}
-						,userPhone=#{userPhone}
-						,userName=#{userName}
-		where userId=#{userId}
-	</update>
+	<update id='update'    parameterType="UserDto">
+        update userinfo set userPw=#{userPw}
+                        ,userEmail=#{userEmail}
+                        ,userPhone=#{userPhone}
+                        ,userName=#{userName}
+                        ,role=#{role}
+        where userId=#{userId}
+    </update>
 	
 	<delete id="delete"	parameterType="string">
 		delete from userinfo where userId=#{userId}
