@@ -82,7 +82,16 @@ public class HappyHouseMapController {
 		int avg = happyHouseMapService.getAptAvgPrice(houseList); 
 		responseMap.put("avgPrice", avg);
 		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK); 
-	}	
+	}
+	
+	@ApiOperation(value = "아파트 코드 검색", notes = "아파트를 코드번호로 검색한다.", response = Map.class)
+	@GetMapping("/apt/code")
+	ResponseEntity<Map<String, Object>> getAptByCode(@RequestParam("aptCode") String aptCode) throws Exception{
+		Map<String, Object> responseMap = new HashMap<>();
+		List<HouseInfoDto> houseList = happyHouseMapService.getAptByCode(aptCode);
+		responseMap.put("houseList", houseList);
+		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK); 
+	}
 	
 	// TODO 아파트 정렬: 다르게 표현할 방법 약간 고려
 	@GetMapping("/apt/dong/year")

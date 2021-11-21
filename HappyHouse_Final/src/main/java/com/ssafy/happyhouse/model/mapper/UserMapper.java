@@ -15,7 +15,7 @@ public interface UserMapper {
 
 	void delete(String id) throws SQLException ;
 
-	String findPass(String id, String email, String name) throws SQLException ;
+	String findPass(UserDto user) throws SQLException ;
 
 	UserDto login(UserDto user) throws SQLException ;
 	UserDto userInfo(String userid) throws SQLException;

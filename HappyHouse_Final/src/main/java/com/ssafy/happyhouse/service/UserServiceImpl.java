@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public String findPass(String userId, String userEmail, String userName) throws Exception {
-		return userMapper.findPass(userId, userEmail, userName);
+	public String findPass(UserDto user) throws Exception {
+		return userMapper.findPass(user);
 	}
 
 	@Transactional

@@ -112,12 +112,11 @@ public class UserController {
 	@ApiOperation(value = "비밀번호 찾기", notes = "비밀번호를 찾는다.", response = Map.class)
 	@PostMapping("/find")
 	public ResponseEntity<Map<String, Object>> find(
-			@ApiParam(value = "로그인 시 필요한 회원정보(아이디, 이메일 이름).", required = true) String userId, String userEmail,
-			String userName) {
+			@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 이메일 이름).", required = true)  UserDto user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			String pass = service.findPass(userId, userEmail, userName);
+			String pass = service.findPass(user);
 			resultMap.put("message", SUCCESS);
 			resultMap.put("pass", pass);
 			System.out.println(pass);

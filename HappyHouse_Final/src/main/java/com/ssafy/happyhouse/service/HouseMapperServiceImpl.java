@@ -46,6 +46,10 @@ public class HouseMapperServiceImpl implements HappyHouseMapService {
 	public List<HouseInfoDto> getAptByName(String aptName) throws Exception {
 		return sqlSession.getMapper(HouseMapMapper.class).getAptByName(aptName);
 	}
+	@Transactional
+	public List<HouseInfoDto> getAptByCode(String aptCode) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getAptByCode(aptCode);
+	}
 	
 	@Transactional
 	public int getAptAvgPrice(List<HouseInfoDto> houseList) {

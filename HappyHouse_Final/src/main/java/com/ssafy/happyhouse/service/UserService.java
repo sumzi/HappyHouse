@@ -12,7 +12,7 @@ public interface UserService {
 
 	void delete(String userId) throws Exception;
 
-	String findPass(String userId, String userEmail, String userName) throws Exception;
+	String findPass(UserDto user) throws Exception;
 
 	UserDto login(UserDto user) throws Exception;
 	

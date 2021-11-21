@@ -22,9 +22,9 @@
 		delete from userinfo where userId=#{userId}
 	</delete>
 	
-	<select id="findPass" parameterType="string" resultType="string">
+	<select id="findPass" parameterType="UserDto" resultType="string">
 		select userPw from userinfo
-		where userId=#{id} and userEmail=#{email} and userName=#{name}
+		where userId=#{userId} and userEmail=#{userEmail} and userName=#{userName}
 	</select>
 	
 	<select id="login" parameterType="UserDto" resultType="UserDto"> 

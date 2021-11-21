@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.InterestHouseMapper">
+
+	<insert id='likeHouse'	parameterType="InterestHouseDto">
+		insert into interesthouse (userId, aptCode) 
+		values (#{userId},#{aptCode})
+	</insert>
+	
+	<delete id="unlikeHouse"	parameterType="InterestHouseDto">
+		delete from interesthouse where userId=#{userId} and aptCode=#{aptCode}
+	</delete>
+	
+
+	<select id="search"	parameterType="string"	resultType="InterestHouseDto">
+		select *
+		from   interesthouse
+		where  userId=#{userId} and aptCode=#{aptCode}	
+	</select>
+	<select id="searchIdAll"	parameterType="string"	resultType="InterestHouseDto">
+		select *
+		from   interesthouse
+		where  userId=#{userId}	
+	</select>
+	<select id="searchAll" resultType="InterestHouseDto">
+		select * 
+		from interesthouse
+	</select>
+</mapper>
+
+
+
+
+
+
+
