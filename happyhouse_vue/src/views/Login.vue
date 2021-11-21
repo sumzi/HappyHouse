@@ -36,7 +36,7 @@
             >로그인</v-btn
           >
         </v-card-actions>
-        <div class="text-center">
+        <div class="text-center menu-btn">
           아이디 저장 |
           <router-link :to="{ name: 'Signup' }">회원가입</router-link> |
           <router-link :to="{ name: 'FindPw' }">비밀번호 찾기</router-link>
@@ -62,7 +62,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("userStore", ["isLogin", "isLoginError", "userInfo"]),
+    ...mapState("userStore", ["isLogin", "userInfo"]),
   },
   methods: {
     ...mapActions("userStore", ["userLogin", "getUserInfo"]),
@@ -70,8 +70,10 @@ export default {
       await this.userLogin(this.user);
 
       if (this.isLogin) {
-        await this.getUserInfo();
+        await this.getUserInfo(this.user.userId);
         this.$router.push({ name: "Index" });
+      } else {
+        console.log(this.isLogin);
       }
     },
   },
@@ -79,6 +81,10 @@ export default {
 </script>
 
 <style scoped>
+.menu-btn a {
+  text-decoration: none;
+  color: black;
+}
 .login-container {
   margin: 50px 0;
 }

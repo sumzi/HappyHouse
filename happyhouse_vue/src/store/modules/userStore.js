@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     isLogin: false,
-    isLoginError: false,
     userInfo: null,
   },
   getters: {
@@ -16,34 +15,28 @@ export default {
     USER_LOGIN(state, isLogin) {
       state.isLogin = isLogin;
     },
-    USER_LOGIN_ERROR(state, isLoginError) {
-      state.isLoginError = isLoginError;
-    },
     SET_USER_INFO(state, userInfo) {
       state.isLogin = true;
       state.userInfo = userInfo;
     },
   },
   actions: {
-    userLogin({ commit }, payload) {
-      http
+    async userLogin({ commit }, payload) {
+      await http
         .post("/user/login", payload)
         .then((response) => {
           if (response.data.message === "success") {
             commit("USER_LOGIN", true);
-            commit("USER_LOGIN_ERROR", false);
             sessionStorage.setItem("userId", response.data.user.userId);
           } else {
             commit("USER_LOGIN", false);
-            commit("USER_LOGIN_ERROR", true);
           }
         })
         .catch((error) => console.log(error));
     },
-    getUserInfo({ commit }) {
-      const userId = sessionStorage.getItem("userId");
+    getUserInfo({ commit }, id) {
       http
-        .get(`/user/info/${userId}`)
+        .get(`/user/info/${id}`)
         .then((response) => {
           if (response.data.message === "success") {
             commit("SET_USER_INFO", response.data.userInfo);
