@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <v-row class="mt-0 mv-0 text-center">
-      <!-- <v-col class="sm-3">
+  <v-row class="mt-0 text-center">
+    <!-- <v-col class="sm-3">
       <v-form-input
         v-model.trim="dongCode"
         placeholder="동코드 입력...(예 : 11110)"
@@ -11,39 +10,32 @@
     <v-col class="sm-3" align="left">
       <v-button variant="outline-primary" @click="sendKeyword">검색</v-button>
     </v-col> -->
-      <v-col cols="4">
-        <v-select
-          v-model="sidoCode"
-          :items="sidos"
-          @change="gugunList"
-        ></v-select>
-      </v-col>
-      <v-col cols="4">
-        <v-select
-          v-model="gugunCode"
-          :items="guguns"
-          @change="searchAptByGugun"
-        ></v-select>
-      </v-col>
-      <v-col cols="4">
-        <v-select
-          v-model="dongCode"
-          :items="dongs"
-          @change="searchAptByDong"
-        ></v-select>
-      </v-col>
-    </v-row>
-    <v-row class="ma-0 mv-4 text-center">
-      <v-text-field
-        v-model="houseName"
-        :rules="nameRules"
-        :counter="20"
-        label="건물 이름"
-        required
-      ></v-text-field>
-      <v-btn class="mx-2 mt-6" depressed @click="searchAptByName"> 검색 </v-btn>
-    </v-row>
-  </div>
+    <v-col cols="4">
+      <v-select
+        solo
+        success
+        v-model="sidoCode"
+        :items="sidos"
+        @change="gugunList"
+      ></v-select>
+    </v-col>
+    <v-col cols="4">
+      <v-select
+        solo
+        v-model="gugunCode"
+        :items="guguns"
+        @change="searchAptByGugun"
+      ></v-select>
+    </v-col>
+    <v-col cols="4">
+      <v-select
+        solo
+        v-model="dongCode"
+        :items="dongs"
+        @change="searchAptByDong"
+      ></v-select>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -131,6 +123,6 @@ export default {
 .col,
 .v-select,
 v-input__control {
-  padding: 5px;
+  padding: 3px;
 }
 </style>
