@@ -39,6 +39,7 @@ export default {
       markers: [],
       infowindow: null,
       customOverlay: null,
+      clusterer: null,
     };
   },
   computed: {
@@ -52,7 +53,6 @@ export default {
   mounted() {
     if (window.kakao && window.kakao.maps) {
       // kakao.maps.load(this.initMap);
-      console.log("새로고침?");
       this.initMap();
     } else {
       this.addKakaoMapScript();
@@ -63,9 +63,8 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      console.log("새로고침? kakao after");
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=clusterer";
       document.head.appendChild(script);
       console.log(script);
     },
@@ -76,6 +75,13 @@ export default {
         level: 3, // 지도의 확대 레벨
       };
       this.map = new kakao.maps.Map(container, options);
+
+      this.clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        // disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+      });
       // this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
       this.displayMarkers(this.houses);
     },
@@ -115,11 +121,6 @@ export default {
             console.log(title + " " + code);
           });
           console.log("여기까진 잘 됨" + temp.map);
-          kakao.maps.event.addListener(temp.map, "click", function () {
-            console.log(temp.customOverlay);
-            temp.customOverlay.setMap(null);
-          });
-
           // itemEl.onmouseover = function () {
           //   temp.displayInfowindow(marker, title, place);
           // };
@@ -128,30 +129,49 @@ export default {
           //   temp.customOverlay.setMap(null);
           // };
         })(marker, places[i].aptName, places[i].aptCode, places[i], this);
-
         // fragment.appendChild(itemEl);
       }
+      let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {
+        console.log(temp.customOverlay);
+        if (temp.customOverlay) temp.customOverlay.setMap(null);
+      });
       // listEl.appendChild(fragment);
       // menuEl.scrollTop = 0;
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+      this.clusterer.addMarkers(this.markers);
       this.map.setBounds(bounds);
     },
     addMarker(position) {
-      var marker = new kakao.maps.Marker({
-        position: position, // 마커의 위치
-      });
+      var imageSrc =
+          "https://apis.zigbang.com/marker/v6/apartment?mode=item&size=3&select=n&level=up5&dpi=160", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(56, 70), // 마커 이미지의 크기
+        imgOptions = {
+          // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+          // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+          offset: new kakao.maps.Point(27, 35), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imgOptions
+        ),
+        marker = new kakao.maps.Marker({
+          position: position, // 마커의 위치
+          image: markerImage,
+        });
 
-      marker.setMap(this.map); // 지도 위에 마커를 표출합니다
+      // marker.setMap(this.map); // 지도 위에 마커를 표출합니다
       this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
 
       return marker;
     },
     // 지도 위에 표시되고 있는 마커를 모두 제거합니다
     removeMarker() {
-      for (var i = 0; i < this.markers.length; i++) {
-        this.markers[i].setMap(null);
-      }
+      // for (var i = 0; i < this.markers.length; i++) {
+      //   this.markers[i].setMap(null);
+      // }
       this.markers = [];
     },
     getListItem(index, place) {

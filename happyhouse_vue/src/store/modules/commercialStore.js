@@ -3,33 +3,29 @@ import http from "@/util/http-common.js";
 export default {
   namespaced: true,
   state: {
-    sidos: [{ value: null, text: "시/도" }],
-    guguns: [{ value: null, text: "구/군" }],
-    dongs: [{ value: null, text: "동" }],
-    sido: null,
-    gugun: null,
-    dong: null,
-    houses: [],
-    house: null,
-    avgPrice: 0,
+    bg_cate: [{ value: null, text: "시/도" }],
+    md_cate: [{ value: null, text: "시/도" }],
+    sm_cate: [{ value: null, text: "시/도" }],
+    commercials: [],
+    commercial: null,
   },
 
   getters: {},
 
   mutations: {
-    SET_SIDO_LIST: (state, sidos) => {
-      sidos.forEach((sido) => {
-        state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
+    SET_BG_CATE_LIST: (state, cates) => {
+      cates.forEach((cate) => {
+        state.bg_cate.push({ value: cate.sidoCode, text: cate.sidoName });
       });
     },
-    SET_GUGUN_LIST: (state, guguns) => {
-      guguns.forEach((gugun) => {
-        state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+    SET_MD_CATE_LIST: (state, cates) => {
+      cates.forEach((cate) => {
+        state.md_cate.push({ value: cate.gugunCode, text: cate.gugunName });
       });
     },
-    SET_DONG_LIST: (state, dongs) => {
-      dongs.forEach((dong) => {
-        state.dongs.push({ value: dong.dongCode, text: dong.dongName });
+    SET_SM_CATE_LIST: (state, cates) => {
+      cates.forEach((cate) => {
+        state.sm_cate.push({ value: cate.dongCode, text: cate.dongName });
       });
     },
     SET_SIDO: (state, sido) => {
