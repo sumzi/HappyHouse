@@ -1,8 +1,8 @@
 <template>
   <div
     v-if="houses && houses.length != 0"
-    class="mt-3 overflow-y-auto"
-    style="height: 100%"
+    class="overflow-y-auto"
+    style="height: 85%"
   >
     <ul id="placesList">
       <house-list-row

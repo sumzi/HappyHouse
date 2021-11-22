@@ -13,6 +13,6 @@ public interface InterestHouseMapper {
 	void unlikeHouse(InterestHouseDto interestHouse) throws SQLException;
 	
 	InterestHouseDto search(InterestHouseDto interestHouse) throws SQLException;
-	List<InterestHouseDto> searchIdAll(String userId) throws SQLException;
+	List<String> searchIdAll(String userId) throws SQLException;
 	List<InterestHouseDto> searchAll() throws SQLException;
 }

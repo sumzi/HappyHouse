@@ -5,8 +5,8 @@
       style="position: relative; height: 100%; width: 100%; display: flex"
     >
       <div style="height: 90vh; width: 100%; display: flex">
-        <div align="left" style="height: 100%; width: 400px">
-          <div style="height: 100px; width: 300px; margin-left: 50px">
+        <div align="left" style="width: 400px">
+          <div style="width: 300px; margin-left: 50px">
             <house-name-search></house-name-search>
           </div>
           <house-list />

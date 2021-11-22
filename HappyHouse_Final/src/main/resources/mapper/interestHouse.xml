@@ -19,8 +19,8 @@
 		from   interesthouse
 		where  userId=#{userId} and aptCode=#{aptCode}	
 	</select>
-	<select id="searchIdAll"	parameterType="string"	resultType="InterestHouseDto">
-		select *
+	<select id="searchIdAll"	parameterType="string"	resultType="string">
+		select aptCode
 		from   interesthouse
 		where  userId=#{userId}	
 	</select>

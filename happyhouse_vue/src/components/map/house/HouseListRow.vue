@@ -1,8 +1,8 @@
 <template>
-  <li class="item mt-4" @click="selectHouse">
+  <li class="item" @click="selectHouse">
     <div
       style="border: 1px solid lightgray"
-      class="pa-2 d-flex justify-space-between"
+      class="pa-2 mr-3 mt-3 d-flex justify-space-between"
       @mouseover="colorChange(true)"
       @mouseout="colorChange(false)"
       :class="{ 'mouse-over-bgcolor': isColor }"
@@ -62,7 +62,6 @@ export default {
       this.isColor = flag;
     },
     like() {
-      console.log(this.house.aptCode);
       this.likeHouse({
         userId: this.userInfo.userId,
         aptCode: this.house.aptCode,
@@ -73,7 +72,6 @@ export default {
         userId: this.userInfo.userId,
         aptCode: this.house.aptCode,
       });
-      console.log("삭제");
     },
   },
 };

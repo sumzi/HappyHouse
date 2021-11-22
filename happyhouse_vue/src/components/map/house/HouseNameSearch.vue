@@ -1,14 +1,13 @@
 <template>
-  <v-row class="ma-0 mv-4">
+  <div class="d-flex justify-center mt-4">
     <v-text-field
       v-model="houseName"
       :rules="nameRules"
-      :counter="20"
       label="건물 이름"
-      required
+      color="success"
     ></v-text-field>
-    <v-btn class="mx-2 mt-6" depressed @click="searchAptByName"> 검색 </v-btn>
-  </v-row>
+    <v-btn class="" depressed @click="searchAptByName"> 검색 </v-btn>
+  </div>
 </template>
 
 <script>
@@ -92,10 +91,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.col,
-.v-select,
-v-input__control {
-  padding: 5px;
-}
-</style>
+<style scoped></style>

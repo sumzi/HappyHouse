@@ -35,7 +35,7 @@ public class InterestHouseServiceImpl implements InterestHouseService {
 		return sqlSession.getMapper(InterestHouseMapper.class).searchAll();
 	}
 	@Transactional
-	public List<InterestHouseDto> searchIdAll(String userId) throws Exception {
+	public List<String> searchIdAll(String userId) throws Exception {
 		return sqlSession.getMapper(InterestHouseMapper.class).searchIdAll(userId);
 	}
 

@@ -88,7 +88,7 @@ public class InterestHouseController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			List<InterestHouseDto> list = service.searchIdAll(userId);
+			List<String> list = service.searchIdAll(userId);
 			resultMap.put("interestHouseList", list);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
