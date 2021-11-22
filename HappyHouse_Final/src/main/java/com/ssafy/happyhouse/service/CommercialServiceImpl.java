@@ -28,7 +28,7 @@ public class CommercialServiceImpl implements CommercialService {
 
 	@Transactional
 	public List<CommercialCodeDto> getCode3(String code2) throws Exception {
-		 return sqlSession.getMapper(CommercialMapper.class).getCode2(code2);
+		 return sqlSession.getMapper(CommercialMapper.class).getCode3(code2);
 	}
 
 	@Transactional

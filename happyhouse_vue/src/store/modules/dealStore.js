@@ -117,7 +117,6 @@ export default {
       http
         .get(`/map/apt/gugun`, { params })
         .then((reponse) => {
-          console.log(commit, reponse.data);
           commit("SET_HOUSE_LIST", reponse.data.houseList);
           commit("SET_AVG_PRICE", reponse.data.avgPrice);
         })
@@ -133,7 +132,6 @@ export default {
       http
         .get(`/map/apt/dong`, { params })
         .then((reponse) => {
-          console.log(commit, reponse.data);
           commit("SET_HOUSE_LIST", reponse.data.houseList);
           commit("SET_AVG_PRICE", reponse.data.avgPrice);
         })
@@ -149,7 +147,6 @@ export default {
       http
         .get(`/map/apt/name`, { params })
         .then((reponse) => {
-          console.log(commit, reponse.data);
           commit("SET_HOUSE_LIST", reponse.data.houseList);
           commit("SET_AVG_PRICE", reponse.data.avgPrice);
         })

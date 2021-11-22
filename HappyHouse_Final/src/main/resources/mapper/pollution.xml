@@ -18,13 +18,13 @@
 		</choose>
 	</sql> -->
 	
-	<select id="getCommercialByGugun" parameterType="string" resultType="commercialDto">
+	<select id="getPollutionByGugun" parameterType="string" resultType="commercialDto">
 		select * 
 		from pollution p
 		where dongcode = #{gugun}
 	</select>
 	
-	<select id="getCommercialByDong" parameterType="string" resultType="commercialDto">
+	<select id="getPollutionByDong" parameterType="string" resultType="commercialDto">
 		select * 
 		from pollution p
 		left join dongcode d

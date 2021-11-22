@@ -52,6 +52,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
   }
 */
 const dealStore = "dealStore";
+const commercialStore = "commercialStore";
 
 export default {
   name: "HouseSearchBar",
@@ -65,7 +66,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(dealStore, ["sidos", "guguns", "dongs"]),
+    ...mapState(dealStore, [
+      "sidos",
+      "guguns",
+      "dongs",
+      "sido",
+      "gugun",
+      "dong",
+    ]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -73,8 +81,9 @@ export default {
   created() {
     // this.$store.dispatch("getSido");
     // this.sidoList();
-    // this.CLEAR_SIDO_LIST();
-    // this.getSido();
+    if (this.sidos.length == 1) {
+      this.getSido();
+    }
   },
   updated() {
     if (this.sidoCode) this.SET_SIDO(this.sidoCode);
@@ -82,10 +91,13 @@ export default {
     if (this.dongCode) this.SET_DONG(this.dongCode);
   },
   mounted() {
-    this.CLEAR_SIDO_LIST();
-    this.CLEAR_GUGUN_LIST();
-    this.CLEAR_DONG_LIST();
-    this.getSido();
+    if (this.sido) this.sidoCode = this.sido;
+    if (this.gugun) this.gugunCode = this.gugun;
+    if (this.dong) this.dongCode = this.dong;
+    // this.CLEAR_SIDO_LIST();
+    // this.CLEAR_GUGUN_LIST();
+    // this.CLEAR_DONG_LIST();
+    // this.getSido();
   },
   methods: {
     ...mapActions(dealStore, [
@@ -96,6 +108,10 @@ export default {
       "getHouseListByDong",
       "getHouseListByName",
     ]),
+    ...mapActions(commercialStore, [
+      "getCommercialByGugun",
+      "getCommercialByDong",
+    ]),
     ...mapMutations(dealStore, [
       "SET_SIDO",
       "SET_GUGUN",
@@ -103,6 +119,14 @@ export default {
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
+    ]),
+    ...mapMutations(commercialStore, [
+      "CLEAR_ALL_CATE",
+      "CLEAR_BG_CATE_LIST",
+      "CLEAR_MD_CATE_LIST",
+      "CLEAR_SM_CATE_LIST",
+      "CLEAR_COMMERCIAL_LIST",
+      "CLEAR_DETAIL_COMMERCIAL",
     ]),
     // sidoList() {
     //   this.getSido();
@@ -124,7 +148,10 @@ export default {
       }
     },
     searchAptByDong() {
-      if (this.dongCode) this.getHouseListByDong(this.dongCode);
+      if (this.dongCode) {
+        this.getHouseListByDong(this.dongCode);
+        this.getCommercialByDong({ dongcode: this.dongCode });
+      }
     },
     searchAptByName() {
       this.getHouseListByName(this.houseName);

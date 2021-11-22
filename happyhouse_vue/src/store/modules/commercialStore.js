@@ -3,9 +3,9 @@ import http from "@/util/http-common.js";
 export default {
   namespaced: true,
   state: {
-    bg_cate: [{ value: null, text: "시/도" }],
-    md_cate: [{ value: null, text: "시/도" }],
-    sm_cate: [{ value: null, text: "시/도" }],
+    bgCate: [{ value: null, text: "대분류" }],
+    mdCate: [{ value: null, text: "중분류" }],
+    smCate: [{ value: null, text: "소분류" }],
     commercials: [],
     commercial: null,
   },
@@ -15,147 +15,178 @@ export default {
   mutations: {
     SET_BG_CATE_LIST: (state, cates) => {
       cates.forEach((cate) => {
-        state.bg_cate.push({ value: cate.sidoCode, text: cate.sidoName });
+        state.bgCate.push({ value: cate.code1, text: cate.codename1 });
       });
     },
     SET_MD_CATE_LIST: (state, cates) => {
       cates.forEach((cate) => {
-        state.md_cate.push({ value: cate.gugunCode, text: cate.gugunName });
+        state.mdCate.push({ value: cate.code2, text: cate.codename2 });
       });
     },
     SET_SM_CATE_LIST: (state, cates) => {
       cates.forEach((cate) => {
-        state.sm_cate.push({ value: cate.dongCode, text: cate.dongName });
+        state.smCate.push({ value: cate.code3, text: cate.codename3 });
       });
     },
-    SET_SIDO: (state, sido) => {
-      state.sido = sido;
+    CLEAR_ALL_CATE: (state) => {
+      state.bgCate = [{ value: null, text: "대분류" }];
+      state.mdCate = [{ value: null, text: "중분류" }];
+      state.smCate = [{ value: null, text: "소분류" }];
     },
-    SET_GUGUN: (state, gugun) => {
-      state.gugun = gugun;
+    CLEAR_BG_CATE_LIST: (state) => {
+      state.bgCate = [{ value: null, text: "대분류" }];
     },
-    SET_DONG: (state, dong) => {
-      state.dong = dong;
+    CLEAR_MD_CATE_LIST: (state) => {
+      state.mdCate = [{ value: null, text: "중분류" }];
     },
-    CLEAR_SIDO_LIST: (state) => {
-      state.sidos = [{ value: null, text: "시/도" }];
+    CLEAR_SM_CATE_LIST: (state) => {
+      state.smCate = [{ value: null, text: "소분류" }];
     },
-    CLEAR_GUGUN_LIST: (state) => {
-      state.guguns = [{ value: null, text: "구/군" }];
-    },
-    CLEAR_DONG_LIST: (state) => {
-      state.dongs = [{ value: null, text: "동" }];
-    },
-    SET_HOUSE_LIST: (state, houses) => {
+    SET_COMMERCIAL_LIST: (state, commercials) => {
       //   console.log(houses);
-      state.houses = houses;
+      state.commercials = commercials;
     },
-    SET_DETAIL_HOUSE: (state, house) => {
-      state.house = house;
+    SET_DETAIL_COMMERCIAL: (state, commercial) => {
+      state.commercial = commercial;
     },
-    SET_AVG_PRICE: (state, avgPrice) => {
-      state.avgPrice = avgPrice;
+    CLEAR_COMMERCIAL_LIST: (state) => {
+      //   console.log(houses);
+      state.commercials = [];
+    },
+    CLEAR_DETAIL_COMMERCIAL: (state) => {
+      state.commercial = null;
     },
   },
 
   actions: {
-    getSido: ({ commit }) => {
+    getBgCate: ({ commit }) => {
       http
-        .get(`/map/sido`)
+        .get(`/map/code1`)
         .then(({ data }) => {
           // console.log(data);
-          commit("SET_SIDO_LIST", data);
+          commit("SET_BG_CATE_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getGugun: ({ commit }, sidoCode) => {
+    getMdCate: ({ commit }, code1) => {
+      commit("CLEAR_MD_CATE_LIST");
+      commit("CLEAR_SM_CATE_LIST");
       const params = {
-        sido: sidoCode,
+        code1,
       };
       http
-        .get(`/map/gugun`, { params: params })
+        .get(`/map/code2`, { params: params })
         .then(({ data }) => {
           // console.log(commit, response);
-          commit("SET_GUGUN_LIST", data);
+          commit("SET_MD_CATE_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getDong: ({ commit }, gugunCode) => {
+    getSmCate: ({ commit }, code2) => {
+      commit("CLEAR_SM_CATE_LIST");
       const params = {
-        gugun: gugunCode,
+        code2,
       };
       http
-        .get(`/map/dong`, { params: params })
+        .get(`/map/code3`, { params: params })
         .then(({ data }) => {
           // console.log(commit, response);
-          commit("SET_DONG_LIST", data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    getHouseListByGugun: ({ commit }, gugunCode) => {
-      // // vue cli enviroment variables 검색
-      // //.env.local file 생성.
-      // // 반드시 VUE_APP으로 시작해야 한다.
-      // const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
-      // //   const SERVICE_KEY =
-      // //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
-      // const SERVICE_URL =
-      //   "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev";
-      const params = {
-        gugun: gugunCode,
-      };
-      http
-        .get(`/map/apt/gugun`, { params })
-        .then((reponse) => {
-          console.log(commit, reponse.data);
-          commit("SET_HOUSE_LIST", reponse.data.houseList);
-          commit("SET_AVG_PRICE", reponse.data.avgPrice);
+          commit("SET_SM_CATE_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    getHouseListByDong: ({ commit }, dongCode) => {
-      const params = {
-        dong: dongCode,
-      };
+    //수정해야할 것들
+
+    getCommercialByGugun: ({ commit }, param) => {
+      commit("CLEAR_COMMERCIAL_LIST");
+      commit("CLEAR_DETAIL_COMMERCIAL");
+      let data;
+      switch (param.type) {
+        case 1:
+          data = {
+            guguncode: param.guguncode,
+            code1: param.code,
+          };
+          break;
+        case 2:
+          data = {
+            guguncode: param.guguncode,
+            code2: param.code,
+          };
+          break;
+        case 3:
+          data = {
+            guguncode: param.guguncode,
+            code3: param.code,
+          };
+          break;
+        //너무 많이 반환됨.
+        // default:
+        //   data = {
+        //     guguncode: gugun,
+        //   };
+        //   break;
+      }
       http
-        .get(`/map/apt/dong`, { params })
+        .post(`/map/commercial/gugun`, data)
         .then((reponse) => {
-          console.log(commit, reponse.data);
-          commit("SET_HOUSE_LIST", reponse.data.houseList);
-          commit("SET_AVG_PRICE", reponse.data.avgPrice);
+          commit("SET_COMMERCIAL_LIST", reponse.data.commercialList);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    getHouseListByName: ({ commit }, houseName) => {
-      const params = {
-        aptName: houseName,
-      };
+    getCommercialByDong: ({ commit }, param) => {
+      commit("CLEAR_COMMERCIAL_LIST");
+      commit("CLEAR_DETAIL_COMMERCIAL");
+      let data;
+      switch (param.type) {
+        case 1:
+          data = {
+            dongcode: param.dongcode,
+            code1: param.code,
+          };
+          break;
+        case 2:
+          data = {
+            dongcode: param.dongcode,
+            code2: param.code,
+          };
+          break;
+        case 3:
+          data = {
+            dongcode: param.dongcode,
+            code3: param.code,
+          };
+          break;
+        default:
+          data = {
+            dongcode: param.dongcode,
+          };
+          break;
+      }
+
       http
-        .get(`/map/apt/name`, { params })
+        .post(`/map/commercial/dong`, data)
         .then((reponse) => {
-          console.log(commit, reponse.data);
-          commit("SET_HOUSE_LIST", reponse.data.houseList);
-          commit("SET_AVG_PRICE", reponse.data.avgPrice);
+          commit("SET_COMMERCIAL_LIST", reponse.data.commercialList);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    detailHouse: ({ commit }, house) => {
+
+    detailCommercial: ({ commit }, commercial) => {
       // 나중에 house.일련번호를 이용하여 API 호출
-      commit("SET_DETAIL_HOUSE", house);
+      commit("SET_DETAIL_COMMERCIAL", commercial);
     },
   },
 };

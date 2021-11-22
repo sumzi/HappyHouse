@@ -15,6 +15,7 @@
           "
         >
           <house-address-search></house-address-search>
+          <commercial-search></commercial-search>
         </span>
         <div id="menu_wrap" class="bg_white">
           <ul id="placesList"></ul>
@@ -27,11 +28,66 @@
 <script>
 import { mapState } from "vuex";
 import HouseAddressSearch from "@/components/map/house/HouseAddressSearch.vue";
+import CommercialSearch from "@/components/map/house/CommercialSearch.vue";
 const dealStore = "dealStore";
+const commercialStore = "commercialStore";
+
+// Q	음식
+// F	생활서비스
+// D	소매
+// S	의료
+// R	학문/교육
+// N	관광/여가/오락
+// L	부동산
+// O	숙박
+// P	스포츠
+const code1Cate = {
+  F: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f9fa.png",
+  D: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3ea.png",
+  S: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3e5.png",
+  R: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3eb.png",
+  N: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3d6.png",
+  L: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f5fa.png",
+  O: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3e8.png",
+  P: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/26bd.png",
+};
+// Q09	유흥주점
+// Q12	커피점/카페
+// Q07	패스트푸드
+// Q03	일식/수산물
+// Q04	분식
+// Q01	한식
+// Q06	양식
+// Q02	중식
+// Q10	별식/퓨전요리
+// Q05	닭/오리요리
+// Q14	기타음식업
+// Q13	음식배달서비스
+// Q08	제과제빵떡케익
+// Q15	부페
+const code2FoodCate = {
+  Q09: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f37a.png",
+  Q12: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2615.png",
+  Q07: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f35f.png",
+  Q03: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f980.png",
+  Q04: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f362.png",
+  Q01: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f371.png",
+  Q06: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f969.png",
+  Q02: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f963.png",
+  Q10: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f372.png",
+  Q05: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f357.png",
+  Q14: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f37d.png",
+  Q13: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f6f5.png",
+  Q08: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f35e.png",
+  Q15: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f37d.png",
+};
+code1Cate, code2FoodCate;
+
 export default {
   name: "KakaoMap",
   components: {
     HouseAddressSearch,
+    CommercialSearch,
   },
   data() {
     return {
@@ -44,10 +100,14 @@ export default {
   },
   computed: {
     ...mapState(dealStore, ["houses"]),
+    ...mapState(commercialStore, ["commercials"]),
   },
   watch: {
     houses() {
-      this.displayMarkers(this.houses);
+      this.initMarker();
+    },
+    commercials() {
+      this.initMarker();
     },
   },
   mounted() {
@@ -83,6 +143,12 @@ export default {
         // disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
       });
       // this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      this.initMarker();
+    },
+    initMarker() {
+      this.removeMarker();
+      if (this.commercials && this.commercials.length > 0)
+        this.displayCommercialMarkers(this.commercials);
       this.displayMarkers(this.houses);
     },
     changeSize(size) {
@@ -102,11 +168,13 @@ export default {
       // this.removeAllChildNods(listEl);
 
       // 지도에 표시되고 있는 마커를 제거합니다
-      this.removeMarker();
 
       for (var i = 0; i < places.length; i++) {
         var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
-        var marker = this.addMarker(placePosition, i);
+        var marker = this.addMarker(
+          placePosition,
+          "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3e0.png"
+        );
         // var itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -120,7 +188,6 @@ export default {
             temp.displayInfowindow(marker, title, place);
             console.log(title + " " + code);
           });
-          console.log("여기까진 잘 됨" + temp.map);
           // itemEl.onmouseover = function () {
           //   temp.displayInfowindow(marker, title, place);
           // };
@@ -143,14 +210,12 @@ export default {
       this.clusterer.addMarkers(this.markers);
       this.map.setBounds(bounds);
     },
-    addMarker(position) {
-      var imageSrc =
-          "https://apis.zigbang.com/marker/v6/apartment?mode=item&size=3&select=n&level=up5&dpi=160", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(56, 70), // 마커 이미지의 크기
+    addMarker(position, imageSrc) {
+      var imageSize = new kakao.maps.Size(30, 30), // 마커 이미지의 크기
         imgOptions = {
           // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
           // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(27, 35), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+          offset: new kakao.maps.Point(15, 15), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(
           imageSrc,
@@ -167,11 +232,47 @@ export default {
 
       return marker;
     },
+    displayCommercialMarkers(places) {
+      console.log(places + "상권표시");
+      var bounds = new kakao.maps.LatLngBounds();
+
+      for (var i = 0; i < places.length; i++) {
+        var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
+        var marker = this.addMarker(
+          placePosition,
+          places[i].code1 === "Q"
+            ? code2FoodCate[places[i].code2]
+            : code1Cate[places[i].code1]
+        );
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function (marker, title, code, place, temp) {
+          kakao.maps.event.addListener(marker, "click", function () {
+            temp.displayInfowindow(marker, title, place);
+            console.log(title + " " + code);
+          });
+        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+      }
+      let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {
+        console.log(temp);
+      });
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+      this.clusterer.addMarkers(this.markers);
+      this.map.setBounds(bounds);
+    },
     // 지도 위에 표시되고 있는 마커를 모두 제거합니다
     removeMarker() {
       // for (var i = 0; i < this.markers.length; i++) {
       //   this.markers[i].setMap(null);
       // }
+      this.clusterer.clear();
       this.markers = [];
     },
     getListItem(index, place) {
@@ -192,28 +293,28 @@ export default {
     displayInfowindow(marker, title, place) {
       console.log(title);
       var content = `
-		<div class="overlaybox">
-			<div class="boxtitle">${title}</div>
-			<div class="first"><img src='@/assets/apt.png' style="width:247px; height:136px;" alt=""></div>
-			<ul>
-				<li class="up">
-					<span class="title">건축년도</span>
-					<span class="count">${place.buildYear}</span>
-				</li>
-				<li>
-					<span class="title">주소</span>
-					<span class="count">${place.sidoName} ${place.gugunName} ${place.dongName} ${place.jibun}</span>
-				</li>
-				<li>
-					<span class="title">최신거래금액</span>
-					<span class="count">${place.recentPrice}</span>
-				</li>
-				<li>
-					<span class="last" id="recenthistor" data-toggle="modal" data-target="#myModal">아파트정보 update</span>
-				</li>
-			</ul>
-		</div>
-	`;
+        <div class="overlaybox">
+          <div class="boxtitle">${title}</div>
+          <div class="first"><img src='@/assets/apt.png' style="width:247px; height:136px;" alt=""></div>
+          <ul>
+            <li class="up">
+              <span class="title">건축년도</span>
+              <span class="count">${place.buildYear}</span>
+            </li>
+            <li>
+              <span class="title">주소</span>
+              <span class="count">${place.sidoName} ${place.gugunName} ${place.dongName} ${place.jibun}</span>
+            </li>
+            <li>
+              <span class="title">최신거래금액</span>
+              <span class="count">${place.recentPrice}</span>
+            </li>
+            <li>
+              <span class="last" id="recenthistor" data-toggle="modal" data-target="#myModal">아파트정보 update</span>
+            </li>
+          </ul>
+        </div>
+      `;
       var position = new kakao.maps.LatLng(
         marker.getPosition().getLat() + 0.00033,
         marker.getPosition().getLng() - 0.00003

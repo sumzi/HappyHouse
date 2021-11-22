@@ -1,38 +1,28 @@
 <template>
   <v-row class="mt-0 text-center">
-    <!-- <v-col class="sm-3">
-      <v-form-input
-        v-model.trim="dongCode"
-        placeholder="동코드 입력...(예 : 11110)"
-        @keypress.enter="sendKeyword"
-      ></v-form-input>
-    </v-col>
-    <v-col class="sm-3" align="left">
-      <v-button variant="outline-primary" @click="sendKeyword">검색</v-button>
-    </v-col> -->
     <v-col cols="4">
       <v-select
         solo
         success
-        v-model="sidoCode"
-        :items="sidos"
-        @change="gugunList"
+        v-model="code1"
+        :items="bgCate"
+        @change="searchByBgCate"
       ></v-select>
     </v-col>
     <v-col cols="4">
       <v-select
         solo
-        v-model="gugunCode"
-        :items="guguns"
-        @change="searchAptByGugun"
+        v-model="code2"
+        :items="mdCate"
+        @change="searchByMdCate"
       ></v-select>
     </v-col>
     <v-col cols="4">
       <v-select
         solo
-        v-model="dongCode"
-        :items="dongs"
-        @change="searchAptByDong"
+        v-model="code3"
+        :items="smCate"
+        @change="searchBySmCate"
       ></v-select>
     </v-col>
   </v-row>
@@ -41,93 +31,137 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 
-/*
-  namespaced: true를 사용했기 때문에 선언해줍니다.
-  index.js 에서 modules 객체의 '키' 이름입니다.
-
-  modules: {
-    키: 값
-    memberStore: memberStore,
-    dealStore: dealStore
-  }
-*/
+const commercialStore = "commercialStore";
 const dealStore = "dealStore";
 
 export default {
-  name: "HouseSearchBar",
+  name: "CommercialSearch",
   data() {
     return {
-      sidoCode: null,
-      gugunCode: null,
-      dongCode: null,
-      houseName: "",
-      nameRules: [(v) => v.length <= 20 || "검색어는 20자 이하여야 합니다."],
+      code1: null,
+      code2: null,
+      code3: null,
     };
   },
   computed: {
-    ...mapState(dealStore, ["sidos", "guguns", "dongs"]),
-    // sidos() {
-    //   return this.$store.state.sidos;
-    // },
+    ...mapState(commercialStore, ["bgCate", "mdCate", "smCate"]),
+    ...mapState(dealStore, ["sido", "gugun", "dong"]),
   },
-  created() {
-    // this.$store.dispatch("getSido");
-    // this.sidoList();
-    // this.CLEAR_SIDO_LIST();
-    // this.getSido();
-  },
+  created() {},
   updated() {
-    if (this.sidoCode) this.SET_SIDO(this.sidoCode);
-    if (this.gugunCode) this.SET_GUGUN(this.gugunCode);
-    if (this.dongCode) this.SET_DONG(this.dongCode);
+    this.getBgCate();
+  },
+  watch: {
+    sido() {
+      this.code1 = null;
+      this.code2 = null;
+      this.code3 = null;
+    },
+    gugun() {
+      this.code1 = null;
+      this.code2 = null;
+      this.code3 = null;
+      this.CLEAR_ALL_CATE();
+    },
+    dong() {
+      this.code1 = null;
+      this.code2 = null;
+      this.code3 = null;
+      this.CLEAR_ALL_CATE();
+    },
   },
   mounted() {
-    this.CLEAR_SIDO_LIST();
-    this.CLEAR_GUGUN_LIST();
-    this.CLEAR_DONG_LIST();
-    this.getSido();
+    if (this.bgCate.length == 1) this.getBgCate();
   },
   methods: {
-    ...mapActions(dealStore, [
-      "getSido",
-      "getGugun",
-      "getDong",
+    ...mapActions(commercialStore, [
+      "getBgCate",
+      "getMdCate",
+      "getSmCate",
       "getHouseListByGugun",
       "getHouseListByDong",
       "getHouseListByName",
     ]),
-    ...mapMutations(dealStore, [
-      "SET_SIDO",
-      "SET_GUGUN",
-      "SET_DONG",
-      "CLEAR_SIDO_LIST",
-      "CLEAR_GUGUN_LIST",
-      "CLEAR_DONG_LIST",
+    ...mapActions(commercialStore, [
+      "getCommercialByGugun",
+      "getCommercialByDong",
     ]),
+    ...mapMutations(commercialStore, [
+      "CLEAR_ALL_CATE",
+      "CLEAR_BG_CATE_LIST",
+      "CLEAR_MD_CATE_LIST",
+      "CLEAR_SM_CATE_LIST",
+    ]),
+
     // sidoList() {
     //   this.getSido();
     // },
-    gugunList() {
-      // console.log(this.sidoCode);
-      this.CLEAR_GUGUN_LIST();
-      this.gugunCode = null;
-
-      if (this.sidoCode) this.getGugun(this.sidoCode);
-    },
-    searchAptByGugun() {
-      // 동도 같이 바꿈.
-      this.CLEAR_DONG_LIST();
-      this.dongCode = null;
-      if (this.gugunCode) {
-        this.getHouseListByGugun(this.gugunCode);
-        this.getDong(this.gugunCode);
+    searchByBgCate() {
+      if (this.code1) {
+        if (this.dong) {
+          this.getCommercialByDong({
+            dongcode: this.dong,
+            code: this.code1,
+            type: 1,
+          });
+        } else if (this.gugun) {
+          this.getCommercialByGugun({
+            guguncode: this.gugun,
+            code: this.code1,
+            type: 1,
+          });
+        }
+      } else {
+        if (this.dong) {
+          this.getCommercialByDong({
+            dongcode: this.dong,
+          });
+        }
       }
+      this.getMdCate(this.code1);
     },
-    searchAptByDong() {
-      if (this.dongCode) this.getHouseListByDong(this.dongCode);
+    searchByMdCate() {
+      if (this.code2) {
+        if (this.dong) {
+          this.getCommercialByDong({
+            dongcode: this.dong,
+            code: this.code2,
+            type: 2,
+          });
+        } else if (this.gugun) {
+          this.getCommercialByGugun({
+            guguncode: this.gugun,
+            code: this.code2,
+            type: 2,
+          });
+        }
+      } else {
+        if (this.dong && this.code1) {
+          this.getCommercialByDong({
+            dongcode: this.dong,
+            code: this.code1,
+            type: 1,
+          });
+        }
+      }
+      this.getSmCate(this.code2);
     },
-    searchAptByName() {
-      this.getHouseListByName(this.houseName);
+    searchBySmCate() {
+      if (this.code3) {
+        if (this.dong) {
+          this.getCommercialByDong({
+            dongcode: this.dong,
+            code: this.code3,
+            type: 3,
+          });
+        } else if (this.gugun) {
+          this.getCommercialByGugun({
+            guguncode: this.gugun,
+            code: this.code3,
+            type: 3,
+          });
+        }
+      }
     },
   },
 };

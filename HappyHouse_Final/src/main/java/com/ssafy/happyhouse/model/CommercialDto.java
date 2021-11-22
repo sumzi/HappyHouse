@@ -9,6 +9,7 @@ public class CommercialDto {
 	private String localname;
 	private String code1;
 	private String code2;
+	private String code3;
 	private String gucode;
 	private String dongcode;
 	private String address;
@@ -79,6 +80,17 @@ public class CommercialDto {
 
 	public void setCode2(String code2) {
 		this.code2 = code2;
+	}
+
+	
+
+	public String getCode3() {
+		return code3;
+	}
+
+
+	public void setCode3(String code3) {
+		this.code3 = code3;
 	}
 
 
