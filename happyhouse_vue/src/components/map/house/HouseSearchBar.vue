@@ -41,7 +41,7 @@
         label="건물 이름"
         required
       ></v-text-field>
-      <v-btn class="mx-2 mt-6" depressed> 검색 </v-btn>
+      <v-btn class="mx-2 mt-6" depressed @click="searchAptByName"> 검색 </v-btn>
     </v-row>
   </div>
 </template>
@@ -91,6 +91,7 @@ export default {
       "getDong",
       "getHouseListByGugun",
       "getHouseListByDong",
+      "getHouseListByName",
     ]),
     ...mapMutations(dealStore, [
       "CLEAR_SIDO_LIST",
@@ -118,6 +119,9 @@ export default {
     },
     searchAptByDong() {
       if (this.dongCode) this.getHouseListByDong(this.dongCode);
+    },
+    searchAptByName() {
+      this.getHouseListByName(this.houseName);
     },
   },
 };

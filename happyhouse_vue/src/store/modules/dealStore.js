@@ -129,6 +129,22 @@ export default {
           console.log(error);
         });
     },
+
+    getHouseListByName: ({ commit }, houseName) => {
+      const params = {
+        aptName: houseName,
+      };
+      http
+        .get(`/map/apt/name`, { params })
+        .then((reponse) => {
+          console.log(commit, reponse.data);
+          commit("SET_HOUSE_LIST", reponse.data.houseList);
+          commit("SET_AVG_PRICE", reponse.data.avgPrice);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);

@@ -4,9 +4,10 @@
       <div
         id="map"
         style="width: 100%; height: 100%; position: relative; overflow: hidden"
-      ></div>
-      <div id="menu_wrap" class="bg_white">
-        <ul id="placesList"></ul>
+      >
+        <span style="position: absolute; top: 0; left: 0; z-index: 1000"
+          >안녕하세요</span
+        >
       </div>
     </div>
   </div>
@@ -33,20 +34,26 @@ export default {
       this.displayMarkers(this.houses);
     },
   },
-
   mounted() {
     if (window.kakao && window.kakao.maps) {
+      // kakao.maps.load(this.initMap);
+      console.log("새로고침?");
       this.initMap();
     } else {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
-      document.head.appendChild(script);
+      this.addKakaoMapScript();
     }
   },
   methods: {
+    addKakaoMapScript() {
+      const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      console.log("새로고침? kakao after");
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+      document.head.appendChild(script);
+      console.log(script);
+    },
     initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -55,6 +62,7 @@ export default {
       };
       this.map = new kakao.maps.Map(container, options);
       // this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      this.displayMarkers(this.houses);
     },
     changeSize(size) {
       const container = document.getElementById("map");
@@ -63,7 +71,6 @@ export default {
       this.map.relayout();
     },
     displayMarkers(places) {
-      console.log(places + "places");
       console.log(this.map + "MAP");
       // var listEl = document.getElementById("placesList"),
       //   menuEl = document.getElementById("menu_wrap"),
@@ -79,7 +86,7 @@ export default {
       for (var i = 0; i < places.length; i++) {
         var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
         var marker = this.addMarker(placePosition, i);
-        var itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+        // var itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -98,13 +105,13 @@ export default {
             temp.customOverlay.setMap(null);
           });
 
-          itemEl.onmouseover = function () {
-            temp.displayInfowindow(marker, title, place);
-          };
+          // itemEl.onmouseover = function () {
+          //   temp.displayInfowindow(marker, title, place);
+          // };
 
-          itemEl.onmouseout = function () {
-            temp.customOverlay.setMap(null);
-          };
+          // itemEl.onmouseout = function () {
+          //   temp.customOverlay.setMap(null);
+          // };
         })(marker, places[i].aptName, places[i].aptCode, places[i], this);
 
         // fragment.appendChild(itemEl);
@@ -115,24 +122,10 @@ export default {
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       this.map.setBounds(bounds);
     },
-    addMarker(position, idx) {
-      var imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
-        imgOptions = {
-          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imgOptions
-        ),
-        marker = new kakao.maps.Marker({
-          position: position, // 마커의 위치
-          image: markerImage,
-        });
+    addMarker(position) {
+      var marker = new kakao.maps.Marker({
+        position: position, // 마커의 위치
+      });
 
       marker.setMap(this.map); // 지도 위에 마커를 표출합니다
       this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
@@ -163,7 +156,6 @@ export default {
     },
     displayInfowindow(marker, title, place) {
       console.log(title);
-      console.log(place);
       var content = `
 		<div class="overlaybox">
 			<div class="boxtitle">${title}</div>
