@@ -1,6 +1,5 @@
 <template>
   <v-card class="ma-8 pa-3" elevation="3" width="400px">
-    {{ aptCode }}
     <v-card-title>
       <span>{{ house.aptName }}</span></v-card-title
     >

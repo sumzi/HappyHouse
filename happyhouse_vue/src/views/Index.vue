@@ -46,17 +46,23 @@
           </div>
         </v-img>
       </div>
-      <div class="section"></div>
+      <div class="section">
+        <area-air />
+      </div>
       <div class="section"></div>
     </full-page>
   </div>
 </template>
 
 <script>
+import AreaAir from "@/components/interest/AreaAir.vue";
 import { mapState } from "vuex";
 import axios from "axios";
 export default {
   name: "app",
+  components: {
+    AreaAir,
+  },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -71,17 +77,7 @@ export default {
         menu: "#menu",
         navigation: true,
         anchors: ["page1", "page2", "page3"],
-        sectionsColor: [
-          "#fff",
-          "#000",
-          "#fff",
-          "#fec401",
-          "#1bcee6",
-          "#ee1a59",
-          "#2c3e4f",
-          "#ba5be9",
-          "#b4b8ab",
-        ],
+        sectionsColor: ["#fff", "lightgray", "#fff"],
       },
     };
   },
