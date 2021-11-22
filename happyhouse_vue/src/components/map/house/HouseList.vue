@@ -65,7 +65,7 @@ hr {
 }
 #placesList .item {
   position: relative;
-  border-bottom: 1px solid #888;
+  /* border-bottom: 1px solid #888; */
   overflow: hidden;
   cursor: pointer;
   min-height: 65px;

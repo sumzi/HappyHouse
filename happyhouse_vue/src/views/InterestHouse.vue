@@ -4,10 +4,10 @@
     <v-container class="text-center mt-8">
       <h2>관심 매매 목록</h2>
     </v-container>
-    <v-container style="width: 70%" class="">
+    <v-container style="width: 65%" class="">
       <v-layout text-xs-center row wrap>
-        <v-flex v-for="house in houselist" :key="house.aptCode">
-          <house-card v-bind="house" />
+        <v-flex v-for="house in houselist" :key="house">
+          <house-card v-bind="{ aptCode: house }" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -30,9 +30,6 @@ export default {
   },
   methods: {
     ...mapActions("interestStore", ["getInterestHouse"]),
-  },
-  created() {
-    this.getInterestHouse(this.userInfo.userId);
   },
 };
 </script>

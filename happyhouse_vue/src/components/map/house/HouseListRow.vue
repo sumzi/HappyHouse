@@ -1,26 +1,32 @@
 <template>
-  <li class="item">
-    <v-row
-      class="m-2"
-      @click="selectHouse"
+  <li class="item mt-4" @click="selectHouse">
+    <div
+      style="border: 1px solid lightgray"
+      class="pa-2 d-flex justify-space-between"
       @mouseover="colorChange(true)"
       @mouseout="colorChange(false)"
       :class="{ 'mouse-over-bgcolor': isColor }"
     >
-      <span class="markerbg" :class="'marker_' + (num + 1)"></span>
+      <div class="markerbg" :class="'marker_' + (num + 1)"></div>
       <div class="content">
         <h5>{{ house.aptName }}</h5>
-        <span
-          >{{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
-          {{ house.jibun }}</span
-        >
+        <div>
+          {{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
+          {{ house.jibun }}
+        </div>
       </div>
-    </v-row>
+      <div>
+        <div v-if="this.houselist.includes(house.aptCode)" @click.stop="unlike">
+          💗
+        </div>
+        <div v-else @click.stop="like">🤍</div>
+      </div>
+    </div>
   </li>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const dealStore = "dealStore";
 
@@ -35,8 +41,16 @@ export default {
     house: Object,
     num: Number,
   },
-
+  computed: {
+    ...mapState("interestStore", ["houselist"]),
+    ...mapState("userStore", ["userInfo"]),
+  },
   methods: {
+    ...mapActions("interestStore", [
+      "getInterestHouse",
+      "likeHouse",
+      "unlikeHouse",
+    ]),
     ...mapActions(dealStore, ["detailHouse"]),
     selectHouse() {
       // console.log("listRow : ", this.house);
@@ -46,6 +60,20 @@ export default {
     },
     colorChange(flag) {
       this.isColor = flag;
+    },
+    like() {
+      console.log(this.house.aptCode);
+      this.likeHouse({
+        userId: this.userInfo.userId,
+        aptCode: this.house.aptCode,
+      });
+    },
+    unlike() {
+      this.unlikeHouse({
+        userId: this.userInfo.userId,
+        aptCode: this.house.aptCode,
+      });
+      console.log("삭제");
     },
   },
 };

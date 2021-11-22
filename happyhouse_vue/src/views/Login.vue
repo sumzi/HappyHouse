@@ -46,7 +46,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import HeaderNav from "../components/layout/HeaderNav.vue";
 export default {
   name: "Login",
@@ -66,14 +66,18 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["userLogin", "getUserInfo"]),
+    ...mapMutations("userStore", ["USER_LOGIN"]),
+    ...mapActions("interestStore", ["getInterestHouse"]),
     async userCheck() {
       await this.userLogin(this.user);
 
       if (this.isLogin) {
         await this.getUserInfo(this.user.userId);
+        await this.getInterestHouse(this.user.userId);
         this.$router.push({ name: "Index" });
       } else {
-        console.log(this.isLogin);
+        alert("로그인실패");
+        this.USER_LOGIN(false);
       }
     },
   },

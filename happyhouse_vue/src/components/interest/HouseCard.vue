@@ -1,10 +1,14 @@
 <template>
   <v-card class="ma-8 pa-3" elevation="3" width="400px">
+    {{ aptCode }}
     <v-card-title>
-      <span>{{ aptName }}</span></v-card-title
+      <span>{{ house.aptName }}</span></v-card-title
     >
-    <v-card-text>{{ sidoName }} {{ gugunName }} {{ dongName }}</v-card-text>
-    <v-card-text>가격 : {{ recentPrice }}</v-card-text>
+    <v-card-text
+      >{{ house.sidoName }} {{ house.gugunName }}
+      {{ house.dongName }}</v-card-text
+    >
+    <v-card-text>가격 : {{ house.recentPrice }}</v-card-text>
     <v-card-actions>
       <v-icon large left @click="unlike"> mdi-heart </v-icon>
     </v-card-actions>
@@ -13,21 +17,27 @@
 
 <script>
 import http from "@/util/http-common.js";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "HouseCard",
   props: {
     aptCode: String,
-    aptName: String,
-    sidoName: String,
-    gugunName: String,
-    dongName: String,
-    recentPrice: String,
+  },
+  data() {
+    return {
+      house: {},
+    };
   },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
+  created() {
+    http
+      .get(`/map/apt/code?aptCode=${this.aptCode}`)
+      .then((response) => (this.house = response.data.houseList[0]));
+  },
   methods: {
+    ...mapActions("interestStore", ["getInterestHouse"]),
     unlike() {
       http
         .delete("/house/unlike", {
@@ -35,7 +45,7 @@ export default {
         })
         .then((response) => {
           if (response.data.message === "success") {
-            location.reload();
+            this.getInterestHouse(this.userInfo.userId);
           }
         });
     },
