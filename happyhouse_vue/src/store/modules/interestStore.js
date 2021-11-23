@@ -18,21 +18,21 @@ export default {
   },
   actions: {
     getInterestHouse({ commit }, id) {
-      http.get(`house/${id}`).then((response) => {
+      http.get(`interest/house/search/${id}`).then((response) => {
         if (response.data.message === "success") {
           commit("SET_INTEREST_HOUSE_LIST", response.data.interestHouseList);
         }
       });
     },
     likeHouse({ commit }, data) {
-      http.post("house/like", data).then((response) => {
+      http.post("interest/house/like", data).then((response) => {
         if (response.data.message === "success") {
           commit("LIKE_INTEREST_HOUSE", data.aptCode);
         }
       });
     },
     unlikeHouse({ commit }, payload) {
-      http.delete("house/unlike", { data: payload }).then((response) => {
+      http.delete("interest/house/unlike", { data: payload }).then((response) => {
         if (response.data.message === "success") {
           commit("UNLIKE_INTEREST_HOUSE", payload.aptCode);
         }

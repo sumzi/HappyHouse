@@ -27,15 +27,17 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  name: "NoticeSearch",
   computed: {
-    ...mapGetters(["notice"]),
+    ...mapGetters("noticeStore", ["notice"]),
   },
   created() {
-    this.$store.dispatch("getNotice", this.$route.params.no);
+    this.getNotice(this.$route.params.no);
   },
   methods: {
+    ...mapActions("noticeStore", ["getNotice"]),
     moveNoticeList() {
       this.$router.push({ name: "NoticeList" });
     },

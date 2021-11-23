@@ -28,21 +28,11 @@
               <td>{{ notice.title }}</td>
               <td>{{ notice.userId }}</td>
               <td>{{ notice.ndate }}</td>
-              <td>{{ notice.hitCount }}</td>
+              <td>{{ notice.likeCount }}</td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
-
-      <!-- <div class="text-center mt-10">
-        <v-pagination
-          v-model="page"
-          :length="5"
-          color="#019689"
-          prev-icon="mdi-menu-left"
-          next-icon="mdi-menu-right"
-        ></v-pagination>
-      </div> -->
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.happyhouse.model.mapper.InterestHouseMapper">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.InterestMapper">
 
 	<insert id='likeHouse'	parameterType="InterestHouseDto">
 		insert into interesthouse (userId, aptCode) 
@@ -28,11 +28,21 @@
 		select * 
 		from interesthouse
 	</select>
+	
+	<insert id="insertArea" parameterType="InterestAreaDto">
+		insert into interestarea (userId, dongCode) 
+		values (#{userId},#{dongCode})
+	</insert>
+	<update id="updateArea" parameterType="InterestAreaDto">
+		update interestarea set dongCode=#{dongCode}
+		where userId=#{userId} 
+	</update>
+	
+	<delete id="deleteArea" parameterType="string">
+		delete from interestarea where userId=#{userId}
+	</delete>
+	
+	<select id="searchArea" parameterType="string" resultType="string">
+		select dongCode from interestarea where userId=#{userId}
+	</select>
 </mapper>
-
-
-
-
-
-
-

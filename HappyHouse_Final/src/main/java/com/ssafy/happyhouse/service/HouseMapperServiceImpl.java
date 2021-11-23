@@ -66,7 +66,7 @@ public class HouseMapperServiceImpl implements HappyHouseMapService {
 		int avg = Math.round((float)(sum / houseList.size()));
 		return avg;
 	}
-	@Override
+	@Transactional
 	public List<HouseDealDto> getAptDeal(String aptCode) throws Exception {
 		return sqlSession.getMapper(HouseMapMapper.class).getAptDeal(aptCode);
 	}

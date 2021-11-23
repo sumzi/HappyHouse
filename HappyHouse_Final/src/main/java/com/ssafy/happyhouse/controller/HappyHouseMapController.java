@@ -24,7 +24,6 @@ import com.ssafy.happyhouse.model.CommercialDto;
 import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.PollutionDto;
-import com.ssafy.happyhouse.model.QnADto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.service.CommercialService;
 import com.ssafy.happyhouse.service.HappyHouseMapService;
@@ -44,6 +43,7 @@ public class HappyHouseMapController {
 
 	@Autowired
 	private HappyHouseMapService happyHouseMapService;
+	
 	@Autowired
 	private CommercialService commercialService;
 
@@ -207,9 +207,8 @@ public class HappyHouseMapController {
 		responseMap.put("pollutionList", pollutionList);
 		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
 	}
-<<<<<<< HEAD
-	@ApiOperation(value = "아파트 거래목록", notes = "아파트 번호에 맞는 거래 목록을 반환한다", response = Map.class)
 	
+	@ApiOperation(value = "아파트 거래목록", notes = "아파트 번호에 맞는 거래 목록을 반환한다", response = Map.class)
 	@GetMapping("/apt/deal")
 	ResponseEntity<Map<String, Object>> getAptDeal(@RequestParam("aptCode") String aptCode)
 			throws Exception {
@@ -218,7 +217,5 @@ public class HappyHouseMapController {
 		responseMap.put("aptDealList", aptDealList);
 		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
 	}
-=======
->>>>>>> 948bae8784751bb1f444f084942317818ea30cb1
 
 }

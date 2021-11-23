@@ -9,7 +9,7 @@
     >
     <v-card-text>가격 : {{ house.recentPrice }}</v-card-text>
     <v-card-actions>
-      <v-icon large left @click="unlike"> mdi-heart </v-icon>
+      <v-icon large left @click.stop="unlike"> mdi-heart </v-icon>
     </v-card-actions>
   </v-card>
 </template>
@@ -44,7 +44,7 @@ export default {
     },
     unlike() {
       http
-        .delete("/house/unlike", {
+        .delete("/interest/house/unlike", {
           data: { aptCode: this.aptCode, userId: this.userInfo.userId },
         })
         .then((response) => {
