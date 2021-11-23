@@ -46,7 +46,6 @@ export default {
     //   return this.$store.state.sidos;
     // },
   },
-<<<<<<< HEAD
   created() {
     // this.$store.dispatch("getSido");
     // this.sidoList();
@@ -58,8 +57,6 @@ export default {
       this.searchAptByName();
     }
   },
-=======
->>>>>>> 948bae8784751bb1f444f084942317818ea30cb1
   methods: {
     ...mapActions(dealStore, [
       "getSido",
