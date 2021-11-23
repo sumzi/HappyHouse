@@ -48,26 +48,24 @@ export default {
     ...mapState(dealStore, ["sido", "gugun", "dong"]),
   },
   created() {},
-  updated() {
-    this.getBgCate();
-  },
   watch: {
     sido() {
       this.code1 = null;
       this.code2 = null;
       this.code3 = null;
+      this.clearCate();
     },
     gugun() {
       this.code1 = null;
       this.code2 = null;
       this.code3 = null;
-      this.CLEAR_ALL_CATE();
+      this.clearCate();
     },
     dong() {
       this.code1 = null;
       this.code2 = null;
       this.code3 = null;
-      this.CLEAR_ALL_CATE();
+      this.clearCate();
     },
   },
   mounted() {
@@ -85,6 +83,7 @@ export default {
     ...mapActions(commercialStore, [
       "getCommercialByGugun",
       "getCommercialByDong",
+      "clearCate",
     ]),
     ...mapMutations(commercialStore, [
       "CLEAR_ALL_CATE",
@@ -118,6 +117,8 @@ export default {
           });
         }
       }
+      this.code2 = null;
+      this.code3 = null;
       this.getMdCate(this.code1);
     },
     searchByMdCate() {
@@ -144,6 +145,7 @@ export default {
           });
         }
       }
+      this.code3 = null;
       this.getSmCate(this.code2);
     },
     searchBySmCate() {

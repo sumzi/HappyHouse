@@ -59,6 +59,12 @@ export default {
   },
 
   actions: {
+    clearCate: ({ commit }) => {
+      commit("CLEAR_MD_CATE_LIST");
+      commit("CLEAR_SM_CATE_LIST");
+      commit("CLEAR_COMMERCIAL_LIST");
+      commit("CLEAR_DETAIL_COMMERCIAL");
+    },
     getBgCate: ({ commit }) => {
       http
         .get(`/map/code1`)

@@ -16,6 +16,7 @@
         >
           <house-address-search></house-address-search>
           <commercial-search></commercial-search>
+          <pollution-search></pollution-search>
         </span>
         <div id="menu_wrap" class="bg_white">
           <ul id="placesList"></ul>
@@ -29,8 +30,10 @@
 import { mapState } from "vuex";
 import HouseAddressSearch from "@/components/map/house/HouseAddressSearch.vue";
 import CommercialSearch from "@/components/map/house/CommercialSearch.vue";
+import PollutionSearch from "@/components/map/house/PollutionSearch.vue";
 const dealStore = "dealStore";
 const commercialStore = "commercialStore";
+const pollutionStore = "pollutionStore";
 
 // Q	음식
 // F	생활서비스
@@ -88,26 +91,43 @@ export default {
   components: {
     HouseAddressSearch,
     CommercialSearch,
+    PollutionSearch,
   },
   data() {
     return {
       map: null,
       markers: [],
+      pollutionMarkers: [],
+      commercailMarkers: [],
       infowindow: null,
       customOverlay: null,
       clusterer: null,
+      commercialClusterer: null,
     };
   },
   computed: {
     ...mapState(dealStore, ["houses"]),
     ...mapState(commercialStore, ["commercials"]),
+    ...mapState(pollutionStore, ["pollutions"]),
   },
   watch: {
     houses() {
-      this.initMarker();
+      this.removeMarker();
+      this.displayMarkers(this.houses);
     },
     commercials() {
-      this.initMarker();
+      this.commercialClusterer.clear();
+      this.commercailMarkers = [];
+
+      this.displayCommercialMarkers(this.commercials);
+    },
+    pollutions() {
+      if (this.pollutions.length == 0) {
+        this.setPollutionMarkers(null);
+        this.pollutionMarkers = [];
+      } else {
+        this.displayPollutionMarkers(this.pollutions);
+      }
     },
   },
   mounted() {
@@ -135,8 +155,19 @@ export default {
         level: 3, // 지도의 확대 레벨
       };
       this.map = new kakao.maps.Map(container, options);
-
       this.clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        // disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+      });
+      this.commercialClusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        // disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+      });
+      this.pollutionClusterer = new kakao.maps.MarkerClusterer({
         map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 4, // 클러스터 할 최소 지도 레벨
@@ -144,12 +175,6 @@ export default {
       });
       // this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
       this.initMarker();
-    },
-    initMarker() {
-      this.removeMarker();
-      if (this.commercials && this.commercials.length > 0)
-        this.displayCommercialMarkers(this.commercials);
-      this.displayMarkers(this.houses);
     },
     changeSize(size) {
       const container = document.getElementById("map");
@@ -175,6 +200,7 @@ export default {
           placePosition,
           "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3e0.png"
         );
+        this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
         // var itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -210,6 +236,65 @@ export default {
       this.clusterer.addMarkers(this.markers);
       this.map.setBounds(bounds);
     },
+
+    displayCommercialMarkers(places) {
+      // var bounds = new kakao.maps.LatLngBounds();
+
+      for (var i = 0; i < places.length; i++) {
+        var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
+        var marker = this.addMarker(
+          placePosition,
+          places[i].code1 === "Q"
+            ? code2FoodCate[places[i].code2]
+            : code1Cate[places[i].code1]
+        );
+        this.commercailMarkers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        // bounds.extend(placePosition);
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function (marker, title, code, place, temp) {
+          kakao.maps.event.addListener(marker, "click", function () {
+            temp.displayInfowindow(marker, title, place);
+            console.log(title + " " + code);
+          });
+        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+      }
+      // let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {});
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+      this.commercialClusterer.addMarkers(this.commercailMarkers);
+      // this.map.setBounds(bounds);
+    },
+    displayPollutionMarkers(places) {
+      for (var i = 0; i < places.length; i++) {
+        var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
+        var marker = this.addMarker(
+          placePosition,
+          "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f332.png"
+        );
+        this.pollutionMarkers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function (marker, title, code, place, temp) {
+          kakao.maps.event.addListener(marker, "click", function () {
+            temp.displayInfowindow(marker, title, place);
+            console.log(title + " " + code);
+          });
+        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+      }
+      // let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {});
+
+      //맵에 환경 마커(클러스터러 아님) 추가
+      this.setPollutionMarkers(this.map);
+    },
     addMarker(position, imageSrc) {
       var imageSize = new kakao.maps.Size(30, 30), // 마커 이미지의 크기
         imgOptions = {
@@ -228,45 +313,11 @@ export default {
         });
 
       // marker.setMap(this.map); // 지도 위에 마커를 표출합니다
-      this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
+      // this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
 
       return marker;
     },
-    displayCommercialMarkers(places) {
-      console.log(places + "상권표시");
-      var bounds = new kakao.maps.LatLngBounds();
 
-      for (var i = 0; i < places.length; i++) {
-        var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng);
-        var marker = this.addMarker(
-          placePosition,
-          places[i].code1 === "Q"
-            ? code2FoodCate[places[i].code2]
-            : code1Cate[places[i].code1]
-        );
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function (marker, title, code, place, temp) {
-          kakao.maps.event.addListener(marker, "click", function () {
-            temp.displayInfowindow(marker, title, place);
-            console.log(title + " " + code);
-          });
-        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
-      }
-      let temp = this;
-      kakao.maps.event.addListener(this.map, "click", function () {
-        console.log(temp);
-      });
-
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-      this.clusterer.addMarkers(this.markers);
-      this.map.setBounds(bounds);
-    },
     // 지도 위에 표시되고 있는 마커를 모두 제거합니다
     removeMarker() {
       // for (var i = 0; i < this.markers.length; i++) {
@@ -274,6 +325,11 @@ export default {
       // }
       this.clusterer.clear();
       this.markers = [];
+    },
+    setPollutionMarkers(map) {
+      for (var i = 0; i < this.pollutionMarkers.length; i++) {
+        this.pollutionMarkers[i].setMap(map);
+      }
     },
     getListItem(index, place) {
       var el = document.createElement("li");

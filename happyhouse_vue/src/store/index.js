@@ -8,6 +8,7 @@ import qnaStore from "@/store/modules/qnaStore.js";
 import dealStore from "@/store/modules/dealStore.js";
 import commercialStore from "@/store/modules/commercialStore.js";
 import interestStore from "@/store/modules/interestStore.js";
+import pollutionStore from "@/store/modules/pollutionStore.js";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     dealStore,
     commercialStore,
     interestStore,
+    pollutionStore,
   },
   plugins: [
     createPersistedState({

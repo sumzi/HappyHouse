@@ -135,6 +135,10 @@ export default {
       // console.log(this.sidoCode);
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
+      this.CLEAR_DONG_LIST();
+      this.dongCode = null;
+      this.SET_GUGUN(null);
+      this.SET_DONG(null);
 
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
@@ -142,6 +146,8 @@ export default {
       // 동도 같이 바꿈.
       this.CLEAR_DONG_LIST();
       this.dongCode = null;
+      this.SET_DONG(null);
+
       if (this.gugunCode) {
         this.getHouseListByGugun(this.gugunCode);
         this.getDong(this.gugunCode);
