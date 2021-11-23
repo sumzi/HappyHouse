@@ -1,83 +1,159 @@
 <template>
-  <v-container
-    v-if="house"
-    class="lighten-5 pa-16"
-    style="width: auto; height: 100%"
-  >
-    <v-row class="mb-1">
-      <v-col
-        ><h3>{{ house.아파트 }}</h3></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col cols="4"
-        ><v-img :src="require('@/assets/apt.png')" fluid-grow></v-img
-      ></v-col>
-      <v-col cols="8">
-        <br />
-        <v-row>
-          <v-col>
-            <v-alert show outlined color="success"
-              >아파트번호 : {{ house.aptCode }}</v-alert
-            >
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-alert show outlined color="success"
-              >아파트 이름 : {{ house.aptName }}
-            </v-alert>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-alert show outlined color="success"
-              >법정동 : {{ house.dongName }}
-            </v-alert>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-alert show outlined color="success"
-              >건축 연도 : {{ house.buildYear }}년</v-alert
-            >
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-alert show outlined text color="deep-orange"
-              >최근 거래금액 :
-              {{
-                (parseInt(house.recentPrice.replace(",", "")) * 10000) | price
-              }}원</v-alert
-            >
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-alert show outlined text color="deep-orange"
-              >검색결과 평균 거래금액 :
-              {{ (avgPrice * 10000) | price }}원</v-alert
-            >
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+    <v-container>
+      <v-icon left @click="goBack"> mdi-arrow-left </v-icon></v-container
+    >
+    <v-container>
+      <div class="mb-5 mt-8 text-center">
+        <h2>{{ this.house.aptName }}</h2>
+      </div>
+
+      <div class="d-flex justify-center">
+        <div>
+          <v-img
+            :src="require('@/assets/apt.png')"
+            height="400px"
+            width="400px"
+          ></v-img>
+        </div>
+        <div style="width: 400px" class="ml-4">
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th colspan="2">상세정보</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>시도</td>
+                  <td>
+                    {{ house.sidoName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>구군</td>
+                  <td>
+                    {{ house.gugunName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>동</td>
+                  <td>
+                    {{ house.dongName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>건축연도</td>
+                  <td>{{ house.buildYear }}</td>
+                </tr>
+                <tr>
+                  <td>지번</td>
+                  <td>{{ house.jibun }}</td>
+                </tr>
+                <tr>
+                  <td>최근거래금액</td>
+                  <td>
+                    {{
+                      (parseInt(house.recentPrice.replace(",", "")) * 10000)
+                        | price
+                    }}원
+                  </td>
+                </tr>
+                <tr>
+                  <td>지역 평균거래금액</td>
+                  <td>{{ (avgPrice * 10000) | price }}원</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </div>
+      </div>
+      <div class="d-flex justify-center">
+        <v-card class="mt-10 pa-5" width="800px" elevation="2">
+          <v-card-title>최근 거래 목록</v-card-title>
+          <v-card-text>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th>년</th>
+                    <th>월</th>
+                    <th>일</th>
+                    <th>거래 금액</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="deal in housedeals" :key="deal.no">
+                    <td>{{ deal.dealYear }}</td>
+                    <td>{{ deal.dealMonth }}</td>
+                    <td>{{ deal.dealDay }}</td>
+                    <td>{{ deal.dealAmount }} 만원</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card-text>
+        </v-card>
+      </div>
+      <div class="d-flex justify-center">
+        <v-card class="mt-10 pa-5" width="800px" elevation="2">
+          <v-card-title>주변 기반 시설</v-card-title>
+          <v-card-text>
+            <v-tabs color="success" v-model="tab">
+              <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab">
+              <v-tab-item v-for="(item, index) in items" :key="index">
+                <v-card flat>
+                  <v-card-text>
+                    <v-simple-table>
+                      <thead></thead>
+                      <tbody>
+                        <tr v-for="data in getInfraAll[index]" :key="data.id">
+                          <td>
+                            <strong>{{ data.distance }}</strong> m 이내에
+                            <v-tooltip right>
+                              <template v-slot:activator="{ on, attrs }">
+                                <strong v-bind="attrs" v-on="on">{{
+                                  data.place_name
+                                }}</strong>
+                              </template>
+                              <span>{{ data.address_name }}</span>
+                            </v-tooltip>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </v-simple-table>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+            </v-tabs-items>
+            <router-view />
+          </v-card-text>
+        </v-card>
+      </div>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 const dealStore = "dealStore";
+const infraStore = "infraStore";
 
 export default {
   name: "HouseDetail",
+  data() {
+    return {
+      tab: null,
+      items: ["학교", "편의점", "지하철", "병원", "카페", "문화시설"],
+    };
+  },
   computed: {
-    ...mapState(dealStore, ["house", "avgPrice"]),
-    // house() {
-    //   return this.$store.state.house;
-    // },
+    ...mapState(dealStore, ["house", "avgPrice", "housedeals"]),
+    ...mapGetters(infraStore, ["getInfraAll"]),
   },
   filters: {
     price(value) {
@@ -85,16 +161,22 @@ export default {
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
   },
+  methods: {
+    ...mapActions(infraStore, ["getInfraList"]),
+    ...mapActions(dealStore, ["getHouseDeal"]),
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
+  created() {
+    this.getInfraList({ x: this.house.lng, y: this.house.lat });
+    this.getHouseDeal(this.house.aptCode);
+  },
 };
 </script>
 
 <style scoped>
-div.col {
-  padding: 0 10px 0 10px;
-}
-.v-alert {
-  margin: 2px;
-  padding: 10px;
-  width: fit-content;
+a {
+  color: black;
 }
 </style>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.mapper.HouseMapMapper;
@@ -64,6 +65,10 @@ public class HouseMapperServiceImpl implements HappyHouseMapService {
 		}
 		int avg = Math.round((float)(sum / houseList.size()));
 		return avg;
+	}
+	@Override
+	public List<HouseDealDto> getAptDeal(String aptCode) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getAptDeal(aptCode);
 	}
 
 }

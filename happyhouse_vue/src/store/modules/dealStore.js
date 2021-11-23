@@ -12,6 +12,7 @@ export default {
     houses: [],
     house: null,
     avgPrice: 0,
+    housedeals: [],
   },
 
   getters: {},
@@ -59,6 +60,9 @@ export default {
     },
     SET_AVG_PRICE: (state, avgPrice) => {
       state.avgPrice = avgPrice;
+    },
+    SET_HOUSE_DEAL: (state, payload) => {
+      state.housedeals = payload;
     },
   },
 
@@ -152,6 +156,16 @@ export default {
           console.log(commit, reponse.data);
           commit("SET_HOUSE_LIST", reponse.data.houseList);
           commit("SET_AVG_PRICE", reponse.data.avgPrice);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getHouseDeal: ({ commit }, payload) => {
+      http
+        .get(`/map/apt/deal?aptCode=${payload}`)
+        .then((response) => {
+          commit("SET_HOUSE_DEAL", response.data.aptDealList);
         })
         .catch((error) => {
           console.log(error);

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.CommercialCodeDto;
 import com.ssafy.happyhouse.model.CommercialDto;
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.PollutionDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -181,6 +182,15 @@ public class HappyHouseMapController {
 		responseMap.put("pollutionList", pollutionList);
 		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
 	}
-
+	@ApiOperation(value = "아파트 거래목록", notes = "아파트 번호에 맞는 거래 목록을 반환한다", response = Map.class)
+	
+	@GetMapping("/apt/deal")
+	ResponseEntity<Map<String, Object>> getAptDeal(@RequestParam("aptCode") String aptCode)
+			throws Exception {
+		Map<String, Object> responseMap = new HashMap<>();
+		List<HouseDealDto> aptDealList = happyHouseMapService.getAptDeal(aptCode);
+		responseMap.put("aptDealList", aptDealList);
+		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
+	}
 
 }

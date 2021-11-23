@@ -7,6 +7,7 @@ import userStore from "@/store/modules/userStore.js";
 import qnaStore from "@/store/modules/qnaStore.js";
 import dealStore from "@/store/modules/dealStore.js";
 import interestStore from "@/store/modules/interestStore.js";
+import infraStore from "@/store/modules/infraStore.js";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     qnaStore,
     dealStore,
     interestStore,
+    infraStore,
   },
   plugins: [
     createPersistedState({

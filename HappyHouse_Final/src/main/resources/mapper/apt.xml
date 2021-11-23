@@ -71,5 +71,12 @@
 		on left(h.dongcode,5) = left(gu.guguncode,5)
 		where aptCode=#{aptCode}
 	</select>
+	
+	<select id="getAptDeal" parameterType="string" resultType="houseDealDto">
+		select * 
+		from housedeal 
+		where aptCode=#{aptCode}
+		limit 5;
+	</select>
 
 </mapper>

@@ -47,6 +47,11 @@ export default {
     // this.sidoList();
     this.CLEAR_SIDO_LIST();
     this.getSido();
+    console.log(this.$route.params.aptName);
+    if (this.$route.params.aptName) {
+      this.houseName = this.$route.params.aptName;
+      this.searchAptByName();
+    }
   },
   methods: {
     ...mapActions(dealStore, [

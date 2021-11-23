@@ -73,7 +73,7 @@ const routes = [
     path: "/deal",
     name: "Deal",
     component: Deal,
-    redirect: "/deal/house/map",
+    redirect: "/deal/house/map/",
     children: [
       {
         path: "house/map",

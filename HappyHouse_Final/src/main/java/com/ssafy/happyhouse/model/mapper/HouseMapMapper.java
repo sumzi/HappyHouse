@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.model.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 
@@ -16,5 +17,6 @@ public interface HouseMapMapper {
 	List<HouseInfoDto> getAptInGugun(String gugun) throws SQLException;
 	List<HouseInfoDto> getAptByName(String aptName) throws SQLException;
 	List<HouseInfoDto> getAptByCode(String aptCode) throws SQLException;
+	List<HouseDealDto> getAptDeal(String aptCode) throws SQLException;
 	
 }

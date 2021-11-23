@@ -37,7 +37,7 @@
                 ><v-list-item link>마이페이지</v-list-item></router-link
               >
               <router-link :to="{ name: 'InterestHouse' }"
-                ><v-list-item link>관심 매매</v-list-item></router-link
+                ><v-list-item link>관심 찜 목록</v-list-item></router-link
               >
               <router-link :to="{ name: 'InterestArea' }"
                 ><v-list-item link>관심 지역</v-list-item></router-link

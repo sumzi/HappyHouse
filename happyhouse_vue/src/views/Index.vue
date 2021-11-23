@@ -31,15 +31,17 @@
           <div id="index">
             <p id="title">Happy House</p>
             <p id="sub-title">당신의 행복한 집을 찾아보세요!</p>
-            <div class="d-flex justify-center mt-5">
+            <div class="d-flex justify-center">
               <div class="col-4">
                 <v-text-field
                   height="60px"
                   color="success"
                   prepend-inner-icon="mdi-map-marker"
-                  label="내 집 검색하기"
+                  label="건물명으로 검색하기"
                   solo
                   rounded
+                  v-model="aptName"
+                  @keyup.enter="searchApt"
                 ></v-text-field>
               </div>
             </div>
@@ -47,7 +49,93 @@
         </v-img>
       </div>
       <div class="section">
-        <area-air />
+        <div style="height: 60%; z-index: 10">
+          <v-carousel
+            cycle
+            hide-delimiter-background
+            show-arrows-on-hover
+            style="height: 100%"
+          >
+            <v-carousel-item v-for="(slide, i) in slides" :key="i">
+              <v-sheet :color="colors[i]" height="100%">
+                <v-row class="fill-height" align="center" justify="center">
+                  <div class="text-h2">{{ slide }} Slide</div>
+                </v-row>
+              </v-sheet>
+            </v-carousel-item>
+          </v-carousel>
+        </div>
+        <div
+          style="z-index: 10; height: 40%"
+          class="d-flex justify-space-around"
+        >
+          <v-card width="50%" elevation="5" class="ma-10 mt-0 pa-3">
+            <v-card-title class="d-flex justify-space-between">
+              <div>공지사항</div>
+              <div>
+                <router-link :to="{ name: 'NoticeList' }">➕</router-link>
+              </div>
+            </v-card-title>
+            <v-card-text>
+              <v-simple-table
+                ><thead>
+                  <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="notice in noticeList"
+                    :key="notice.no"
+                    @click="selectNotice(notice.no)"
+                  >
+                    <td>{{ notice.no }}</td>
+                    <td>{{ notice.title }}</td>
+                    <td>{{ notice.userId }}</td>
+                    <td>{{ notice.ndate }}</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+          </v-card>
+          <v-card
+            width="50%"
+            elevation="5"
+            class="ma-10 mt-0 pa-3 overflow-y-auto"
+          >
+            <v-card-title class="d-flex justify-space-between">
+              <div>Q & A</div>
+              <div><router-link :to="{ name: 'QnAList' }">➕</router-link></div>
+            </v-card-title>
+            <v-card-text overline>
+              <v-simple-table
+                ><thead>
+                  <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="qna in qnaList"
+                    :key="qna.no"
+                    @click="selectQnA(qna.no)"
+                  >
+                    <td>{{ qna.no }}</td>
+                    <td>{{ qna.title }}</td>
+                    <td>{{ qna.userId }}</td>
+                    <td>{{ qna.ndate }}</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+          </v-card>
+        </div>
       </div>
       <div class="section"></div>
     </full-page>
@@ -55,19 +143,25 @@
 </template>
 
 <script>
-import AreaAir from "@/components/interest/AreaAir.vue";
 import { mapState } from "vuex";
 import axios from "axios";
+import http from "@/util/http-common.js";
 export default {
   name: "app",
-  components: {
-    AreaAir,
-  },
+  components: {},
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
   data() {
     return {
+      colors: [
+        "indigo",
+        "warning",
+        "pink darken-2",
+        "red lighten-1",
+        "deep-purple accent-4",
+      ],
+      slides: ["First", "Second", "Third"],
       bgImage: "",
       options: {
         licenseKey: "YOUR_KEY_HERE",
@@ -79,6 +173,9 @@ export default {
         anchors: ["page1", "page2", "page3"],
         sectionsColor: ["#fff", "lightgray", "#fff"],
       },
+      aptName: "",
+      noticeList: [],
+      qnaList: [],
     };
   },
   created() {
@@ -91,8 +188,28 @@ export default {
         },
       })
       .then((res) => (this.bgImage = res.data[0].urls.full));
+    http.get("/qna?spp=3").then((response) => {
+      this.qnaList = response.data.qnaList;
+    });
+    http.get("/notice?spp=3").then((response) => {
+      this.noticeList = response.data.noticeList;
+    });
   },
-  methods: {},
+  methods: {
+    searchApt() {
+      if (this.aptName.trim() !== "")
+        this.$router.push({
+          name: "HouseComp",
+          params: { aptName: this.aptName },
+        });
+    },
+    selectNotice(no) {
+      this.$router.push({ name: "NoticeSearch", params: { no: no } });
+    },
+    selectQnA(no) {
+      this.$router.push({ name: "QnASearch", params: { no: no } });
+    },
+  },
 };
 </script>
 

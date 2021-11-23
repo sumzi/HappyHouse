@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-8 pa-3" elevation="3" width="400px">
+  <v-card class="ma-8 pa-3" elevation="3" width="400px" @click="moveDetail">
     <v-card-title>
       <span>{{ house.aptName }}</span></v-card-title
     >
@@ -37,6 +37,11 @@ export default {
   },
   methods: {
     ...mapActions("interestStore", ["getInterestHouse"]),
+    ...mapActions("dealStore", ["detailHouse"]),
+    moveDetail() {
+      this.detailHouse(this.house);
+      this.$router.push({ name: "HouseDetail" });
+    },
     unlike() {
       http
         .delete("/house/unlike", {

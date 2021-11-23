@@ -2,7 +2,7 @@
   <div>
     <header-nav />
     <v-container class="text-center mt-8">
-      <h2>관심 매매 목록</h2>
+      <h2>관심 찜 목록</h2>
     </v-container>
     <v-container style="width: 65%" class="">
       <v-layout text-xs-center row wrap>

@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.service;
 
 import java.util.List;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 
@@ -14,5 +15,6 @@ public interface HappyHouseMapService {
 	List<HouseInfoDto> getAptInGugun(String gugun) throws Exception;
 	List<HouseInfoDto> getAptByName(String aptName) throws Exception;
 	List<HouseInfoDto> getAptByCode(String aptCode) throws Exception;
+	List<HouseDealDto> getAptDeal(String aptCode) throws Exception;
 	int getAptAvgPrice(List<HouseInfoDto> houseList);
 }

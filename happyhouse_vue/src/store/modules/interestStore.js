@@ -1,4 +1,5 @@
 import http from "@/util/http-common.js";
+
 export default {
   namespaced: true,
   state: {
