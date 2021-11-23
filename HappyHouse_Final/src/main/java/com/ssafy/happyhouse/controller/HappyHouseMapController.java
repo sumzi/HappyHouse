@@ -181,7 +181,7 @@ public class HappyHouseMapController {
 			@RequestBody @ApiParam(value = "구코드와 분류코드가 담긴 정보", required = true) CommercialCodeDto codes)
 			throws Exception {
 		logger.debug("commercialInGugun............................");
-		logger.debug("codes:{}",codes);
+		logger.debug("codes:{}", codes);
 		Map<String, Object> responseMap = new HashMap<>();
 		List<CommercialDto> commercialList = commercialService.getCommercialByGugun(codes);
 		responseMap.put("commercialList", commercialList);
@@ -207,11 +207,14 @@ public class HappyHouseMapController {
 		responseMap.put("pollutionList", pollutionList);
 		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 4076449436a72a5e1c2319958e9ffa6cc6a5a079
 	@ApiOperation(value = "아파트 거래목록", notes = "아파트 번호에 맞는 거래 목록을 반환한다", response = Map.class)
 	@GetMapping("/apt/deal")
-	ResponseEntity<Map<String, Object>> getAptDeal(@RequestParam("aptCode") String aptCode)
-			throws Exception {
+	ResponseEntity<Map<String, Object>> getAptDeal(@RequestParam("aptCode") String aptCode) throws Exception {
 		Map<String, Object> responseMap = new HashMap<>();
 		List<HouseDealDto> aptDealList = happyHouseMapService.getAptDeal(aptCode);
 		responseMap.put("aptDealList", aptDealList);
