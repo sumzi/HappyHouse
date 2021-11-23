@@ -28,21 +28,21 @@
 	</sql>
 
 	<select id="getCode1" parameterType="string" resultType="commercialCodeDto">
-		select code, codename
+		select code as code1, codename as codename1
 		from commercialcode
 		where codetype = 1
 	</select>
 	
 	<select id="getCode2" parameterType="string" resultType="commercialCodeDto">
-		select code, codename
+		select code as code2, codename as codename2
 		from commercialcode
-		where codetype = 2 and codeup
+		where codetype = 2 and codeup = #{code1}
 	</select>
 	
 	<select id="getCode3" parameterType="string" resultType="commercialCodeDto">
-		select code, codename
+		select code as code3, codename as codename3
 		from commercialcode
-		where codetype = 3 and codeup
+		where codetype = 3 and codeup = #{code2}
 	</select>
 	
 	
@@ -51,7 +51,7 @@
 		from commercialarea
 		<where>
 			<include refid="search"/>
-			and gucode = #{gucode}
+			and gucode = #{guguncode}
 		</where>
 	</select>
 	
@@ -69,7 +69,7 @@
 		from commercialarea
 		<where>
 			<include refid="search"/>
-			and gucode = #{gucode}
+			and gucode = #{guguncode}
 		</where>
 	</select>
 	

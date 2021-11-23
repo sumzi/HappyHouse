@@ -18,18 +18,18 @@
 		</choose>
 	</sql> -->
 	
-	<select id="getCommercialByGugun" parameterType="string" resultType="commercialDto">
+	<select id="getPollutionByGugun" parameterType="string" resultType="commercialDto">
 		select * 
 		from pollution p
-		where dongcode = #{gugun}
+		where dongcode = #{gugun} and bizcode = 1000
 	</select>
 	
-	<select id="getCommercialByDong" parameterType="string" resultType="commercialDto">
+	<select id="getPollutionByDong" parameterType="string" resultType="commercialDto">
 		select * 
 		from pollution p
 		left join dongcode d
-		on dongName = dong and p.dongcode = left(d.dongCode,5);
-		where d.dongCode = #{dong}
+		on dongName = dong and p.dongcode = left(d.dongCode,5)
+		where d.dongCode = #{dong} and bizcode = 1000
 	</select>	
 	
 	<!-- 참고사항 -->

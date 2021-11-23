@@ -33,7 +33,11 @@ export default {
       gugunCode: null,
       dongCode: null,
       houseName: "",
-      nameRules: [(v) => v.length <= 20 || "검색어는 20자 이하여야 합니다."],
+      nameRules: [
+        (v) =>
+          (v.length <= 20 && v.length > 0) ||
+          "검색어는 1자 이상 20자 이하여야 합니다.",
+      ],
     };
   },
   computed: {
@@ -42,6 +46,7 @@ export default {
     //   return this.$store.state.sidos;
     // },
   },
+<<<<<<< HEAD
   created() {
     // this.$store.dispatch("getSido");
     // this.sidoList();
@@ -53,6 +58,8 @@ export default {
       this.searchAptByName();
     }
   },
+=======
+>>>>>>> 948bae8784751bb1f444f084942317818ea30cb1
   methods: {
     ...mapActions(dealStore, [
       "getSido",
@@ -90,7 +97,8 @@ export default {
       if (this.dongCode) this.getHouseListByDong(this.dongCode);
     },
     searchAptByName() {
-      this.getHouseListByName(this.houseName);
+      if (this.houseName.length > 0 && this.houseName.length <= 20)
+        this.getHouseListByName(this.houseName);
     },
   },
 };

@@ -19,7 +19,7 @@ public class CommercialCodeDto {
 	private String codename3;	
 	
 	@ApiModelProperty(value = "구코드")
-	private String gucode;
+	private String guguncode;
 	
 	@ApiModelProperty(value = "동코드")
 	private String dongcode;
@@ -78,12 +78,11 @@ public class CommercialCodeDto {
 		this.codetype = codetype;
 	}
 	
-	
-	public String getGucode() {
-		return gucode;
+	public String getGuguncode() {
+		return guguncode;
 	}
-	public void setGucode(String gucode) {
-		this.gucode = gucode;
+	public void setGuguncode(String guguncode) {
+		this.guguncode = guguncode;
 	}
 	public String getDongcode() {
 		return dongcode;
@@ -113,7 +112,7 @@ public class CommercialCodeDto {
 	@Override
 	public String toString() {
 		return "CommercialCodeDto [code1=" + code1 + ", codename1=" + codename1 + ", code2=" + code2 + ", codename2="
-				+ codename2 + ", code3=" + code3 + ", codename3=" + codename3 + ", gucode=" + gucode + ", dongcode="
+				+ codename2 + ", code3=" + code3 + ", codename3=" + codename3 + ", guguncode=" + guguncode + ", dongcode="
 				+ dongcode + ", lng=" + lng + ", lat=" + lat + ", dist=" + dist + ", codetype=" + codetype + "]";
 	}
 	
