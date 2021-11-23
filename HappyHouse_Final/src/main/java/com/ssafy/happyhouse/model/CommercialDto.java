@@ -8,8 +8,12 @@ public class CommercialDto {
 	private String shopname;
 	private String localname;
 	private String code1;
+	private String codename1;
 	private String code2;
+	private String codename2;
 	private String code3;
+	private String codename3;
+	private String codename4;
 	private String gucode;
 	private String dongcode;
 	private String address;
@@ -153,12 +157,57 @@ public class CommercialDto {
 		this.lng = lng;
 	}
 
+	
+
+	public String getCodename1() {
+		return codename1;
+	}
+
+
+	public void setCodename1(String codename1) {
+		this.codename1 = codename1;
+	}
+
+
+	public String getCodename2() {
+		return codename2;
+	}
+
+
+	public void setCodename2(String codename2) {
+		this.codename2 = codename2;
+	}
+
+
+	public String getCodename3() {
+		return codename3;
+	}
+
+
+	public void setCodename3(String codename3) {
+		this.codename3 = codename3;
+	}
+	
+	
+
+
+	public String getCodename4() {
+		return codename4;
+	}
+
+
+	public void setCodename4(String codename4) {
+		this.codename4 = codename4;
+	}
+
 
 	@Override
 	public String toString() {
 		return "CommercialDto [no=" + no + ", shopname=" + shopname + ", localname=" + localname + ", code1=" + code1
-				+ ", code2=" + code2 + ", gucode=" + gucode + ", dongcode=" + dongcode + ", address=" + address
-				+ ", jibuaddress=" + jibuaddress + ", lat=" + lat + ", lng=" + lng + "]";
+				+ ", codename1=" + codename1 + ", code2=" + code2 + ", codename2=" + codename2 + ", code3=" + code3
+				+ ", codename3=" + codename3 + ", codename4=" + codename4 + ", gucode=" + gucode + ", dongcode="
+				+ dongcode + ", address=" + address + ", jibuaddress=" + jibuaddress + ", lat=" + lat + ", lng=" + lng
+				+ "]";
 	}	
 	
 }

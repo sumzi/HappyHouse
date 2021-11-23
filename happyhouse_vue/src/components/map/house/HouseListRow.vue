@@ -1,10 +1,10 @@
 <template>
-  <li class="item" @click="selectHouse">
+  <li class="item" :id="'house' + num" @click="selectHouse">
     <div
       style="border: 1px solid lightgray"
       class="pa-2 mr-3 mt-3 d-flex justify-space-between"
-      @mouseover="colorChange(true)"
-      @mouseout="colorChange(false)"
+      @mouseover="mouseOnOut(true)"
+      @mouseout="mouseOnOut(false)"
       :class="{ 'mouse-over-bgcolor': isColor }"
     >
       <div class="markerbg">
@@ -59,14 +59,24 @@ export default {
       "likeHouse",
       "unlikeHouse",
     ]),
-    ...mapActions(dealStore, ["detailHouse"]),
+    ...mapActions(dealStore, [
+      "detailViewFlag",
+      "detailHouse",
+      "detailHouseClear",
+    ]),
     selectHouse() {
       // console.log("listRow : ", this.house);
       // this.$store.dispatch("getHouse", this.house);
       this.detailHouse(this.house);
       this.$router.push({ name: "HouseDetail" });
     },
-    colorChange(flag) {
+    mouseOnOut(flag) {
+      this.detailViewFlag(flag);
+      if (flag) {
+        this.detailHouse(this.house);
+      } else {
+        this.detailHouseClear();
+      }
       this.isColor = flag;
     },
     like() {

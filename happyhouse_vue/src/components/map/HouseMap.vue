@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import HouseAddressSearch from "@/components/map/house/HouseAddressSearch.vue";
 import CommercialSearch from "@/components/map/house/CommercialSearch.vue";
 import PollutionSearch from "@/components/map/house/PollutionSearch.vue";
@@ -87,7 +87,7 @@ const code2FoodCate = {
 code1Cate, code2FoodCate;
 
 export default {
-  name: "KakaoMap",
+  name: "HouseMap",
   components: {
     HouseAddressSearch,
     CommercialSearch,
@@ -106,11 +106,21 @@ export default {
     };
   },
   computed: {
-    ...mapState(dealStore, ["houses"]),
+    ...mapState(dealStore, ["houses", "house"]),
     ...mapState(commercialStore, ["commercials"]),
     ...mapState(pollutionStore, ["pollutions"]),
   },
   watch: {
+    house() {
+      console.log(this.house);
+      if (this.house) {
+        console.log(this.house + "동작");
+        var moveLatLon = new kakao.maps.LatLng(this.house.lat, this.house.lng);
+        this.map.setLevel(2, { anchor: moveLatLon, animate: true });
+
+        this.map.panTo(moveLatLon);
+      }
+    },
     houses() {
       this.removeMarker();
       this.displayMarkers(this.houses);
@@ -137,8 +147,20 @@ export default {
     } else {
       this.addKakaoMapScript();
     }
+    this.displayMarkers(this.houses);
   },
   methods: {
+    ...mapActions(dealStore, [
+      "detailViewFlag",
+      "detailHouse",
+      "detailHouseClear",
+    ]),
+    ...mapActions(commercialStore, [
+      "detailCommercial",
+      "detailCommercialClear",
+    ]),
+    ...mapActions(pollutionStore, ["detailPollution", "detailPollutionClear"]),
+
     addKakaoMapScript() {
       const script = document.createElement("script");
       /* global kakao */
@@ -146,7 +168,6 @@ export default {
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=clusterer";
       document.head.appendChild(script);
-      console.log(script);
     },
     initMap() {
       const container = document.getElementById("map");
@@ -174,7 +195,6 @@ export default {
         // disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
       });
       // this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-      this.initMarker();
     },
     changeSize(size) {
       const container = document.getElementById("map");
@@ -182,7 +202,7 @@ export default {
       container.style.height = `${size}px`;
       this.map.relayout();
     },
-    displayMarkers(places) {
+    async displayMarkers(places) {
       console.log(this.map + "MAP");
       // var listEl = document.getElementById("placesList"),
       //   menuEl = document.getElementById("menu_wrap"),
@@ -209,10 +229,13 @@ export default {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function (marker, title, code, place, temp) {
+        (function (marker, place, temp) {
           kakao.maps.event.addListener(marker, "click", function () {
-            temp.displayInfowindow(marker, title, place);
-            console.log(title + " " + code);
+            temp.detailCommercialClear();
+            temp.detailPollutionClear();
+            temp.detailHouse(place);
+            temp.detailViewFlag(true);
+            console.log("집: " + place);
           });
           // itemEl.onmouseover = function () {
           //   temp.displayInfowindow(marker, title, place);
@@ -221,13 +244,13 @@ export default {
           // itemEl.onmouseout = function () {
           //   temp.customOverlay.setMap(null);
           // };
-        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+        })(marker, places[i], this);
         // fragment.appendChild(itemEl);
       }
       let temp = this;
       kakao.maps.event.addListener(this.map, "click", function () {
-        console.log(temp.customOverlay);
-        if (temp.customOverlay) temp.customOverlay.setMap(null);
+        temp.detailViewFlag(false);
+        temp.detailHouseClear();
       });
       // listEl.appendChild(fragment);
       // menuEl.scrollTop = 0;
@@ -256,15 +279,21 @@ export default {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function (marker, title, code, place, temp) {
+        (function (marker, place, temp) {
           kakao.maps.event.addListener(marker, "click", function () {
-            temp.displayInfowindow(marker, title, place);
-            console.log(title + " " + code);
+            temp.detailHouseClear();
+            temp.detailPollutionClear();
+            temp.detailCommercial(place);
+            temp.detailViewFlag(true);
+            console.log("상권: " + place);
           });
-        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+        })(marker, places[i], this);
       }
-      // let temp = this;
-      kakao.maps.event.addListener(this.map, "click", function () {});
+      let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {
+        temp.detailViewFlag(false);
+        temp.detailCommercialClear();
+      });
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       this.commercialClusterer.addMarkers(this.commercailMarkers);
@@ -282,15 +311,20 @@ export default {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function (marker, title, code, place, temp) {
+        (function (marker, place, temp) {
           kakao.maps.event.addListener(marker, "click", function () {
-            temp.displayInfowindow(marker, title, place);
-            console.log(title + " " + code);
+            temp.detailHouseClear();
+            temp.detailCommercialClear();
+            temp.detailPollution(place);
+            temp.detailViewFlag(true);
           });
-        })(marker, places[i].aptName, places[i].aptCode, places[i], this);
+        })(marker, places[i], this);
       }
-      // let temp = this;
-      kakao.maps.event.addListener(this.map, "click", function () {});
+      let temp = this;
+      kakao.maps.event.addListener(this.map, "click", function () {
+        temp.detailViewFlag(false);
+        temp.detailPollutionClear();
+      });
 
       //맵에 환경 마커(클러스터러 아님) 추가
       this.setPollutionMarkers(this.map);

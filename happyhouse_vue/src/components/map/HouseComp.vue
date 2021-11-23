@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <detail-pre-view id="previewPopup" v-if="isDetailView"></detail-pre-view>
   </div>
 </template>
 
@@ -23,6 +24,8 @@
 import HouseMap from "@/components/map/HouseMap.vue";
 import HouseList from "@/components/map/house/HouseList.vue";
 import HouseNameSearch from "@/components/map/house/HouseNameSearch.vue";
+import DetailPreView from "@/components/map/house/DetailPreView.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "HouseComp",
@@ -30,6 +33,16 @@ export default {
     HouseMap,
     HouseList,
     HouseNameSearch,
+    DetailPreView,
+  },
+
+  computed: {
+    ...mapState("dealStore", ["isDetailView"]),
+  },
+  watch: {
+    isDetailView() {
+      console.log("작동");
+    },
   },
 };
 </script>
@@ -42,5 +55,14 @@ export default {
     rgba(255, 255, 255, 0) 70%,
     rgba(231, 149, 27, 0.3) 30%
   );
+}
+#previewPopup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  width: 400px;
+  height: 600px;
+  background-color: white;
 }
 </style>

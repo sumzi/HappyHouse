@@ -13,6 +13,7 @@ export default {
     house: null,
     avgPrice: 0,
     housedeals: [],
+    isDetailView: false,
   },
 
   getters: {},
@@ -58,11 +59,17 @@ export default {
     SET_DETAIL_HOUSE: (state, house) => {
       state.house = house;
     },
+    CLEAR_DETAIL_HOUSE: (state) => {
+      state.house = null;
+    },
     SET_AVG_PRICE: (state, avgPrice) => {
       state.avgPrice = avgPrice;
     },
     SET_HOUSE_DEAL: (state, payload) => {
       state.housedeals = payload;
+    },
+    SET_DETAIL_VIEW_FLAG: (state, flag) => {
+      state.isDetailView = flag;
     },
   },
 
@@ -168,9 +175,17 @@ export default {
           console.log(error);
         });
     },
+    detailViewFlag: ({ commit }, flag) => {
+      // 나중에 house.일련번호를 이용하여 API 호출
+      commit("SET_DETAIL_VIEW_FLAG", flag);
+    },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
+    },
+    detailHouseClear: ({ commit }) => {
+      // 나중에 house.일련번호를 이용하여 API 호출
+      commit("CLEAR_DETAIL_HOUSE");
     },
   },
 };

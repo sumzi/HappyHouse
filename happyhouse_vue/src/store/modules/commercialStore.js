@@ -194,5 +194,9 @@ export default {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_COMMERCIAL", commercial);
     },
+    detailCommercialClear: ({ commit }) => {
+      // 나중에 house.일련번호를 이용하여 API 호출
+      commit("CLEAR_DETAIL_COMMERCIAL");
+    },
   },
 };

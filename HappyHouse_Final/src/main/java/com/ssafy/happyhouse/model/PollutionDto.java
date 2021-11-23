@@ -2,11 +2,13 @@ package com.ssafy.happyhouse.model;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "CommercialDto : 환경 정보 dto", description = "환경 정보를 표현하는데 사용한다.")
+@ApiModel(value = "PollutionDto : 환경 정보 dto", description = "환경 정보를 표현하는데 사용한다.")
 public class PollutionDto {
 	private String no;
 	private String name;
 	private String dongcode;
+	private String sidoName;
+	private String gugunName;
 	
 	private String bizcode;
 	
@@ -48,9 +50,23 @@ public class PollutionDto {
 	public void setLat(String lat) {
 		this.lat = lat;
 	}
+	public String getGugunName() {
+		return gugunName;
+	}
+	public void setGugunName(String gugunName) {
+		this.gugunName = gugunName;
+	}
+	
+	public String getSidoName() {
+		return sidoName;
+	}
+	public void setSidoName(String sidoName) {
+		this.sidoName = sidoName;
+	}
 	@Override
 	public String toString() {
-		return "PollutionDto [no=" + no + ", name=" + name + ", dongcode=" + dongcode + ", bizcode=" + bizcode
-				+ ", lng=" + lng + ", lat=" + lat + "]";
+		return "PollutionDto [no=" + no + ", name=" + name + ", dongcode=" + dongcode + ", sidoName=" + sidoName
+				+ ", gugunName=" + gugunName + ", bizcode=" + bizcode + ", lng=" + lng + ", lat=" + lat + "]";
 	}
+		
 }
