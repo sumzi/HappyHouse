@@ -9,6 +9,7 @@ import dealStore from "@/store/modules/dealStore.js";
 import commercialStore from "@/store/modules/commercialStore.js";
 import interestStore from "@/store/modules/interestStore.js";
 import infraStore from "@/store/modules/infraStore.js";
+import pollutionStore from "@/store/modules/pollutionStore.js";
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     commercialStore,
     interestStore,
     infraStore,
+    pollutionStore,
   },
   plugins: [
     createPersistedState({
