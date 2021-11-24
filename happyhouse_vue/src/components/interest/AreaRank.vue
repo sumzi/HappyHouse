@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "AreaRank",
   computed: {
@@ -39,11 +39,9 @@ export default {
     ...mapState("interestStore", ["interestAreaUser", "interestArea"]),
   },
   created() {
-    this.getHouseListByDong(this.interestArea);
     console.log(this.houses);
   },
   methods: {
-    ...mapActions("dealStore", ["getHouseListByDong", "detailHouse"]),
     moveDetail(house) {
       this.detailHouse(house);
       this.$router.push({ name: "HouseDetail" });

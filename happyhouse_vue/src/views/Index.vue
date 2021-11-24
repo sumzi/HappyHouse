@@ -190,6 +190,7 @@ export default {
         },
       })
       .then((res) => (this.bgImage = res.data[0].urls.full));
+    this.getInterestArea();
     http.get("/qna?spp=3").then((response) => {
       this.qnaList = response.data.qnaList;
     });
@@ -197,9 +198,10 @@ export default {
       this.noticeList = response.data;
     });
     this.getHouseRank();
-    this.getInterestArea();
+    this.findArea();
   },
   methods: {
+    ...mapActions("dealStore", ["getHouseListByDong", "detailHouse"]),
     ...mapActions("interestStore", ["getHouseRank", "getInterestArea"]),
     searchApt() {
       if (this.aptName.trim() !== "")
@@ -213,6 +215,10 @@ export default {
     },
     selectQnA(no) {
       this.$router.push({ name: "QnASearch", params: { no: no } });
+    },
+    async findArea() {
+      await this.getInterestArea();
+      await this.getHouseListByDong(this.interestArea);
     },
   },
 };

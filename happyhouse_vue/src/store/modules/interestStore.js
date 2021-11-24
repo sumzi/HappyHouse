@@ -23,6 +23,7 @@ export default {
     },
     SET_INTEREST_AREA_RANK(state, payload) {
       state.interestArea = payload;
+      console.log("!")
     },
     SET_INTEREST_AREA_USER(state, payload) {
       state.interestAreaUser = payload;
@@ -62,8 +63,8 @@ export default {
         }
       });
     },
-    getInterestArea({ commit }) {
-      http.get("interest/area/rank").then((response) => {
+    async getInterestArea({ commit }) {
+      await http.get("interest/area/rank").then((response) => {
         if (response.data.message === "success") {
           commit("SET_INTEREST_AREA_RANK", response.data.interestAreaRank);
         }

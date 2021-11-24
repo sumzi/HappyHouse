@@ -3,7 +3,7 @@
     <header-nav />
     <div class="d-flex justify-center">
       <div class="col-6">
-        <v-img src="@/assets/intro.jpg" lazy-src="@/assets/intro.jpg"> </v-img>
+        <v-img src="@/assets/intro.jpg"> </v-img>
         <p>
           <strong>Happy House</strong>는 국토교통부 공공기관이 생성 또는
           취득하여 관리하고 있는 전국 아파트 실거래 매매 데이터를 제공하는

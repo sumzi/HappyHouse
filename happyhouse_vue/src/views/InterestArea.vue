@@ -5,14 +5,24 @@
       <h2>관심 지역</h2>
     </v-container>
 
-    <div class="d-flex justify-center">
-      <div style="width: 600px">
-        <!--관심 지역이 없을때  -->
+    <v-dialog v-model="dialog" width="500">
+      <template
+        v-slot:activator="{ on, attrs }"
+        v-if="interestAreaUser === null"
+      >
         <div>
-          <house-address-search />
+          <v-btn rounded color="success" v-bind="attrs" v-on="on"> 등록 </v-btn>
         </div>
-      </div>
-    </div>
+      </template>
+      <template v-slot:activator="{ on, attrs }" v-else>
+        <div>
+          해당 지역을 알려준다
+          <v-btn rounded color="success" v-bind="attrs" v-on="on"> 수정 </v-btn>
+          <v-btn rounded color="success"> 삭제</v-btn>
+        </div>
+      </template>
+      <v-card> 주소 등록하는 공간 </v-card>
+    </v-dialog>
 
     <router-view />
   </div>
@@ -21,12 +31,15 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import HeaderNav from "../components/layout/HeaderNav.vue";
-import HouseAddressSearch from "../components/map/house/HouseAddressSearch.vue";
 export default {
   name: "InterestHouse",
   components: {
     HeaderNav,
-    HouseAddressSearch,
+  },
+  data() {
+    return {
+      dialog: false,
+    };
   },
   computed: {
     ...mapState("dealStore", [
@@ -50,9 +63,7 @@ export default {
   },
   created() {
     this.getInfraList({ y: 37.5743822, x: 126.9688505 });
-  },
-  mounted() {
-    console.log(this.getInfraAll);
+    console.log(this.interestAreaUser);
   },
 };
 </script>
