@@ -1,15 +1,15 @@
 <template>
   <div class="text-center mt-8">
     <v-card
-      max-width="500px"
-      max-height="600px"
+      max-width="660px"
+      max-height="800px"
       class="mx-auto overflow-y-auto"
     >
       <v-card-title>
         <span class="text-h4 font-weight-light">부동산 관련 뉴스</span>
       </v-card-title>
 
-      <v-list three-line>
+      <v-list three-line class="news_list">
         <template v-for="(article, index) in news">
           <news-list-row
             :key="index"
@@ -20,7 +20,7 @@
           </news-list-row>
 
           <v-divider
-            v-if="index != items.length - 1"
+            v-if="index != news.length - 1"
             :key="index"
             inset
           ></v-divider>
@@ -41,41 +41,6 @@ export default {
   },
   data() {
     return {
-      items: [
-        { header: "Today" },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Brunch this weekend?",
-          subtitle: `<span class="text--primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle: `<span class="text--primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Oui oui",
-          subtitle:
-            '<span class="text--primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-          title: "Birthday gift",
-          subtitle:
-            '<span class="text--primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
-          title: "Recipe to try",
-          subtitle:
-            '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        },
-      ],
       news: [],
       detailLink: [],
     };
@@ -101,4 +66,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.news_list {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  font-family: "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic",
+    "맑은 고딕", Dotum, "돋움", sans-serif;
+  font-size: 13px;
+  letter-spacing: -1px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+
+  text-align: left;
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
+}
+</style>

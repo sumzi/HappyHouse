@@ -146,8 +146,8 @@ export default {
       this.initMap();
     } else {
       this.addKakaoMapScript();
+      this.displayMarkers(this.houses);
     }
-    this.displayMarkers(this.houses);
   },
   methods: {
     ...mapActions(dealStore, [

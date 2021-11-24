@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <div v-html="pressLogo"></div>
-    <div v-html="title"></div>
-    <div v-html="content"></div>
-    <div v-html="byline"></div>
-  </div>
+  <v-card
+    max-width="800px"
+    max-height="800px"
+    class="mx-auto overflow-y-auto pa-5 mt-8"
+  >
+    <div>
+      <div v-html="pressLogo"></div>
+      <div v-html="title"></div>
+      <div class="news_content" v-html="content"></div>
+      <v-divider inset></v-divider>
+      <div class="text-right mt-2" v-html="byline"></div>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -42,4 +49,21 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.end_photo_org {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 24px;
+  text-align: center;
+  zoom: 1;
+}
+.end_photo_org .img_desc {
+  display: block;
+  padding-bottom: 50px;
+  color: #666;
+  letter-spacing: -0.3px;
+  line-height: 19px;
+  font-size: 12px;
+}
+</style>

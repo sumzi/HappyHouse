@@ -92,6 +92,7 @@ public class NewCrawlingController {
 		}
 		alist.tagName("div");
 		news.tagName("div");
+		news.attr("class", "news_item");
 
 		System.out.println(news.size() + "실행");
 		String[] elStrings = new String[elSize];

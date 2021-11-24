@@ -14,6 +14,9 @@
           <router-link :to="{ name: 'Deal' }">집찾기</router-link>
         </li>
         <li>
+          <router-link :to="{ name: 'News' }">뉴스</router-link>
+        </li>
+        <li>
           <router-link :to="{ name: 'Notice' }">공지사항</router-link>
         </li>
         <li>
@@ -56,6 +59,9 @@
         </li>
         <li>
           <router-link :to="{ name: 'Deal' }">집찾기</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'News' }">뉴스</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'Notice' }">공지사항</router-link>
