@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Index from "../views/Index.vue";
 import Notice from "../views/Notice.vue";
 import Deal from "../views/Deal.vue";
+import News from "../views/News.vue";
 import User from "../views/User.vue";
 import QnA from "../views/QnA.vue";
 import Login from "../views/Login.vue";
@@ -15,6 +16,9 @@ import InterestArea from "../views/InterestArea.vue";
 
 import HouseDetail from "../components/map/house/HouseDetail.vue";
 import HouseComp from "../components/map/HouseComp.vue";
+
+import NewsList from "../components/news/NewsList.vue";
+import NewsDetail from "../components/news/NewsDetail.vue";
 
 import NoticeList from "../components/notice/NoticeList.vue";
 import NoticeRegist from "../components/notice/NoticeRegist.vue";
@@ -84,6 +88,25 @@ const routes = [
         path: "house/detail",
         name: "HouseDetail",
         component: HouseDetail,
+      },
+    ],
+  },
+  {
+    path: "/news",
+    name: "News",
+    component: News,
+    redirect: "/news/list",
+    children: [
+      {
+        path: "list",
+        name: "NewsList",
+        component: NewsList,
+      },
+      {
+        path: "detail",
+        name: "NewsDetail",
+        component: NewsDetail,
+        props: true,
       },
     ],
   },

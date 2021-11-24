@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <detail-pre-view id="previewPopup" v-if="isDetailView"></detail-pre-view>
+    <detail-pre-view id="previewPopup" v-show="isDetailView"></detail-pre-view>
   </div>
 </template>
 
