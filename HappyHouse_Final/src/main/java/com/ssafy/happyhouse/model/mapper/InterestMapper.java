@@ -20,4 +20,7 @@ public interface InterestMapper {
 	void updateArea(InterestAreaDto interestArea) throws SQLException;
 	void deleteArea(String userId) throws SQLException;
 	String searchArea(String userId) throws SQLException;
+	
+	List<String> searchHouseRank() throws SQLException;
+	String searchAreaRank() throws SQLException;
 }

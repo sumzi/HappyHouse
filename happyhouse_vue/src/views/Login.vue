@@ -67,13 +67,14 @@ export default {
   methods: {
     ...mapActions("userStore", ["userLogin", "getUserInfo"]),
     ...mapMutations("userStore", ["USER_LOGIN"]),
-    ...mapActions("interestStore", ["getInterestHouse"]),
+    ...mapActions("interestStore", ["getInterestHouse", "getInterestAreaUser"]),
     async userCheck() {
       await this.userLogin(this.user);
 
       if (this.isLogin) {
         await this.getUserInfo(this.user.userId);
         await this.getInterestHouse(this.user.userId);
+        await this.getInterestAreaUser(this.user.userId);
         this.$router.push({ name: "Index" });
       } else {
         alert("로그인실패");

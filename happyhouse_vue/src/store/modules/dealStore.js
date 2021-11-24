@@ -14,6 +14,7 @@ export default {
     avgPrice: 0,
     housedeals: [],
     isDetailView: false,
+    prices: [],
   },
 
   getters: {},
@@ -70,6 +71,9 @@ export default {
     },
     SET_DETAIL_VIEW_FLAG: (state, flag) => {
       state.isDetailView = flag;
+    },
+    SET_PRICE_LIST: (state, payload) => {
+      state.prices = payload;
     },
   },
 
@@ -165,11 +169,20 @@ export default {
           console.log(error);
         });
     },
-    getHouseDeal: ({ commit }, payload) => {
+    getPrices({ commit }, payload) {
+      let datas = payload.map((deal) => {
+        let price = deal.dealAmount.trim().split(",").join("");
+        return parseInt(price);
+      });
+      commit("SET_PRICE_LIST", datas);
+    },
+    getHouseDeal: (store, payload) => {
       http
         .get(`/map/apt/deal?aptCode=${payload}`)
         .then((response) => {
-          commit("SET_HOUSE_DEAL", response.data.aptDealList);
+          // this.getPrices(response.data.aptDealList);//
+          store.dispatch("getPrices", response.data.aptDealList);
+          store.commit("SET_HOUSE_DEAL", response.data.aptDealList);
         })
         .catch((error) => {
           console.log(error);

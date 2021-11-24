@@ -45,4 +45,22 @@
 	<select id="searchArea" parameterType="string" resultType="string">
 		select dongCode from interestarea where userId=#{userId}
 	</select>
+	
+	<select id="searchHouseRank" resultType="string">
+		select aptCode 
+		from interesthouse 
+		group by aptCode 
+		order by count(aptCode) desc
+		limit 3;
+	</select>
+	
+	<select id="searchAreaRank" resultType="string">
+		select dongCode
+		from interestarea
+		group by dongCode 
+		order by count(dongCode) desc 
+		limit 1;
+	</select>
+	
+	
 </mapper>

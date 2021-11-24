@@ -24,7 +24,7 @@
         </div>
       </div>
       <div>
-        <div v-if="this.houselist.includes(house.aptCode)" @click.stop="unlike">
+        <div v-if="this.likelist.includes(house.aptCode)" @click.stop="unlike">
           💗
         </div>
         <div v-else @click.stop="like">🤍</div>
@@ -50,7 +50,7 @@ export default {
     num: Number,
   },
   computed: {
-    ...mapState("interestStore", ["houselist"]),
+    ...mapState("interestStore", ["likelist"]),
     ...mapState("userStore", ["userInfo"]),
   },
   methods: {

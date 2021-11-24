@@ -5,8 +5,8 @@
       <h2>관심 찜 목록</h2>
     </v-container>
     <v-container style="width: 65%" class="">
-      <v-layout text-xs-center row wrap v-if="houselist.length > 0">
-        <v-flex v-for="house in houselist" :key="house">
+      <v-layout text-xs-center row wrap v-if="likelist.length > 0">
+        <v-flex v-for="house in likelist" :key="house">
           <house-card v-bind="{ aptCode: house }" />
         </v-flex>
       </v-layout>
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState("userStore", ["userInfo"]),
-    ...mapState("interestStore", ["houselist"]),
+    ...mapState("interestStore", ["likelist"]),
   },
   methods: {
     ...mapActions("interestStore", ["getInterestHouse"]),

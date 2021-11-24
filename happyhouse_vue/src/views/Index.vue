@@ -49,27 +49,23 @@
         </v-img>
       </div>
       <div class="section">
-        <div style="height: 60%; z-index: 10">
-          <v-carousel
-            cycle
-            hide-delimiter-background
-            show-arrows-on-hover
-            style="height: 100%"
-          >
-            <v-carousel-item v-for="(slide, i) in slides" :key="i">
-              <v-sheet :color="colors[i]" height="100%">
-                <v-row class="fill-height" align="center" justify="center">
-                  <div class="text-h2">{{ slide }} Slide</div>
-                </v-row>
-              </v-sheet>
-            </v-carousel-item>
-          </v-carousel>
+        <div style="z-index: 10" class="d-flex justify-space-around">
+          <v-card width="50%" class="ma-15 pa-5" color="warning lighten-1" flat>
+            <v-card-title>🏢인기 아파트</v-card-title>
+            <div v-for="(house, idx) in houseRank" :key="house">
+              <house-rank-row v-bind="{ index: idx + 1, aptCode: house }" />
+            </div>
+          </v-card>
+          <v-card width="50%" class="ma-15 pa-5" color="red lighten-2" flat>
+            <v-card-title>👍🏻인기 지역 매매</v-card-title>
+            <div><area-rank /></div>
+          </v-card>
         </div>
         <div
-          style="z-index: 10; height: 40%"
+          style="z-index: 10; height: 320px"
           class="d-flex justify-space-around"
         >
-          <v-card width="50%" elevation="5" class="ma-10 mt-0 pa-3">
+          <v-card width="50%" class="ma-15 mt-0 mb-0 pa-5 overflow-y-auto" flat>
             <v-card-title class="d-flex justify-space-between">
               <div>공지사항</div>
               <div>
@@ -101,11 +97,7 @@
               </v-simple-table>
             </v-card-text>
           </v-card>
-          <v-card
-            width="50%"
-            elevation="5"
-            class="ma-10 mt-0 pa-3 overflow-y-auto"
-          >
+          <v-card width="50%" class="ma-15 mt-0 mb-0 pa-5 overflow-y-auto" flat>
             <v-card-title class="d-flex justify-space-between">
               <div>Q & A</div>
               <div><router-link :to="{ name: 'QnAList' }">➕</router-link></div>
@@ -143,14 +135,24 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import axios from "axios";
 import http from "@/util/http-common.js";
+import HouseRankRow from "@/components/interest/HouseRankRow";
+import AreaRank from "../components/interest/AreaRank.vue";
 export default {
   name: "app",
-  components: {},
+  components: {
+    HouseRankRow,
+    AreaRank,
+  },
   computed: {
     ...mapState("userStore", ["userInfo"]),
+    ...mapState("interestStore", [
+      "houseRank",
+      "interestAreaUser",
+      "interestArea",
+    ]),
   },
   data() {
     return {
@@ -192,10 +194,13 @@ export default {
       this.qnaList = response.data.qnaList;
     });
     http.get("/notice?spp=3").then((response) => {
-      this.noticeList = response.data.noticeList;
+      this.noticeList = response.data;
     });
+    this.getHouseRank();
+    this.getInterestArea();
   },
   methods: {
+    ...mapActions("interestStore", ["getHouseRank", "getInterestArea"]),
     searchApt() {
       if (this.aptName.trim() !== "")
         this.$router.push({

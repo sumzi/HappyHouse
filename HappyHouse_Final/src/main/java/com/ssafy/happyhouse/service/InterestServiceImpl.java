@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -69,5 +70,15 @@ public class InterestServiceImpl implements InterestService {
 	@Transactional
 	public String searchArea(String userId) throws Exception {
 		return sqlSession.getMapper(InterestMapper.class).searchArea(userId);
+	}
+
+	@Transactional
+	public List<String> searchHouseRank() throws SQLException {
+		return sqlSession.getMapper(InterestMapper.class).searchHouseRank();
+	}
+
+	@Transactional
+	public String searchAreaRank() throws SQLException {
+		return sqlSession.getMapper(InterestMapper.class).searchAreaRank();
 	}
 }

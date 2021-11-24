@@ -1,11 +1,23 @@
 <template>
   <div>
     <v-container>
-      <v-icon left @click="goBack"> mdi-arrow-left </v-icon></v-container
-    >
-    <v-container>
-      <div class="mb-5 mt-8 text-center">
-        <h2>{{ this.house.aptName }}</h2>
+      <div class="d-flex justify-center">
+        <div
+          class="mb-4 mt-8 d-flex justify-space-between"
+          style="width: 800px"
+        >
+          <v-icon @click="goBack" large> mdi-arrow-left </v-icon>
+          <h2>{{ this.house.aptName }}</h2>
+          <v-icon
+            @click="unlike"
+            large
+            color="red"
+            v-if="likelist.includes(this.house.aptCode)"
+          >
+            mdi-heart
+          </v-icon>
+          <v-icon @click="like" large v-else> mdi-heart-outline </v-icon>
+        </div>
       </div>
 
       <div class="d-flex justify-center">
@@ -53,16 +65,11 @@
                 </tr>
                 <tr>
                   <td>최근거래금액</td>
-                  <td>
-                    {{
-                      (parseInt(house.recentPrice.replace(",", "")) * 10000)
-                        | price
-                    }}원
-                  </td>
+                  <td>{{ house.recentPrice }} 만원</td>
                 </tr>
                 <tr>
                   <td>지역 평균거래금액</td>
-                  <td>{{ (avgPrice * 10000) | price }}원</td>
+                  <td>{{ avgPrice | price }} 만원</td>
                 </tr>
               </tbody>
             </template>
@@ -72,6 +79,21 @@
       <div class="d-flex justify-center">
         <v-card class="mt-10 pa-5" width="800px" elevation="2">
           <v-card-title>최근 거래 목록</v-card-title>
+          <v-card-text v-if="housedeals.length > 1">
+            <v-sheet color="grey lighten-4">
+              <v-sparkline
+                :value="prices"
+                :gradient="['#ffd200', '#1feaea']"
+                height="100"
+                padding="24"
+                stroke-linecap="round"
+                smooth
+                color="black"
+              >
+                <template v-slot:label="item"> {{ item.value }}만원 </template>
+              </v-sparkline>
+            </v-sheet>
+          </v-card-text>
           <v-card-text>
             <v-simple-table>
               <template v-slot:default>
@@ -142,6 +164,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 const dealStore = "dealStore";
 const infraStore = "infraStore";
+const interestStore = "interestStore";
 
 export default {
   name: "HouseDetail",
@@ -152,8 +175,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(dealStore, ["house", "avgPrice", "housedeals"]),
+    ...mapState(dealStore, ["house", "avgPrice", "housedeals", "prices"]),
     ...mapGetters(infraStore, ["getInfraAll"]),
+    ...mapState(interestStore, ["likelist"]),
+    ...mapState("userStore", ["userInfo"]),
   },
   filters: {
     price(value) {
@@ -162,10 +187,27 @@ export default {
     },
   },
   methods: {
+    ...mapActions("interestStore", [
+      "getInterestHouse",
+      "likeHouse",
+      "unlikeHouse",
+    ]),
     ...mapActions(infraStore, ["getInfraList"]),
     ...mapActions(dealStore, ["getHouseDeal"]),
     goBack() {
       this.$router.go(-1);
+    },
+    like() {
+      this.likeHouse({
+        userId: this.userInfo.userId,
+        aptCode: this.house.aptCode,
+      });
+    },
+    unlike() {
+      this.unlikeHouse({
+        userId: this.userInfo.userId,
+        aptCode: this.house.aptCode,
+      });
     },
   },
   created() {

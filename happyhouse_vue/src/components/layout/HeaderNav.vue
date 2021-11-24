@@ -83,9 +83,11 @@ export default {
   },
   methods: {
     ...mapMutations("userStore", ["SET_USER_INFO", "USER_LOGIN"]),
+    ...mapMutations("interestStore", ["SET_INTEREST_AREA_USER"]),
     userLogout() {
       this.SET_USER_INFO(null);
       this.USER_LOGIN(false);
+      this.SET_INTEREST_AREA_USER("");
       sessionStorage.removeItem("userId");
       if (this.$route.path != "/") this.$router.push({ name: "Index" });
     },
