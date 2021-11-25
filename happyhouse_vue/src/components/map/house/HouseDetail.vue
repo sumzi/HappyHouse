@@ -21,13 +21,8 @@
       </div>
 
       <div class="d-flex justify-center">
-        <div>
-          <v-img
-            :src="require('@/assets/apt.png')"
-            height="400px"
-            width="400px"
-          ></v-img>
-        </div>
+        <div id="map" style="width: 400px; height: 400px"></div>
+
         <div style="width: 400px" class="ml-4">
           <v-simple-table>
             <template v-slot:default>
@@ -172,6 +167,10 @@ export default {
     return {
       tab: null,
       items: ["학교", "편의점", "지하철", "병원", "카페", "문화시설"],
+      map: null,
+      markers: [],
+      infowindow: null,
+      customOverlay: null,
     };
   },
   computed: {
@@ -209,10 +208,60 @@ export default {
         aptCode: this.house.aptCode,
       });
     },
+    addKakaoMapScript() {
+      const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+      document.head.appendChild(script);
+    },
+    initMap() {
+      const container = document.getElementById("map");
+      const options = {
+        center: new kakao.maps.LatLng(this.house.lat, this.house.lng), // 지도의 중심좌표
+        level: 3, // 지도의 확대 레벨
+      };
+      this.map = new kakao.maps.Map(container, options);
+
+      var imageSize = new kakao.maps.Size(50, 50), // 마커 이미지의 크기
+        imgOptions = {
+          // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+          // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+          offset: new kakao.maps.Point(25, 25), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(
+          "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f3e0.png",
+          imageSize,
+          imgOptions
+        );
+      var markerPosition = new kakao.maps.LatLng(
+        this.house.lat,
+        this.house.lng
+      );
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+        image: markerImage,
+      });
+
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(this.map);
+      this.map.setDraggable(false);
+      this.map.setZoomable(false);
+    },
   },
   created() {
     this.getInfraList({ x: this.house.lng, y: this.house.lat });
     this.getHouseDeal(this.house.aptCode);
+    if (window.kakao && window.kakao.maps) {
+      // kakao.maps.load(this.initMap);
+      this.initMap();
+    } else {
+      this.addKakaoMapScript();
+    }
+    setTimeout(this.initMap, 200);
   },
 };
 </script>

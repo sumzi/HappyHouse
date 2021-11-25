@@ -144,7 +144,7 @@ export default {
       this.addKakaoMapScript();
     }
     if (this.houses.length != 0) {
-      setTimeout(this.displayMarkers, 200, this.houses);
+      setTimeout(this.displayMarkers, 500, this.houses);
     }
   },
   methods: {
