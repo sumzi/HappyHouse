@@ -36,11 +36,11 @@ export default {
     detailLink: String,
   },
   created() {
-    console.log(this.detailLink);
+    // console.log(this.detailLink);
     http
       .get("/news/detail", { params: { url: this.detailLink } })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         this.pressLogo = response.data.pressLogo;
         this.title = response.data.title;
         this.content = response.data.content;

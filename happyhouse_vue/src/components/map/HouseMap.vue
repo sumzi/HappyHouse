@@ -106,9 +106,9 @@ export default {
   },
   watch: {
     house() {
-      console.log(this.house);
+      // // console.log(this.house);
       if (this.house) {
-        console.log(this.house + "동작");
+        // console.log(this.house + "동작");
         var moveLatLon = new kakao.maps.LatLng(this.house.lat, this.house.lng);
         this.map.setLevel(2, { anchor: moveLatLon, animate: true });
 
@@ -166,9 +166,7 @@ export default {
     async addKakaoMapScript() {
       const script = document.createElement("script");
       /* global kakao */
-      console.log("여기까지");
       script.onload = () => kakao.maps.load(this.initMap);
-      console.log("여기까지 됨");
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=clusterer";
       document.head.appendChild(script);
@@ -207,7 +205,7 @@ export default {
       this.map.relayout();
     },
     displayMarkers(places) {
-      console.log(this.map + "MAP");
+      // console.log(this.map + "MAP");
       // var listEl = document.getElementById("placesList"),
       //   menuEl = document.getElementById("menu_wrap"),
       //   fragment = new DocumentFragment(),
@@ -239,7 +237,7 @@ export default {
             temp.detailPollutionClear();
             temp.detailHouse(place);
             temp.detailViewFlag(true);
-            console.log("집: " + place);
+            // console.log("집: " + place);
           });
           // itemEl.onmouseover = function () {
           //   temp.displayInfowindow(marker, title, place);
@@ -289,7 +287,7 @@ export default {
             temp.detailPollutionClear();
             temp.detailCommercial(place);
             temp.detailViewFlag(true);
-            console.log("상권: " + place);
+            // console.log("상권: " + place);
           });
         })(marker, places[i], this);
       }
@@ -385,7 +383,7 @@ export default {
       return el;
     },
     displayInfowindow(marker, title, place) {
-      console.log(title);
+      // // console.log(title);
       var content = `
         <div class="overlaybox">
           <div class="boxtitle">${title}</div>

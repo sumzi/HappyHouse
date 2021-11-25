@@ -67,9 +67,7 @@ export default {
       this.clearCate();
     },
   },
-  updated() {
-    console.log(this.gugun + "현재구군");
-  },
+  updated() {},
   mounted() {
     if (this.bgCate.length == 1) this.getBgCate();
   },

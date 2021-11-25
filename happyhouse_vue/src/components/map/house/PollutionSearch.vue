@@ -29,7 +29,6 @@ export default {
   created() {},
   updated() {
     if (this.activeCheck) {
-      console.log("환경 필터 동작");
       // if (this.dong) {
       //   this.getPollutionByDong(this.dong);
       // } else if (this.gugun) {
@@ -37,7 +36,6 @@ export default {
         this.getPollutionByGugun(this.gugun);
       }
     } else {
-      console.log("환경 필터 제거");
       this.CLEAR_POLLUTION_LIST();
       this.CLEAR_DETAIL_POLLUTION();
     }

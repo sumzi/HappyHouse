@@ -36,12 +36,12 @@ export default {
   computed: {},
   methods: {
     selectNews() {
-      // // console.log("listRow : ", this.house);
+      // // // console.log("listRow : ", this.house);
       // // this.$store.dispatch("getHouse", this.house);
       // this.detailHouse(this.house);
       // this.$router.push({ name: "NewsDetail" });
-      console.log("기사 클릭됨");
-      console.log(this.detailLink);
+      // console.log("기사 클릭됨");
+      // console.log(this.detailLink);
       this.$router.push({
         name: "NewsDetail",
         params: { detailLink: this.detailLink },
