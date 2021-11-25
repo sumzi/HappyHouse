@@ -21,4 +21,6 @@ public interface InterestService {
 	
 	List<String> searchHouseRank() throws SQLException;
 	String searchAreaRank() throws SQLException;
+	
+	InterestAreaDto searchAreaDongCode(String dongCode) throws SQLException;
 }

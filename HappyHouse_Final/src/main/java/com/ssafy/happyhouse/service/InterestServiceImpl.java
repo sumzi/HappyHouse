@@ -81,4 +81,9 @@ public class InterestServiceImpl implements InterestService {
 	public String searchAreaRank() throws SQLException {
 		return sqlSession.getMapper(InterestMapper.class).searchAreaRank();
 	}
+	
+	@Transactional
+	public InterestAreaDto searchAreaDongCode(String dongCode) throws SQLException {
+		return sqlSession.getMapper(InterestMapper.class).searchAreaDongCode(dongCode);
+	}
 }

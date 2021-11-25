@@ -7,6 +7,7 @@ export default {
     houseRank: [],
     interestArea: "",
     interestAreaUser: "",
+    address: {},
   },
   mutations: {
     SET_INTEREST_HOUSE_LIST(state, payload) {
@@ -23,10 +24,16 @@ export default {
     },
     SET_INTEREST_AREA_RANK(state, payload) {
       state.interestArea = payload;
-      console.log("!")
     },
     SET_INTEREST_AREA_USER(state, payload) {
       state.interestAreaUser = payload;
+    },
+    SET_INTEREST_AREA_ADDRESS(state, payload) {
+      state.address = {
+        sido: payload.sidoName,
+        gugun: payload.gugunName,
+        dong: payload.dongName,
+      };
     },
   },
   actions: {
@@ -74,6 +81,39 @@ export default {
       http.get(`interest/area/search/${userId}`).then((response) => {
         if (response.data.message === "success") {
           commit("SET_INTEREST_AREA_USER", response.data.interestAreaDongCode);
+        }
+      });
+    },
+    async getInterestAreaAddress({ commit }, dongCode) {
+      await http.get(`interest/area/code/${dongCode}`).then((response) => {
+        if (response.data.message === "success") {
+          commit("SET_INTEREST_AREA_ADDRESS", response.data.address);
+        }
+      });
+    },
+    async insertInterestArea({ commit }, payload) {
+      await http.post("interest/area/insert", payload).then((response) => {
+        if (response.data.message === "success") {
+          commit("SET_INTEREST_AREA_USER", payload.dongCode);
+        }
+      });
+    },
+    async updateInterestArea({ commit }, payload) {
+      await http.put("interest/area/update", payload).then((response) => {
+        if (response.data.message === "success") {
+          commit("SET_INTEREST_AREA_USER", payload.dongCode);
+        }
+      });
+    },
+    deleteInterestArea({ commit }, userId) {
+      http.delete(`interest/area/delete/${userId}`).then((response) => {
+        if (response.data.message === "success") {
+          commit("SET_INTEREST_AREA_USER", null);
+          commit("SET_INTEREST_AREA_ADDRESS", {
+            sidoCode: null,
+            gugunCode: null,
+            dongCode: null,
+          });
         }
       });
     },

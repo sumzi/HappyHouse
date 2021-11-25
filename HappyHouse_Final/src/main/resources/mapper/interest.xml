@@ -62,5 +62,11 @@
 		limit 1;
 	</select>
 	
+	<select id="searchAreaDongCode" parameterType="string" resultType="InterestAreaDto">
+		select sidoName, gugunName, dongName
+		from dongcode
+		where dongCode=#{dongCode}
+	</select>
+	
 	
 </mapper>

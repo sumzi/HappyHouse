@@ -23,4 +23,5 @@ public interface InterestMapper {
 	
 	List<String> searchHouseRank() throws SQLException;
 	String searchAreaRank() throws SQLException;
+	InterestAreaDto searchAreaDongCode(String dongCode) throws SQLException;
 }
