@@ -62,10 +62,6 @@
                   <td>최근거래금액</td>
                   <td>{{ house.recentPrice }} 만원</td>
                 </tr>
-                <tr>
-                  <td>지역 평균거래금액</td>
-                  <td>{{ avgPrice | price }} 만원</td>
-                </tr>
               </tbody>
             </template>
           </v-simple-table>

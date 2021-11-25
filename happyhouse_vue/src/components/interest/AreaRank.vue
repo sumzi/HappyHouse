@@ -23,7 +23,7 @@
             <div>
               {{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
             </div>
-            <div>거래금액: {{ house.recentPrice }}</div>
+            <div>거래금액: {{ house.recentPrice }} 만원</div>
           </div>
         </v-row>
       </v-sheet>
