@@ -204,7 +204,6 @@ export default {
     });
     this.getHouseRank();
     this.findArea();
-    this.getInterestAreaAddress(this.interestArea);
   },
   methods: {
     ...mapActions("interestStore", [
@@ -229,6 +228,7 @@ export default {
     async findArea() {
       await this.getInterestArea();
       await this.getInterestAreaList(this.interestArea);
+      await this.getInterestAreaAddress(this.interestArea);
     },
   },
 };

@@ -13,7 +13,11 @@
           <v-text-field label="name" v-model="user.userName"></v-text-field>
           <v-text-field label="email" v-model="user.userEmail"></v-text-field>
           <v-text-field label="phone" v-model="user.userPhone"></v-text-field>
-          <v-text-field label="password" v-model="user.userPw"></v-text-field>
+          <v-text-field
+            label="password"
+            v-model="user.userPw"
+            type="password"
+          ></v-text-field>
         </v-card-text>
 
         <v-card-actions class="d-flex justify-space-around">
@@ -49,7 +53,7 @@ export default {
         userName: "",
         userEmail: "",
         userPhone: "",
-        role: "nomal",
+        role: "",
       },
     };
   },
@@ -62,10 +66,14 @@ export default {
     this.user.userName = this.userInfo.userName;
     this.user.userEmail = this.userInfo.userEmail;
     this.user.userPhone = this.userInfo.userPhone;
+    this.user.role = this.userInfo.role;
   },
   methods: {
     ...mapMutations("userStore", ["SET_USER_INFO", "USER_LOGIN"]),
     updateUser() {
+      if (this.user.userPw === "") {
+        return alert("비밀번호를 입력하세요");
+      }
       http.put("/user", this.user).then((response) => {
         if (response.data.message === "success") {
           alert("회원수정 되었습니다.");
