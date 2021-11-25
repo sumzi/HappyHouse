@@ -1,4 +1,5 @@
 import http from "@/util/http-common.js";
+import axios from "axios";
 
 export default {
   namespaced: true,
@@ -9,6 +10,7 @@ export default {
     interestAreaUser: "",
     interestAreaList: [],
     address: {},
+    air: {},
   },
   mutations: {
     SET_INTEREST_HOUSE_LIST(state, payload) {
@@ -38,6 +40,9 @@ export default {
     },
     SET_INTEREST_AREA_LIST(state, payload) {
       state.interestAreaList = payload;
+    },
+    SET_AREA_AIR(state, payload) {
+      state.air = payload;
     },
   },
   actions: {
@@ -81,8 +86,8 @@ export default {
         }
       });
     },
-    getInterestAreaUser({ commit }, userId) {
-      http.get(`interest/area/search/${userId}`).then((response) => {
+    async getInterestAreaUser({ commit }, userId) {
+      await http.get(`interest/area/search/${userId}`).then((response) => {
         if (response.data.message === "success") {
           commit("SET_INTEREST_AREA_USER", response.data.interestAreaDongCode);
         }
@@ -109,8 +114,8 @@ export default {
         }
       });
     },
-    deleteInterestArea({ commit }, userId) {
-      http.delete(`interest/area/delete/${userId}`).then((response) => {
+    async deleteInterestArea({ commit }, userId) {
+      await http.delete(`interest/area/delete/${userId}`).then((response) => {
         if (response.data.message === "success") {
           commit("SET_INTEREST_AREA_USER", null);
           commit("SET_INTEREST_AREA_ADDRESS", {
@@ -125,10 +130,20 @@ export default {
       http
         .get(`/map/apt/dong?dong=${dongCode}`)
         .then((response) => {
+          
           commit("SET_INTEREST_AREA_LIST", response.data.houseList);
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+    async getAreaAir({ commit }, gugun) {
+      await axios
+        .get(
+          `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=${gugun}&dataTerm=month&pageNo=1&numOfRows=1&returnType=json&serviceKey=K7Wn8ITiQ1up51wuD3nvRKU24dRAJTj6ERIB%2Bjk2XoEkMdgrQXLHY7D%2Bg2%2FJDKtT%2BWwXLzaJEYvKTC72QbL1PA%3D%3D`
+        )
+        .then((response) => {
+          commit("SET_AREA_AIR", response.data.response.body.items[0]);
         });
     },
   },

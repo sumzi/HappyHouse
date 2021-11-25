@@ -90,7 +90,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div class="d-flex justify-center mt-10">
+    <div class="d-flex justify-center mt-10" v-if="interestAreaUser !== null">
       <area-air />
     </div>
 
@@ -100,7 +100,7 @@
 
 <script>
 import http from "@/util/http-common.js";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import HeaderNav from "../components/layout/HeaderNav.vue";
 import AreaAir from "../components/interest/AreaAir.vue";
 export default {
@@ -137,7 +137,9 @@ export default {
       "insertInterestArea",
       "updateInterestArea",
       "deleteInterestArea",
+      "getAreaAir",
     ]),
+    ...mapMutations("interestStore", ["SET_AREA_AIR"]),
     ...mapActions("infraStore", ["getInfraList"]),
     changeSido() {
       http.get(`/map/gugun?sido=${this.sidoCode}`).then((response) => {
@@ -163,6 +165,7 @@ export default {
           dongCode: this.dongCode,
         });
         await this.getInterestAreaAddress(this.interestAreaUser);
+        await this.getAreaAir(this.address.gugun);
         this.dialog = false;
       }
     },
@@ -173,11 +176,13 @@ export default {
           dongCode: this.dongCode,
         });
         await this.getInterestAreaAddress(this.interestAreaUser);
+        await this.getAreaAir(this.address.gugun);
         this.dialog = false;
       }
     },
-    deleteArea() {
-      this.deleteInterestArea(this.userInfo.userId);
+    async deleteArea() {
+      await this.deleteInterestArea(this.userInfo.userId);
+      this.SET_AREA_AIR(null);
       this.dialog = false;
     },
     check() {

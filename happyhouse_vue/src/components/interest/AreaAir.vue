@@ -5,22 +5,20 @@
       >의 미세먼지
     </h2>
     <h4 class="mt-9">
-      {{ grade[item.pm10Grade].state }}
+      {{ grade[air.pm10Grade].state }}
     </h4>
-    <h1 class="ma-3">{{ grade[item.pm10Grade].icon }}</h1>
-    <h3>{{ item.pm10Value }} ㎍/㎥</h3>
-    <h5>{{ item.dataTime }}</h5>
+    <h1 class="ma-3">{{ grade[air.pm10Grade].icon }}</h1>
+    <h3>{{ air.pm10Value }} ㎍/㎥</h3>
+    <h5>{{ air.dataTime }}</h5>
   </v-card>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import axios from "axios";
 export default {
   name: "AreaAir",
   data() {
     return {
-      item: {},
       grade: [
         "",
         { icon: "😍", state: "좋음", color: "lightblue" },
@@ -31,19 +29,9 @@ export default {
     };
   },
   computed: {
-    ...mapState("userStore", ["userInfo", "isLogin"]),
-    ...mapState("interestStore", ["address"]),
+    ...mapState("interestStore", ["address", "air"]),
   },
-  created() {
-    axios
-      .get(
-        `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=${this.address.gugun}&dataTerm=month&pageNo=1&numOfRows=1&returnType=json&serviceKey=K7Wn8ITiQ1up51wuD3nvRKU24dRAJTj6ERIB%2Bjk2XoEkMdgrQXLHY7D%2Bg2%2FJDKtT%2BWwXLzaJEYvKTC72QbL1PA%3D%3D`
-      )
-      .then((response) => {
-        this.item = response.data.response.body.items[0];
-        console.log(this.item);
-      });
-  },
+  created() {},
 };
 </script>
 

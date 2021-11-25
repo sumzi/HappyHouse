@@ -34,7 +34,6 @@ export default {
         .get(`/user/info/${id}`)
         .then((response) => {
           if (response.data.message === "success") {
-            // console.log(response)
             commit("SET_USER_INFO", response.data.userInfo);
           } else {
             console.log("유저 정보 없음!!");
