@@ -76,7 +76,7 @@
 
           <v-list-item-content>
             <v-list-item-title
-              >{{ (house.avgPrice * 10000) | price }} 원</v-list-item-title
+              >{{ (avgPrice * 10000) | price }} 원</v-list-item-title
             >
             <v-list-item-subtitle>검색 결과 평균거래금액</v-list-item-subtitle>
           </v-list-item-content>
@@ -220,7 +220,7 @@ const pollutionStore = "pollutionStore";
 export default {
   name: "DetailPreView",
   computed: {
-    ...mapState(dealStore, ["house"]),
+    ...mapState(dealStore, ["house", "avgPrice"]),
     ...mapState(commercialStore, ["commercial"]),
     ...mapState(pollutionStore, ["pollution"]),
   },
