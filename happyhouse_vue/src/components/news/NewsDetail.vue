@@ -1,17 +1,22 @@
 <template>
-  <v-card
-    max-width="800px"
-    max-height="800px"
-    class="d-flex justify-center pa-5 mt-8"
-  >
-    <div>
-      <div v-html="pressLogo"></div>
-      <div v-html="title"></div>
-      <div class="news_content" v-html="content"></div>
-      <v-divider inset></v-divider>
-      <div class="text-right mt-2" v-html="byline"></div>
+  <div>
+    <div class="d-flex justify-center">
+      <div style="width: 800px" class="mb-4 mt-8">
+        <v-icon @click="goBack" large> mdi-arrow-left </v-icon>
+      </div>
     </div>
-  </v-card>
+    <div class="d-flex justify-center">
+      <v-card max-width="800px" class="pa-5 mt-8" elevation="5">
+        <div>
+          <div v-html="pressLogo"></div>
+          <div v-html="title"></div>
+          <div class="news_content" v-html="content"></div>
+          <v-divider inset></v-divider>
+          <div class="text-right mt-2" v-html="byline"></div>
+        </div>
+      </v-card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,7 +50,11 @@ export default {
         console.log(error);
       });
   },
-  methods: {},
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
 };
 </script>
 

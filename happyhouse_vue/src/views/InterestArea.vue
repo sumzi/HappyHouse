@@ -90,6 +90,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div class="d-flex justify-center mt-10">
+      <area-air />
+    </div>
 
     <router-view />
   </div>
@@ -99,10 +102,12 @@
 import http from "@/util/http-common.js";
 import { mapState, mapActions, mapGetters } from "vuex";
 import HeaderNav from "../components/layout/HeaderNav.vue";
+import AreaAir from "../components/interest/AreaAir.vue";
 export default {
   name: "InterestHouse",
   components: {
     HeaderNav,
+    AreaAir,
   },
   data() {
     return {

@@ -53,6 +53,10 @@ export default {
       },
     };
   },
+  filters: {
+    // phone(val){
+    // }
+  },
   created() {
     this.user.userId = this.userInfo.userId;
     this.user.userName = this.userInfo.userName;
@@ -64,11 +68,11 @@ export default {
     updateUser() {
       http.put("/user", this.user).then((response) => {
         if (response.data.message === "success") {
-          alert("수정 성공");
+          alert("회원수정 되었습니다.");
+          this.SET_USER_INFO(this.user);
         } else {
-          alert("수정 실패");
+          alert("회원수정에 실패했습니다.");
         }
-        location.reload();
       });
     },
     deleteUser() {
