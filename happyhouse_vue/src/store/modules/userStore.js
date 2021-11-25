@@ -6,11 +6,6 @@ export default {
     isLogin: false,
     userInfo: null,
   },
-  getters: {
-    userinfo(state) {
-      return state.user;
-    },
-  },
   mutations: {
     USER_LOGIN(state, isLogin) {
       state.isLogin = isLogin;

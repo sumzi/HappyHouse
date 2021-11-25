@@ -5,20 +5,11 @@ export default {
     qnalist: [],
     qna: {},
   },
-  getters: {
-    qnalist(state) {
-      return state.qnalist;
-    },
-    qna(state) {
-      return state.qna;
-    },
-  },
   mutations: {
     SET_QNA_LIST(state, payload) {
       state.qnalist = payload;
     },
     SET_QNA(state, payload) {
-      console.log(payload)
       state.qna = payload;
     },
   },

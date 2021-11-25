@@ -32,7 +32,7 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "QnAUpdate",
   data() {
@@ -44,7 +44,7 @@ export default {
     this.reply2 = this.qna.reply;
   },
   computed: {
-    ...mapGetters(["qna"]),
+    ...mapState("qnaStore", ["qna"]),
   },
   methods: {
     resetQnA() {
@@ -71,10 +71,10 @@ export default {
           })
           .then((res) => {
             if (res.data === "success") {
-              alert("답변 등록 성공");
+              alert("답변 등록이 되었습니다.");
               this.$router.push({ name: "QnAList" });
             } else {
-              alert("등록 실패!!!");
+              alert("답변 등록에 실패했습니다.");
             }
           });
       }

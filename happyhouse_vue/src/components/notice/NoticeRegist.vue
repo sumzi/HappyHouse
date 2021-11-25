@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import http from "@/util/http-common";
 export default {
   name: "NoticeRegist",
@@ -44,6 +45,9 @@ export default {
       title: "",
       content: "",
     };
+  },
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
   },
   methods: {
     resetNotice() {
@@ -72,14 +76,14 @@ export default {
           .post("/notice", {
             title: this.title,
             content: this.content,
-            userId: "ssafy",
+            userId: this.userInfo.userId,
           })
           .then((res) => {
             if (res.data === "success") {
-              alert("등록 성공");
+              alert("등록 되었습니다.");
               this.$router.push({ name: "NoticeList" });
             } else {
-              alert("등록 실패!!!");
+              alert("등록에 실패했습니다.");
             }
           })
           .catch((error) => {

@@ -3,7 +3,12 @@
     <div class="col-8">
       <!-- 관리자만 보이게 해야한다. -->
       <div class="d-flex justify-end">
-        <v-btn outlined rounded color="success" @click="moveNoticeRegist"
+        <v-btn
+          outlined
+          rounded
+          color="success"
+          @click="moveNoticeRegist"
+          v-if="userInfo && userInfo.role === 'admin'"
           >공지등록</v-btn
         >
       </div>
@@ -38,11 +43,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "NoticeList",
   computed: {
-    ...mapGetters("noticeStore", ["noticelist"]),
+    ...mapState("userStore", ["userInfo"]),
+    ...mapState("noticeStore", ["noticelist"]),
   },
   created() {
     this.getNoticeList();

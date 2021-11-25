@@ -9,12 +9,23 @@
         >
         <v-card-text class="mb-15">{{ notice.content }}</v-card-text>
       </v-card>
-      <!-- 관리자만 보이도록 -->
       <v-card-actions class="d-flex justify-space-around mt-6">
-        <v-btn color="primary" outlined rounded text @click="updateNotice"
+        <v-btn
+          color="primary"
+          outlined
+          rounded
+          text
+          @click="updateNotice"
+          v-if="userInfo && userInfo.role === 'admin'"
           >수정</v-btn
         >
-        <v-btn color="error" outlined rounded text @click="deleteNotice"
+        <v-btn
+          color="error"
+          outlined
+          rounded
+          text
+          @click="deleteNotice"
+          v-if="userInfo && userInfo.role === 'admin'"
           >삭제</v-btn
         >
         <v-btn color="success" outlined rounded text @click="moveNoticeList"
@@ -27,14 +38,16 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "NoticeSearch",
   computed: {
-    ...mapGetters("noticeStore", ["notice"]),
+    ...mapState("userStore", ["userInfo"]),
+    ...mapState("noticeStore", ["notice"]),
   },
   created() {
     this.getNotice(this.$route.params.no);
+    console.log(this.notice);
   },
   methods: {
     ...mapActions("noticeStore", ["getNotice"]),
@@ -42,15 +55,18 @@ export default {
       this.$router.push({ name: "NoticeList" });
     },
     updateNotice() {
-      this.$router.push({ name: "NoticeUpdate", params: this.notice.no });
+      this.$router.push({
+        name: "NoticeUpdate",
+        params: { no: this.notice.no },
+      });
     },
     deleteNotice() {
       http.delete(`/notice/${this.notice.no}`).then((response) => {
         if (response.data === "success") {
-          alert("삭제 성공");
+          alert("삭제되었습니다.");
           this.$router.push({ name: "NoticeList" });
         } else {
-          alert("삭제 실패!!!");
+          alert("삭제에 실패했습니다.");
         }
       });
     },

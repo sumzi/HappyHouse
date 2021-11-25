@@ -131,7 +131,6 @@
           </v-card>
         </div>
       </div>
-      <div class="section"></div>
     </full-page>
   </div>
 </template>
@@ -165,7 +164,7 @@ export default {
         "red lighten-1",
         "deep-purple accent-4",
       ],
-      slides: ["First", "Second", "Third"],
+      slides: ["First", "Second"],
       bgImage: "",
       options: {
         licenseKey: "YOUR_KEY_HERE",
@@ -174,8 +173,8 @@ export default {
         scrollBar: false,
         menu: "#menu",
         navigation: true,
-        anchors: ["page1", "page2", "page3"],
-        sectionsColor: ["#fff", "lightgray", "#fff"],
+        anchors: ["page1", "page2"],
+        sectionsColor: ["#fff", "lightgray"],
       },
       aptName: "",
       noticeList: [],

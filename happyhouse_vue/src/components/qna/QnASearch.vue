@@ -20,10 +20,25 @@
       </v-card>
       <!-- 관리자만 보이도록 -->
       <v-card-actions class="d-flex justify-space-around mt-6">
-        <v-btn color="primary" outlined rounded text @click="updateQnA"
+        <v-btn
+          color="primary"
+          outlined
+          rounded
+          text
+          @click="updateQnA"
+          v-if="userInfo && userInfo.role === 'admin'"
           >답변</v-btn
         >
-        <v-btn color="error" outlined rounded text @click="deleteQnA"
+        <v-btn
+          color="error"
+          outlined
+          rounded
+          text
+          @click="deleteQnA"
+          v-if="
+            userInfo &&
+            (userInfo.role === 'admin' || qna.userId === userInfo.userId)
+          "
           >삭제</v-btn
         >
         <v-btn color="success" outlined rounded text @click="moveQnAList"
@@ -40,6 +55,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState("qnaStore", ["qna"]),
+    ...mapState("userStore", ["userInfo"]),
   },
   created() {
     this.getQnA(this.$route.params.no);
@@ -50,7 +66,7 @@ export default {
       this.$router.push({ name: "QnAList" });
     },
     updateQnA() {
-      this.$router.push({ name: "QnAUpdate", params: this.qna.no });
+      this.$router.push({ name: "QnAUpdate", params: { no: this.qna.no } });
     },
     deleteQnA() {
       http.delete(`/qna/${this.qna.no}`).then((response) => {

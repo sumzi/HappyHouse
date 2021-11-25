@@ -5,14 +5,6 @@ export default {
     noticelist: [],
     notice: {},
   },
-  getters: {
-    noticelist(state) {
-      return state.noticelist;
-    },
-    notice(state) {
-      return state.notice;
-    },
-  },
   mutations: {
     SET_NOTICE_LIST(state, payload) {
       state.noticelist = payload;
@@ -26,15 +18,14 @@ export default {
       http
         .get("/notice")
         .then((response) => {
-          console.log(response);
           commit("SET_NOTICE_LIST", response.data);
         })
         .catch(() => {
           alert("공지목록조회 중 오류 발생!!!!");
         });
     },
-    getNotice({ commit }, payload) {
-      http
+    async getNotice({ commit }, payload) {
+      await http
         .get(`/notice/${payload}`)
         .then((response) => commit("SET_NOTICE", response.data))
         .catch(() => {

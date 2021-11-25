@@ -37,11 +37,11 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "NoticeUpdate",
   computed: {
-    ...mapGetters(["notice"]),
+    ...mapState("noticeStore", ["notice"]),
   },
   data() {
     return {
@@ -50,6 +50,7 @@ export default {
     };
   },
   created() {
+    console.log(this.notice);
     this.title2 = this.notice.title;
     this.content2 = this.notice.content;
   },

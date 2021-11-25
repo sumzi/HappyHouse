@@ -32,7 +32,17 @@ import QnARegist from "../components/qna/QnARegist.vue";
 import QnASearch from "../components/qna/QnASearch.vue";
 import QnAUpdate from "../components/qna/QnAUpdate.vue";
 
+import store from "../store/modules/userStore.js";
+
 Vue.use(VueRouter);
+
+const requireAuth = () => (to, from, next) => {
+  console.log(store.state.userInfo);
+  if (store.state.userInfo) {
+    return next();
+  }
+  next("/login");
+};
 
 const routes = [
   {
@@ -65,6 +75,7 @@ const routes = [
         path: "regist",
         name: "NoticeRegist",
         component: NoticeRegist,
+        beforeEnter: requireAuth(),
       },
       {
         path: "update/:no",
@@ -77,6 +88,7 @@ const routes = [
     path: "/deal",
     name: "Deal",
     component: Deal,
+    beforeEnter: requireAuth(),
     redirect: "/deal/house/map/",
     children: [
       {
@@ -143,6 +155,7 @@ const routes = [
         path: "regist",
         name: "QnARegist",
         component: QnARegist,
+        beforeEnter: requireAuth(),
       },
       {
         path: "update/:no",
