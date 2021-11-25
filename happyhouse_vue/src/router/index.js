@@ -32,13 +32,13 @@ import QnARegist from "../components/qna/QnARegist.vue";
 import QnASearch from "../components/qna/QnASearch.vue";
 import QnAUpdate from "../components/qna/QnAUpdate.vue";
 
-import store from "../store/modules/userStore.js";
+// import store from "../store/modules/userStore.js";
 
 Vue.use(VueRouter);
 
 const requireAuth = () => (to, from, next) => {
-  console.log(store.state.userInfo);
-  if (store.state.userInfo) {
+  const id = sessionStorage.getItem("userId");
+  if (id) {
     return next();
   }
   next("/login");
