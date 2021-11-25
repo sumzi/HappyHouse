@@ -16,7 +16,12 @@
         </div>
       </div>
     </div>
-    <detail-pre-view id="previewPopup" v-show="isDetailView"></detail-pre-view>
+    <v-slide-x-reverse-transition style="transition: all 5s ease">
+      <detail-pre-view
+        id="previewPopup"
+        v-show="isDetailView"
+      ></detail-pre-view>
+    </v-slide-x-reverse-transition>
   </div>
 </template>
 

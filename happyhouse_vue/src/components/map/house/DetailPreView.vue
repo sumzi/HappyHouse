@@ -1,5 +1,5 @@
 <template>
-  <div id="popup" class="text-center">
+  <v-card id="popup" class="text-center">
     <div v-if="house">
       <h2>집 정보 Preview</h2>
       <div>이름: {{ house.aptName }}</div>
@@ -29,7 +29,7 @@
       <div>이름: {{ pollution.name }}</div>
       <div>위치: {{ pollution.sidoName }} {{ pollution.gugunName }}</div>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script>
