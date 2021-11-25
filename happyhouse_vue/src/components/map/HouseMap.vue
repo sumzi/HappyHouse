@@ -5,18 +5,13 @@
         id="map"
         style="width: 100%; height: 100%; position: relative; overflow: hidden"
       >
-        <span
-          style="
-            position: absolute;
-            top: 10px;
-            left: 30px;
-            width: 30vw;
-            z-index: 1000;
-          "
-        >
-          <house-address-search></house-address-search>
-          <commercial-search></commercial-search>
-          <pollution-search></pollution-search>
+        <span id="map_search">
+          <div id="filters" style="display: flex">
+            <house-address-search></house-address-search>
+
+            <commercial-search class="ml-5 mt-3"></commercial-search>
+            <pollution-search class="ml-5"></pollution-search>
+          </div>
         </span>
         <div id="menu_wrap" class="bg_white">
           <ul id="placesList"></ul>
@@ -27,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import HouseAddressSearch from "@/components/map/house/HouseAddressSearch.vue";
 import CommercialSearch from "@/components/map/house/CommercialSearch.vue";
 import PollutionSearch from "@/components/map/house/PollutionSearch.vue";
@@ -84,7 +79,6 @@ const code2FoodCate = {
   Q08: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f35e.png",
   Q15: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/1f37d.png",
 };
-code1Cate, code2FoodCate;
 
 export default {
   name: "HouseMap",
@@ -123,13 +117,14 @@ export default {
     },
     houses() {
       this.removeMarker();
-      this.displayMarkers(this.houses);
+      if (this.houses.length != 0) this.displayMarkers(this.houses);
     },
     commercials() {
       this.commercialClusterer.clear();
       this.commercailMarkers = [];
 
-      this.displayCommercialMarkers(this.commercials);
+      if (this.commercials.length != 0)
+        this.displayCommercialMarkers(this.commercials);
     },
     pollutions() {
       if (this.pollutions.length == 0) {
@@ -140,16 +135,20 @@ export default {
       }
     },
   },
+  created() {},
   mounted() {
     if (window.kakao && window.kakao.maps) {
       // kakao.maps.load(this.initMap);
       this.initMap();
     } else {
       this.addKakaoMapScript();
-      this.displayMarkers(this.houses);
+    }
+    if (this.houses.length != 0) {
+      setTimeout(this.displayMarkers, 200, this.houses);
     }
   },
   methods: {
+    ...mapMutations(dealStore, ["SET_HOUSE_LIST"]),
     ...mapActions(dealStore, [
       "detailViewFlag",
       "detailHouse",
@@ -161,10 +160,12 @@ export default {
     ]),
     ...mapActions(pollutionStore, ["detailPollution", "detailPollutionClear"]),
 
-    addKakaoMapScript() {
+    async addKakaoMapScript() {
       const script = document.createElement("script");
       /* global kakao */
+      console.log("여기까지");
       script.onload = () => kakao.maps.load(this.initMap);
+      console.log("여기까지 됨");
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=clusterer";
       document.head.appendChild(script);
@@ -202,7 +203,7 @@ export default {
       container.style.height = `${size}px`;
       this.map.relayout();
     },
-    async displayMarkers(places) {
+    displayMarkers(places) {
       console.log(this.map + "MAP");
       // var listEl = document.getElementById("placesList"),
       //   menuEl = document.getElementById("menu_wrap"),
@@ -537,5 +538,13 @@ ul {
 }
 .overlaybox li:hover .down {
   background-position: 0 -20px;
+}
+
+#map_search {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  width: 500vw;
+  z-index: 1000;
 }
 </style>

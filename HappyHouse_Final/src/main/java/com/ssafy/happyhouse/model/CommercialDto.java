@@ -18,6 +18,7 @@ public class CommercialDto {
 	private String dongcode;
 	private String address;
 	private String jibuaddress;
+	private String postcode;
 	private String lat; 
 	private String lng;
 	
@@ -200,14 +201,25 @@ public class CommercialDto {
 		this.codename4 = codename4;
 	}
 
+	
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
 
 	@Override
 	public String toString() {
 		return "CommercialDto [no=" + no + ", shopname=" + shopname + ", localname=" + localname + ", code1=" + code1
 				+ ", codename1=" + codename1 + ", code2=" + code2 + ", codename2=" + codename2 + ", code3=" + code3
 				+ ", codename3=" + codename3 + ", codename4=" + codename4 + ", gucode=" + gucode + ", dongcode="
-				+ dongcode + ", address=" + address + ", jibuaddress=" + jibuaddress + ", lat=" + lat + ", lng=" + lng
-				+ "]";
-	}	
+				+ dongcode + ", address=" + address + ", jibuaddress=" + jibuaddress + ", postcode=" + postcode
+				+ ", lat=" + lat + ", lng=" + lng + "]";
+	}
 	
 }

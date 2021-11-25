@@ -57,6 +57,10 @@ export default {
       //   console.log(houses);
       state.houses = houses;
     },
+    CLEAR_HOUSE_LIST: (state) => {
+      //   console.log(houses);
+      state.houses = [];
+    },
     SET_DETAIL_HOUSE: (state, house) => {
       state.house = house;
     },

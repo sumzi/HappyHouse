@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-checkbox v-model="activeCheck" label="환경 정보 보기"></v-checkbox>
+    <v-checkbox
+      class="font-weight-black black--text"
+      v-model="activeCheck"
+      label="환경 정보 보기"
+      v-show="this.gugun"
+    ></v-checkbox>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-0 text-center">
+  <div class="mt-0 text-center" style="display: flex; width: 500px">
     <!-- <v-col class="sm-3">
       <v-form-input
         v-model.trim="dongCode"
@@ -10,32 +10,29 @@
     <v-col class="sm-3" align="left">
       <v-button variant="outline-primary" @click="sendKeyword">검색</v-button>
     </v-col> -->
-    <v-col cols="4">
-      <v-select
-        solo
-        success
-        v-model="sidoCode"
-        :items="sidos"
-        @change="gugunList"
-      ></v-select>
-    </v-col>
-    <v-col cols="4">
-      <v-select
-        solo
-        v-model="gugunCode"
-        :items="guguns"
-        @change="searchAptByGugun"
-      ></v-select>
-    </v-col>
-    <v-col cols="4">
-      <v-select
-        solo
-        v-model="dongCode"
-        :items="dongs"
-        @change="searchAptByDong"
-      ></v-select>
-    </v-col>
-  </v-row>
+
+    <v-select
+      solo
+      success
+      v-model="sidoCode"
+      :items="sidos"
+      @change="gugunList"
+    ></v-select>
+
+    <v-select
+      solo
+      v-model="gugunCode"
+      :items="guguns"
+      @change="searchAptByGugun"
+    ></v-select>
+
+    <v-select
+      solo
+      v-model="dongCode"
+      :items="dongs"
+      @change="searchAptByDong"
+    ></v-select>
+  </div>
 </template>
 
 <script>
@@ -119,6 +116,7 @@ export default {
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
+      "CLEAR_HOUSE_LIST",
     ]),
     ...mapMutations(commercialStore, [
       "CLEAR_ALL_CATE",
@@ -151,12 +149,18 @@ export default {
       if (this.gugunCode) {
         this.getHouseListByGugun(this.gugunCode);
         this.getDong(this.gugunCode);
+      } else {
+        this.SET_GUGUN(null);
+        this.CLEAR_HOUSE_LIST();
       }
     },
     searchAptByDong() {
       if (this.dongCode) {
         this.getHouseListByDong(this.dongCode);
         this.getCommercialByDong({ dongcode: this.dongCode });
+      } else {
+        this.getHouseListByGugun(this.gugunCode);
+        this.SET_DONG(null);
       }
     },
     searchAptByName() {
@@ -170,6 +174,6 @@ export default {
 .col,
 .v-select,
 v-input__control {
-  padding: 3px;
+  padding: 1px;
 }
 </style>

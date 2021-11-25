@@ -1,31 +1,30 @@
 <template>
-  <v-row class="mt-0 text-center">
-    <v-col cols="4">
-      <v-select
-        solo
-        success
-        v-model="code1"
-        :items="bgCate"
-        @change="searchByBgCate"
-      ></v-select>
-    </v-col>
-    <v-col cols="4">
-      <v-select
-        solo
-        v-model="code2"
-        :items="mdCate"
-        @change="searchByMdCate"
-      ></v-select>
-    </v-col>
-    <v-col cols="4">
-      <v-select
-        solo
-        v-model="code3"
-        :items="smCate"
-        @change="searchBySmCate"
-      ></v-select>
-    </v-col>
-  </v-row>
+  <div id="comm_filter" class="text-center" v-show="this.gugun">
+    <v-select
+      class="cumm_select"
+      solo
+      success
+      v-model="code1"
+      :items="bgCate"
+      @change="searchByBgCate"
+    ></v-select>
+
+    <v-select
+      class="cumm_select"
+      solo
+      v-model="code2"
+      :items="mdCate"
+      @change="searchByMdCate"
+    ></v-select>
+
+    <v-select
+      class="cumm_select"
+      solo
+      v-model="code3"
+      :items="smCate"
+      @change="searchBySmCate"
+    ></v-select>
+  </div>
 </template>
 
 <script>
@@ -67,6 +66,9 @@ export default {
       this.code3 = null;
       this.clearCate();
     },
+  },
+  updated() {
+    console.log(this.gugun + "현재구군");
   },
   mounted() {
     if (this.bgCate.length == 1) this.getBgCate();
@@ -169,10 +171,22 @@ export default {
 };
 </script>
 
-<style scoped>
-.col,
-.v-select,
-v-input__control {
-  padding: 3px;
+<style>
+#comm_filter {
+  display: flex;
+  width: 400px;
+  height: 50px;
+}
+.cumm_select.v-text-field.v-text-field--enclosed .v-text-field__details,
+.cumm_select.v-text-field.v-text-field--enclosed
+  > .v-input__control
+  > .v-input__slot {
+  padding: 2px;
+  border-radius: 0px;
+  font-size: 13px;
+  margin: 0;
+  max-height: 35px;
+  min-height: 35px !important;
+  align-items: center !important;
 }
 </style>

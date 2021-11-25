@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <v-slide-x-reverse-transition style="transition: all 5s ease">
+    <v-slide-x-reverse-transition>
       <detail-pre-view
         id="previewPopup"
         v-show="isDetailView"
@@ -44,11 +44,7 @@ export default {
   computed: {
     ...mapState("dealStore", ["isDetailView"]),
   },
-  watch: {
-    isDetailView() {
-      console.log("작동");
-    },
-  },
+  watch: {},
 };
 </script>
 
