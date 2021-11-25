@@ -2,7 +2,7 @@
   <v-card
     max-width="800px"
     max-height="800px"
-    class="mx-auto overflow-y-auto pa-5 mt-8"
+    class="d-flex justify-center pa-5 mt-8"
   >
     <div>
       <div v-html="pressLogo"></div>

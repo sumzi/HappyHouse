@@ -2,11 +2,13 @@
   <v-carousel
     :continuous="false"
     hide-delimiter-background
+    show-arrows-on-hover
+    hide-delimiters
     delimiter-icon="mdi-minus"
     height="200px"
     :cycle="false"
   >
-    <v-carousel-item v-for="(house, i) in houses" :key="i">
+    <v-carousel-item v-for="(house, i) in interestAreaList" :key="i">
       <v-sheet height="100%" tile>
         <v-row class="fill-height" align="center" justify="center">
           <div>
@@ -35,8 +37,11 @@ export default {
   name: "AreaRank",
   computed: {
     ...mapState("userStore", ["userInfo"]),
-    ...mapState("dealStore", ["houses"]),
-    ...mapState("interestStore", ["interestAreaUser", "interestArea"]),
+    ...mapState("interestStore", [
+      "interestAreaUser",
+      "interestArea",
+      "interestAreaList",
+    ]),
   },
   methods: {
     ...mapActions("dealStore", ["detailHouse"]),

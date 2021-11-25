@@ -1,34 +1,29 @@
 <template>
-  <div class="text-center mt-8">
-    <v-card
-      max-width="660px"
-      max-height="800px"
-      class="mx-auto overflow-y-auto"
-    >
-      <v-card-title>
-        <span class="text-h4 font-weight-light">부동산 관련 뉴스</span>
-      </v-card-title>
+  <div>
+    <v-container class="text-center mt-8">
+      <h2>부동산 관련 뉴스</h2>
+    </v-container>
+    <div class="d-flex justify-center mt-8">
+      <v-card max-width="660px" elevation="5">
+        <v-list three-line class="news_list">
+          <div v-for="(article, index) in news" :key="index">
+            <news-list-row
+              :article="article"
+              :num="index"
+              :detailLink="detailLink[index]"
+            >
+            </news-list-row>
 
-      <v-list three-line class="news_list">
-        <template v-for="(article, index) in news">
-          <news-list-row
-            :key="index"
-            :article="article"
-            :num="index"
-            :detailLink="detailLink[index]"
-          >
-          </news-list-row>
-
-          <v-divider
-            v-if="index != news.length - 1"
-            :key="index"
-            inset
-          ></v-divider>
-        </template>
-      </v-list>
-    </v-card>
+            <v-divider
+              v-if="index != news.length - 1"
+              :key="index"
+              inset
+            ></v-divider>
+          </div>
+        </v-list>
+      </v-card>
+    </div>
   </div>
-  <!-- pagenation 들어갈 곳 -->
 </template>
 
 <script>
@@ -49,7 +44,6 @@ export default {
     http
       .get("/news/list", {})
       .then((response) => {
-        console.log(response);
         this.news = response.data.news;
         this.detailLink = response.data.detailLink;
       })

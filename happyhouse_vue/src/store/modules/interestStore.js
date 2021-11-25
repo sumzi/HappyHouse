@@ -7,6 +7,7 @@ export default {
     houseRank: [],
     interestArea: "",
     interestAreaUser: "",
+    interestAreaList: [],
     address: {},
   },
   mutations: {
@@ -34,6 +35,9 @@ export default {
         gugun: payload.gugunName,
         dong: payload.dongName,
       };
+    },
+    SET_INTEREST_AREA_LIST(state, payload) {
+      state.interestAreaList = payload;
     },
   },
   actions: {
@@ -116,6 +120,16 @@ export default {
           });
         }
       });
+    },
+    getInterestAreaList({ commit }, dongCode) {
+      http
+        .get(`/map/apt/dong?dong=${dongCode}`)
+        .then((response) => {
+          commit("SET_INTEREST_AREA_LIST", response.data.houseList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

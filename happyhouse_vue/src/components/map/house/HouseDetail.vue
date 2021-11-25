@@ -134,7 +134,7 @@
                       <tbody>
                         <tr v-for="data in getInfraAll[index]" :key="data.id">
                           <td>
-                            <strong>{{ data.distance }}</strong> m 이내에
+                            <strong>{{ data.distance }}</strong> m 거리에
                             <v-tooltip right>
                               <template v-slot:activator="{ on, attrs }">
                                 <strong v-bind="attrs" v-on="on">{{

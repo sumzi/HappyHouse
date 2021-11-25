@@ -53,13 +53,16 @@
       <div class="section">
         <div style="z-index: 10" class="d-flex justify-space-around">
           <v-card width="50%" class="ma-15 pa-5" color="warning lighten-1" flat>
-            <v-card-title>🏢인기 아파트</v-card-title>
+            <v-card-title>🏢인기 아파트 </v-card-title>
             <div v-for="(house, idx) in houseRank" :key="house">
               <house-rank-row v-bind="{ index: idx + 1, aptCode: house }" />
             </div>
           </v-card>
           <v-card width="50%" class="ma-15 pa-5" color="red lighten-2" flat>
-            <v-card-title>👍🏻인기 지역 매매</v-card-title>
+            <v-card-title
+              >👍🏻인기 지역 매매 [{{ address.sido }} {{ address.gugun }}
+              {{ address.dong }}]</v-card-title
+            >
             <div><area-rank /></div>
           </v-card>
         </div>
@@ -153,6 +156,7 @@ export default {
       "houseRank",
       "interestAreaUser",
       "interestArea",
+      "address",
     ]),
   },
   data() {
@@ -200,10 +204,15 @@ export default {
     });
     this.getHouseRank();
     this.findArea();
+    this.getInterestAreaAddress(this.interestArea);
   },
   methods: {
-    ...mapActions("dealStore", ["getHouseListByDong", "detailHouse"]),
-    ...mapActions("interestStore", ["getHouseRank", "getInterestArea"]),
+    ...mapActions("interestStore", [
+      "getHouseRank",
+      "getInterestArea",
+      "getInterestAreaAddress",
+      "getInterestAreaList",
+    ]),
     searchApt() {
       if (this.aptName.trim() !== "")
         this.$router.push({
@@ -219,7 +228,7 @@ export default {
     },
     async findArea() {
       await this.getInterestArea();
-      await this.getHouseListByDong(this.interestArea);
+      await this.getInterestAreaList(this.interestArea);
     },
   },
 };

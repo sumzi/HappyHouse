@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-nav />
+    <header-nav id="top" />
     <v-container class="text-center mt-8">
       <h2>관심 찜 목록</h2>
     </v-container>

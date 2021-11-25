@@ -183,11 +183,10 @@ export default {
             userPhone: this.phone,
           })
           .then((res) => {
-            console.log(res);
             if (res.data.message === "success") {
-              alert("회원가입 성공");
+              alert("회원가입 되었습니다.");
             } else {
-              alert("회원가입 실패");
+              alert("회원가입에 실패했습니다.");
             }
 
             this.$router.push({ name: "Login" });

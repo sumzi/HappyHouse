@@ -9,7 +9,7 @@
     >
     <v-card-text>가격 : {{ house.recentPrice }}</v-card-text>
     <v-card-actions>
-      <v-icon large left @click.stop="unlike"> mdi-heart </v-icon>
+      <v-icon large left @click.stop="unlike" color="red"> mdi-heart </v-icon>
     </v-card-actions>
   </v-card>
 </template>

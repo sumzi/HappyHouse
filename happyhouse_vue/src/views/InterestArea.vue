@@ -30,6 +30,7 @@
               success
               solo
               rounded
+              label="시도"
               v-model="sidoCode"
               :items="sidoList"
               @change="changeSido"
@@ -40,6 +41,7 @@
               success
               solo
               rounded
+              label="구군"
               v-model="gugunCode"
               :items="gugunList"
               @change="changeGugun"
@@ -50,6 +52,7 @@
               success
               solo
               rounded
+              label="동"
               v-model="dongCode"
               :items="dongList"
               @change="changeDong"

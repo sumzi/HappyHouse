@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-nav />
+    <header-nav id="top" />
     <div>
       <router-view />
     </div>

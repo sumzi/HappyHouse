@@ -77,7 +77,7 @@ export default {
         await this.getInterestAreaUser(this.user.userId);
         this.$router.push({ name: "Index" });
       } else {
-        alert("로그인실패");
+        alert("아이디와 비밀번호를 확인해주세요");
         this.USER_LOGIN(false);
       }
     },
