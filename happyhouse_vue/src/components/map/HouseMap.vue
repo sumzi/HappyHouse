@@ -100,7 +100,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(dealStore, ["houses", "house"]),
+    ...mapState(dealStore, ["houses", "house", "dong"]),
     ...mapState(commercialStore, ["commercials"]),
     ...mapState(pollutionStore, ["pollutions"]),
   },
@@ -145,6 +145,9 @@ export default {
     }
     if (this.houses.length != 0) {
       setTimeout(this.displayMarkers, 500, this.houses);
+    }
+    if (this.dong) {
+      setTimeout(this.displayCommercialMarkers, 500, this.commercials);
     }
   },
   methods: {
